@@ -90,6 +90,7 @@ const Gallery = () => {
                     <th className="text-center">Edit</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {Gallery &&
                     Gallery.map((Gallery) => (

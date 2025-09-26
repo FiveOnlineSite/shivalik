@@ -1,7 +1,7 @@
 const path = require("path");
 const mongoose = require("mongoose");
 const ProjectsModel = require("../../models/projects/projectsModel");
-const FeaturesContentModel = require("../../models/projectDetails/FeaturesContentModel");
+const FeaturesContentModel = require("../../models/projectDetails/featuresContentModel");
 
 const createFeaturesContent = async (req, res) => {
   try {
