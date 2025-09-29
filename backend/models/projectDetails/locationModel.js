@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const LocationSchema = new mongoose.Schema({
-    project: {
+  project: {
        type: mongoose.Types.ObjectId,
         ref: "projects",
         required: true,
-      },
+  },
   map_link: {
     type: String,
     required: true,
@@ -15,11 +15,9 @@ const LocationSchema = new mongoose.Schema({
     {
       phone: {
         type: String,
-        required: true,
       },
       distance: {
         type: String,
-        required: true,
       },
     },
     ],

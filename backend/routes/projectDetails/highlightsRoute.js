@@ -20,7 +20,7 @@ route.patch(
   HighLightsController.updateHighlight
 );
 
-route.get("/title/:name", HighLightsController.getHighlightsByProject);
+route.get("/project/:name", HighLightsController.getHighlightsByProject);
 
 route.get("/:_id", HighLightsController.getHighlight);
 

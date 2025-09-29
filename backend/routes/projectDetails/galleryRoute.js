@@ -20,7 +20,7 @@ route.patch(
   GalleryController.updateGallery
 );
 
-route.get("/title/:name", GalleryController.getGalleriesByProject);
+route.get("/project/:name", GalleryController.getGalleriesByProject);
 
 route.get("/:_id", GalleryController.getGallery);
 

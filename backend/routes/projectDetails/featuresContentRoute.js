@@ -19,7 +19,7 @@ route.patch(
   FeaturesController.updateFeaturesContent
 );
 
-route.get("/title/:name", FeaturesController.getFeatureContentByProject);
+route.get("/project/:name", FeaturesController.getFeatureContentByProject);
 
 route.get("/:_id", FeaturesController.getFeaturesContent);
 

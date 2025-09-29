@@ -86,6 +86,18 @@ import EditAmenity from './pages/admin/ProjectDetails/Amenities/EditAmenity';
 import Gallery from './pages/admin/ProjectDetails/Gallery/Gallery';
 import AddGallery from './pages/admin/ProjectDetails/Gallery/AddGallery';
 import EditGallery from './pages/admin/ProjectDetails/Gallery/EditGallery';
+import Banks from './pages/admin/ProjectDetails/Banks/Banks';
+import AddBank from './pages/admin/ProjectDetails/Banks/AddBank';
+import EditBank from './pages/admin/ProjectDetails/Banks/EditBank';
+import ProjectFAQ from './pages/admin/ProjectDetails/FAQ/FAQ';
+import AddProjectFAQ from './pages/admin/ProjectDetails/FAQ/AddFAQ';
+import EditProjectFAQ from './pages/admin/ProjectDetails/FAQ/EditFAQ';
+import Disclaimers from './pages/admin/ProjectDetails/Disclaimers/Disclaimers';
+import AddDisclaimer from './pages/admin/ProjectDetails/Disclaimers/AddDisclaimer';
+import EditDisclaimer from './pages/admin/ProjectDetails/Disclaimers/EditDisclaimer';
+import Status from './pages/admin/ProjectDetails/Status/Status';
+import AddStatus from './pages/admin/ProjectDetails/Status/AddStatus';
+import EditStatus from './pages/admin/ProjectDetails/Status/EditStatus';
 
 const App = () => {
   return (
@@ -203,6 +215,22 @@ const App = () => {
           <Route path="gallery" element={<Gallery />} />
           <Route path="add/gallery" element={<AddGallery />} />
           <Route path="edit/gallery/:id" element={<EditGallery />} />
+
+          <Route path="banks" element={<Banks />} />
+          <Route path="add/banks" element={<AddBank />} />
+          <Route path="edit/banks/:id" element={<EditBank />} />
+
+          <Route path="project-faqs" element={<ProjectFAQ />} />
+          <Route path="add/project-faqs" element={<AddProjectFAQ />} />
+          <Route path="edit/project-faqs/:id" element={<EditProjectFAQ />} />
+
+          <Route path="disclaimers" element={<Disclaimers />} />
+          <Route path="add/disclaimers" element={<AddDisclaimer />} />
+          <Route path="edit/disclaimers/:id" element={<EditDisclaimer />} />
+
+          <Route path="current-status" element={<Status />} />
+          <Route path="add/current-status" element={<AddStatus />} />
+          <Route path="edit/current-status/:id" element={<EditStatus />} />
 
           </Route>
          </Routes>

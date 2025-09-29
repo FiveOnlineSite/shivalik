@@ -25,6 +25,8 @@ const [projectContent, setProjectContent] = useState([])
 const [projectFeatures, setProjectFeatures] = useState([])
 const [projectHighlight, setProjectHighlight] = useState([])
 const [projectAmenities, setProjectAmenities] = useState([])
+const [projectDisclaimer, setProjectDisclaimer] = useState([])
+const [projectFAQ, setProjectFAQ] = useState([])
 
 const {name} = useParams()
 
@@ -50,7 +52,7 @@ const {name} = useParams()
     const fetchProjectAbout = async () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
-        const response = await axios.get(`${apiUrl}/api/about/title/${name}`);
+        const response = await axios.get(`${apiUrl}/api/about/project/${name}`);
         const ProjectAboutData = response.data.about;
         console.log("about", ProjectAboutData)
         setProjectAbout(ProjectAboutData);
@@ -67,7 +69,7 @@ const {name} = useParams()
     const fetchProjectFeatureContent = async () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
-        const response = await axios.get(`${apiUrl}/api/feature-content/title/${name}`);
+        const response = await axios.get(`${apiUrl}/api/feature-content/project/${name}`);
         const ProjectContentData = response.data.content;
         console.log("content", ProjectContentData)
         setProjectContent(ProjectContentData);
@@ -84,7 +86,7 @@ const {name} = useParams()
     const fetchProjectFeatures = async () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
-        const response = await axios.get(`${apiUrl}/api/feature/title/${name}`);
+        const response = await axios.get(`${apiUrl}/api/feature/project/${name}`);
         const ProjectFeaturesData = response.data.features;
         console.log("feature", ProjectFeaturesData)
         setProjectFeatures(ProjectFeaturesData);
@@ -101,7 +103,7 @@ const {name} = useParams()
     const fetchProjectHighlights = async () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
-        const response = await axios.get(`${apiUrl}/api/highlight/title/${name}`);
+        const response = await axios.get(`${apiUrl}/api/highlight/project/${name}`);
         const ProjectAmenitiesData = response.data.Highlights;
         console.log("highlight", ProjectAmenitiesData)
         setProjectHighlight(ProjectAmenitiesData);
@@ -117,7 +119,7 @@ const {name} = useParams()
     const fetchProjectAmenities = async () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
-        const response = await axios.get(`${apiUrl}/api/amenity/title/${name}`);
+        const response = await axios.get(`${apiUrl}/api/amenity/project/${name}`);
         const ProjectAmenitiesData = response.data.Amenities;
         console.log("amenities", ProjectAmenitiesData)
         setProjectAmenities(ProjectAmenitiesData);
@@ -126,6 +128,21 @@ const {name} = useParams()
       }
     };
     fetchProjectAmenities();
+  }, [name]);
+
+  useEffect(() => {
+    const fetchProjectDisclaimer = async () => {
+      try {
+        const apiUrl = process.env.REACT_APP_API_URL;
+        const response = await axios.get(`${apiUrl}/api/disclaimer/project/${name}`);
+        const ProjectDisclaimerData = response.data.disclaimers;
+        console.log("disclaimers", ProjectDisclaimerData)
+        setProjectDisclaimer(ProjectDisclaimerData);
+      } catch (error) {
+        console.error("Error fetching project disclaimers:", error);
+      }
+    };
+    fetchProjectDisclaimer();
   }, [name]);
 
   return (
@@ -454,21 +471,26 @@ const {name} = useParams()
       {/* rera section start */}
       <section className={`${styles.reraSection} mb-5`}>
         <div className='container-fluid'>
+      {projectDisclaimer && projectDisclaimer.map((disclaimer) => (
+
           <div className='row '>
             <div className='col-lg-7'>
-              <p>Disclaimer : This is not an offer, an invitation to offer and/or commitment of any nature. This contains artistic impressions and stock images for illustrative purpose and no warranty is expressly or impliedly given that the completed development will comply in any degree with such artist's impression as depicted. All terms and conditions of sale of flat, specifications and amenities of the flat/project shall be as per the final agreement between the Parties. Recipients are advised to use their discretion in relying on the information/amenities described / shown herein. All distances mentioned are aerial distances. ** The No EMI Till Possession & Flexi Payment scheme is subject to the sanction of the home buyer’s loan from financial institution / banks offering this scheme. * T & C Apply.</p>
+              <div dangerouslySetInnerHTML={{__html: disclaimer.description}}></div>
             </div>
             <div className='col-lg-5'>
               <div className='row align-items-center'>
-                <div className='col-lg-3 col-md-3 col-sm-3 col-4'><img src='images/qr-code.png' width='100%' /></div>
+                <div className='col-lg-3 col-md-3 col-sm-3 col-4'>
+                  {disclaimer.qr?.[0]?.filepath && (<img src={disclaimer.qr?.[0]?.filepath} width='100%' alt={disclaimer.alt} />)}
+                  </div>
                 <div className='col-lg-3 col-md-3 col-sm-3 col-4'><img src='images/maharera.png' width='100%' /></div>
                 <div className='col-lg-6'>
-                  <p className='mb-0'>RERA Registeration No.: P51800014036</p>
+                  <p className='mb-0'>RERA Registeration No.: {disclaimer.registration_no}</p>
                   <p className=''><a href="maharerait.mahaonline.gov.in" className='text-dark text-decoration-none' target='_blank'>maharerait.mahaonline.gov.in</a></p>
                 </div>
               </div>
             </div>
           </div>
+      ))}
         </div>
       </section>
       {/* rera section close */}

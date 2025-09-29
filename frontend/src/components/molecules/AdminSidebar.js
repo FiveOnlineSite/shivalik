@@ -226,21 +226,25 @@ const AdminSidebar = () => {
                 linkIcon: "las la-home",
                 label: "Gallery",
               },
-
               {
-                to: "/admin/location",
+                to: "/admin/project-faqs",
+                linkIcon: "las la-home",
+                label: "FAQ",
+              },
+              {
+                to: "/admin/current-status",
                 linkIcon: "las la-home",
                 label: "Current Status",
               },
-                            {
-                to: "/admin/site-plan",
-                linkIcon: "las la-home",
-                label: "Current Status Content",
-              },
               {
-                to: "/admin/location",
+                to: "/admin/banks",
                 linkIcon: "las la-home",
                 label: "Bank Tie-Ups",
+              },
+               {
+                to: "/admin/disclaimers",
+                linkIcon: "las la-home",
+                label: "Disclaimers",
               },
                
             ]}

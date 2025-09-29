@@ -21,7 +21,10 @@ const sitePlanRoute = require("./projectDetails/sitePlanRoute")
 const highlightsRoute = require("./projectDetails/highlightsRoute")
 const amenitiesRoute = require("./projectDetails/amenitiesRoute")
 const galleryRoute = require("./projectDetails/galleryRoute")
-
+const banksRoute = require("./projectDetails/banksRoute")
+const disclaimerRoute = require("./projectDetails/disclaimerRoute")
+const faqRoute = require("./projectDetails/faqRoute")
+const currentStatusRoute = require("./projectDetails/currentStatusRoute")
 
 module.exports = {
     authRoute,
@@ -46,5 +49,9 @@ module.exports = {
     sitePlanRoute,
     highlightsRoute,
     amenitiesRoute,
-    galleryRoute
+    galleryRoute,
+    banksRoute,
+    disclaimerRoute,
+    faqRoute,
+    currentStatusRoute
 }

@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const DisclaimerSchema = new mongoose.Schema({
-//   project: {
-//    type: mongoose.Types.ObjectId,
-//     ref: "projects",
-//     required: true,
-//   },
+  project: {
+   type: mongoose.Types.ObjectId,
+    ref: "projects",
+    required: true,
+  },
   qr: {
     type: Array,
     required: true,

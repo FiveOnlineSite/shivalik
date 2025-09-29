@@ -30,7 +30,7 @@ const GalleryGrid = () => {
       const fetchProjectGallery = async () => {
         try {
           const apiUrl = process.env.REACT_APP_API_URL;
-          const response = await axios.get(`${apiUrl}/api/gallery/title/${name}`);
+          const response = await axios.get(`${apiUrl}/api/gallery/project/${name}`);
           const ProjectGalleryData = response.data.Galleries;
           console.log("gallery", ProjectGalleryData)
           setProjectGallery(ProjectGalleryData);

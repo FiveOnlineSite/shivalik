@@ -61,6 +61,10 @@ app.use("/api/site-plan", Route.sitePlanRoute);
 app.use("/api/highlight", Route.highlightsRoute);
 app.use("/api/amenity", Route.amenitiesRoute);
 app.use("/api/gallery", Route.galleryRoute);
+app.use("/api/bank", Route.banksRoute);
+app.use("/api/disclaimer", Route.disclaimerRoute);
+app.use("/api/faq", Route.faqRoute);
+app.use("/api/current-status", Route.currentStatusRoute);
 
 connectDb();
 

@@ -20,7 +20,7 @@ route.patch(
   AmenitiesController.updateAmenity
 );
 
-route.get("/title/:name", AmenitiesController.getAmenitiesByProject);
+route.get("/project/:name", AmenitiesController.getAmenitiesByProject);
 
 route.get("/:_id", AmenitiesController.getAmenity);
 

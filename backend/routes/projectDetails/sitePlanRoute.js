@@ -25,7 +25,7 @@ route.patch(
   SitePlanController.updateSitePlan
 );
 
-route.get("/title/:name", SitePlanController.getSitePlansByProject);
+route.get("/project/:name", SitePlanController.getSitePlansByProject);
 
 route.get("/:_id", SitePlanController.getSitePlan);
 

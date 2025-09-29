@@ -1,39 +1,38 @@
 const mongoose = require("mongoose");
 
-const ProgressStepSchema = new mongoose.Schema({
-  date: {
-    type: Date,             // use Date for easy sorting
-    required: true,
-  },
-  image: {
-    type: String,           // S3/Cloudinary URL
-    required: true,
-  },
-  alt: {
-    type: String,
-    default: "",
-  }
-});
-
 const CurrentStatusSchema = new mongoose.Schema({
   project: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Project",
+    ref: "projects",
     required: true,
   },
+  date: {
+    type: String,
+    required: true,
+  },
+  images: [
+    {
+      image: {  
+        type: Array,
+        required: true,
+      },
+      alt: { type: String }
+    }
+  ],
   status: {
-    type: String,           // e.g. "Ongoing Construction"
-    required: true,
+    type: String,
+    enum: ["Ongoing Construction", "Completed"],
+    default: "Ongoing Construction",
   },
-  possessionBy: {
-    type: Date,             // September 2026
+  possession: {
+    type: Date,
     required: true,
   },
   maharera: {
     type: String,
     required: true,
   },
-  timeline: [ProgressStepSchema], // <-- array of steps
 }, { timestamps: true });
+
 
 module.exports = mongoose.model("currentstatus", CurrentStatusSchema);

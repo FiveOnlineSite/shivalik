@@ -25,7 +25,7 @@ route.patch(
   AboutController.updateAbout
 );
 
-route.get("/title/:name", AboutController.getAboutsByProject);
+route.get("/project/:name", AboutController.getAboutsByProject);
 
 route.get("/:_id", AboutController.getAbout);
 

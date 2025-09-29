@@ -47,7 +47,7 @@ const [unlocked, setUnlocked] = useState({});
   const fetchProjectSitePlan = async () => {
     try {
       const apiUrl = process.env.REACT_APP_API_URL;
-      const response = await axios.get(`${apiUrl}/api/site-plan/title/${name}`);
+      const response = await axios.get(`${apiUrl}/api/site-plan/project/${name}`);
 
       // Default to [] if SitePlan is missing
       const sitePlans = response.data?.SitePlan || [];

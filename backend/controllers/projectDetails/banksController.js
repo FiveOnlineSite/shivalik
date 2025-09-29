@@ -5,7 +5,7 @@ const BanksModel = require("../../models/projectDetails/banksModel");
 
 const createBank = async (req, res) => {
   try {
-    const { alt } = req.body;
+    const { alt, title } = req.body;
 
     const { project } = req.body;
         console.log("project id", project, typeof project);
@@ -33,6 +33,7 @@ const createBank = async (req, res) => {
       image: imageData ? [imageData] : [],
       alt,
       project,
+      title
     });
 
     await newBank.save();
@@ -50,7 +51,7 @@ const createBank = async (req, res) => {
 
 const updateBank = async (req, res) => {
   try {
-    const { alt, project } = req.body;
+    const { alt, project, title } = req.body;
 
     const BankId = req.params._id;
 
@@ -90,6 +91,8 @@ const updateBank = async (req, res) => {
             }
 
      if (alt !== undefined) Bank.alt = alt;
+     if (title !== undefined) Bank.title = title;
+
     await Bank.save();
 
     return res.status(200).json({
@@ -103,7 +106,7 @@ const updateBank = async (req, res) => {
   }
 };
 
-const getBanksByTitle = async (req, res) => {
+const getBanksByProject = async (req, res) => {
   try {
     let name = req.params.name || "";
 
@@ -211,7 +214,7 @@ const deleteBank = async (req, res) => {
 module.exports = {
   createBank,
   updateBank,
-  getBanksByTitle,
+  getBanksByProject,
   getBank,
   getBanks,
   deleteBank,

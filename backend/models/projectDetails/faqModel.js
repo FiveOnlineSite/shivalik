@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const GallerySchema = new mongoose.Schema({
+const FAQSchema = new mongoose.Schema({
   project: {
    type: mongoose.Types.ObjectId,
     ref: "projects",
@@ -18,6 +18,6 @@ const GallerySchema = new mongoose.Schema({
   
 });
 
-const GalleryModel = mongoose.model("galleries", GallerySchema);
+const FAQModel = mongoose.model("faqs", FAQSchema);
 
-module.exports = GalleryModel;
+module.exports = FAQModel;
