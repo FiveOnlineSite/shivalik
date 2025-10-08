@@ -2,6 +2,9 @@
 import React, { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
+import { ArrowRightAlt } from '@mui/icons-material';
+import styles from '../../style/Common.module.css';
+import GradientLine from '../atoms/GradientLine';
 
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { useEffect } from "react";
@@ -43,16 +46,25 @@ const GalleryGrid = () => {
 
 
   return (
-    <>
-      <div className="gallery-grid">
-        {projectGallery && projectGallery.map((gallery, i) => (
-          <div key={gallery._id} className="gallery-box" onClick={() => { setIndex(i); setOpen(true); }}>
-            {gallery.image?.[0]?.filepath && (
-            <img src={gallery.image?.[0]?.filepath} alt={gallery.alt} />
-            )}
-          </div>
-        ))}
+    <div>
+       {projectGallery.map((gallery) => (
+    <section className='mb-5 pb-5 mt-5 pt-5' id='gallery'>
+        <div className='container'>
+          <div className='row'>
+
+   
+  <>
+    <GradientLine />
+    <h3 className={styles.sectionTitle}>Project Gallery</h3>
+    <div className="gallery-grid">
+      <div className="gallery-box" onClick={() => { setIndex(gallery._id); setOpen(true); }}>
+        {gallery.image?.[0]?.filepath && (
+          <img src={gallery.image?.[0]?.filepath} alt={gallery.alt} />
+        )}
       </div>
+    </div>
+  </>
+
 
       {open && (
         <Lightbox
@@ -70,7 +82,12 @@ const GalleryGrid = () => {
           // onIndexChange={setIndex}
         />
       )}
-    </>
+      
+     </div>
+        </div>
+      </section>
+      ))}
+      </div>
   );
 };
 

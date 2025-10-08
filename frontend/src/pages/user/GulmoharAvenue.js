@@ -27,6 +27,7 @@ const [projectHighlight, setProjectHighlight] = useState([])
 const [projectAmenities, setProjectAmenities] = useState([])
 const [projectDisclaimer, setProjectDisclaimer] = useState([])
 const [projectLocation, setProjectLocation] = useState([])
+  const [projectGallery, setProjectGallery] = useState([])
 
 const {name} = useParams()
 
@@ -99,7 +100,6 @@ const {name} = useParams()
   }, [name]);
 
  useEffect(() => {
-
     const fetchProjectHighlights = async () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
@@ -159,6 +159,21 @@ const {name} = useParams()
     };
     fetchProjectLocation();
   }, [name]);
+
+   useEffect(() => {
+      const fetchProjectGallery = async () => {
+        try {
+          const apiUrl = process.env.REACT_APP_API_URL;
+          const response = await axios.get(`${apiUrl}/api/gallery/project/${name}`);
+          const ProjectGalleryData = response.data.Galleries;
+          console.log("gallery", ProjectGalleryData)
+          setProjectGallery(ProjectGalleryData);
+        } catch (error) {
+          console.error("Error fetching project gallery:", error);
+        }
+      };
+      fetchProjectGallery();
+    }, [name]);
 
   return (
     <Layout>
@@ -426,8 +441,6 @@ const {name} = useParams()
                 />
             </div>
             )}
-           
-
           </div>
   ))}
         </div>
@@ -435,17 +448,11 @@ const {name} = useParams()
       {/* Well connected to all that is important section close */}
 
       {/* Project Gallery section start */}
-      <section className='mb-5 pb-5 mt-5 pt-5' id='gallery'>
-        <div className='container'>
-          <div className='row'>
-            <div className='col-lg-12'>
-              <GradientLine />
-              <h3 className={styles.sectionTitle}>Project Gallery</h3>
-            </div>
+      
+
             <GalleryGrid />
-          </div>
-        </div>
-      </section>
+         
+      
       {/* Project Gallery section close */}
 
       {/* Key Features Section Start */}
