@@ -1,10 +1,10 @@
-const CounterResponseModel = require("../../models/contact/contactResponseModel");
+const CountersModel = require("../../models/home/countersModel");
 
 const createCounter = async (req, res) => {
   try {
     const { title, number } = req.body;
 
-    const newCounter = new CounterResponseModel({
+    const newCounter = new CountersModel({
       title,
       number,
     });
@@ -27,7 +27,7 @@ const updateCounter = async (req, res) => {
     const { _id } = req.params;
     const { title, number} = req.body;
 
-    const currentCounter = await CounterResponseModel.findById(_id);
+    const currentCounter = await CountersModel.findById(_id);
     if (!currentCounter) {
       return res
         .status(404)
@@ -37,7 +37,7 @@ const updateCounter = async (req, res) => {
     const updatedFields = { title, number };
 
     const updatedCounter =
-      await CounterResponseModel.findByIdAndUpdate(_id, updatedFields, {
+      await CountersModel.findByIdAndUpdate(_id, updatedFields, {
         new: true,
       });
 
@@ -54,7 +54,7 @@ const updateCounter = async (req, res) => {
 
 const getCounter = async (req, res) => {
   try {
-    const counter = await CounterResponseModel.findById(
+    const counter = await CountersModel.findById(
       req.params._id
     );
 
@@ -76,7 +76,7 @@ const getCounter = async (req, res) => {
 
 const getCounters = async (req, res) => {
   try {
-    const counters = await CounterResponseModel.find()
+    const counters = await CountersModel.find()
 
     if (counters.length === 0) {
       return res.status(400).json({
@@ -97,7 +97,7 @@ const getCounters = async (req, res) => {
 
 const deleteCounter = async (req, res) => {
   try {
-    const Counters = await CounterResponseModel.findOne({});
+    const Counters = await CountersModel.findOne({});
 
     if (Counters.length === 0) {
       return res.status(400).json({
@@ -106,7 +106,7 @@ const deleteCounter = async (req, res) => {
     }
 
     const deletedCounter =
-      await CounterResponseModel.findByIdAndDelete(
+      await CountersModel.findByIdAndDelete(
         Counters._id
       );
 

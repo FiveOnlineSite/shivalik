@@ -21,7 +21,19 @@ const BlogsSchema = new mongoose.Schema({
   sequence: {
     type: Number,
     required: true,
-  }
+  },
+  metaTitle: {
+    type: String,
+    required: true,
+  },
+  metaDescription: {
+    type: String,
+    required: true,
+  },
+  metaKeyword: {
+    type: String,
+    required: true,
+  },
 });
 
 const BlogsModel = mongoose.model("blogs", BlogsSchema);

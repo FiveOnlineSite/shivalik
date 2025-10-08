@@ -1,5 +1,18 @@
 const ProjectsModel = require("../../models/projects/projectsModel")
 const path = require("path")
+const AboutModel = require("../../models/projectDetails/aboutModel")
+const AmenitiesModel = require("../../models/projectDetails/amenitiesModel")
+const BanksModel = require("../../models/projectDetails/banksModel")
+const CurrentStatusModel = require("../../models/projectDetails/currentStatusModel")
+const DisclaimerModel = require("../../models/projectDetails/disclaimerModel")
+const FAQModel = require("../../models/projectDetails/faqModel")
+const FeaturesContentModel = require("../../models/projectDetails/featuresContentModel")
+const FeaturesModel = require("../../models/projectDetails/featuresModel")
+const GalleryModel = require("../../models/projectDetails/galleryModel")
+const HighlightsModel = require("../../models/projectDetails/highlightsModel")
+const LocationModel = require("../../models/projectDetails/locationModel")
+const SitePlanModel = require("../../models/projectDetails/sitePlanModel")
+const mongoose = require("mongoose")
 
 const slugify = (str = "") =>
   str
@@ -22,7 +35,10 @@ const createProject = async (req, res) => {
       completion_date,
       alt,
       banner_alt,
-      mobile_banner_alt
+      mobile_banner_alt,
+      metaTitle,
+      metaDescription,
+      metaKeyword
     } = req.body;
 
     // Validate category
@@ -108,7 +124,9 @@ const createProject = async (req, res) => {
       mobile_banner: mobileBanner.length ? mobileBanner : undefined,
       mobile_banner_alt: mobile_banner_alt || undefined,
       sequence: newSeq,
-
+      metaTitle,
+      metaDescription,
+      metaKeyword
     });
 
     await newProject.save();
@@ -126,147 +144,128 @@ const createProject = async (req, res) => {
 
 const updateProject = async (req, res) => {
   try {
-    const { title, project_category, location, excerpt, completion_date, banner_alt, alt, mobile_banner_alt, sequence } = req.body;
-    const projectId = req.params._id;
+    const { _id } = req.params;
+    const {
+      title,
+      location,
+      completion_date,
+      excerpt,
+      alt,
+      banner_alt,
+      mobile_banner_alt,
+      sequence,
+      project_category,
+      metaTitle,
+      metaDescription,
+      metaKeyword,
+      removeBanner,
+      removeMobileBanner,
+    } = req.body;
 
-    const existingProject = await ProjectsModel.findById(projectId);
-    if (!existingProject) {
+    const project = await ProjectsModel.findById(_id);
+    if (!project) {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    const category = project_category || existingProject.project_category;
+    // --- Update text/meta fields ---
+    project.title = title || project.title;
+    project.location = location || project.location;
+    project.completion_date = completion_date || project.completion_date;
+    project.excerpt = excerpt || project.excerpt;
+    project.alt = alt || project.alt;
+    project.banner_alt = banner_alt || project.banner_alt;
+    project.mobile_banner_alt = mobile_banner_alt || project.mobile_banner_alt;
+    project.project_category = project_category || project.project_category;
+    project.metaTitle = metaTitle || project.metaTitle;
+    project.metaDescription = metaDescription || project.metaDescription;
+    project.metaKeyword = metaKeyword || project.metaKeyword;
 
-    if (project_category && !["Shivalik", "Promoters"].includes(category)) {
-      return res.status(400).json({
-        message: "Give 'shivalik' or 'promoters' as category",
-      });
-    }
-
-    const updateData = {};
-
-    if (req.files?.image && req.files.image[0]) {
-      const file = req.files.image[0];
-      const ext = path.extname(file.originalname).toLowerCase();
-      if (![".jpg", ".jpeg", ".png", ".webp"].includes(ext)) {
-        return res.status(400).json({ message: `Unsupported file type: ${file.originalname}` });
-      }
-
-      updateData.image = [
+    // --- Handle main image upload ---
+    if (req.files?.image?.[0]) {
+      project.image = [
         {
-          filename: path.basename(file.key),
-          filepath: `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${file.key}`,
+          filename: req.files.image[0].filename,
+          filepath: req.files.image[0].location || req.files.image[0].path,
         },
       ];
     }
 
-    if (req.files?.banner && req.files.banner[0]) {
-      const file = req.files.banner[0];
-      const ext = path.extname(file.originalname).toLowerCase();
-      if (![".jpg", ".jpeg", ".png", ".webp"].includes(ext)) {
-        return res.status(400).json({ message: `Unsupported file type: ${file.originalname}` });
-      }
-
-      updateData.banner = [
+    // --- Handle banner upload or removal ---
+    if (req.files?.banner?.[0]) {
+      project.banner = [
         {
-          filename: path.basename(file.key),
-          filepath: `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${file.key}`,
+          filename: req.files.banner[0].filename,
+          filepath: req.files.banner[0].location || req.files.banner[0].path,
         },
       ];
-
-      if (!req.files?.mobile_banner || !req.files.mobile_banner[0]) {
-    return res.status(400).json({
-      message: "You must upload a mobile banner when updating the banner."
-    });
-     }
+    } else if (removeBanner === "true") {
+      project.banner = [];
+      project.banner_alt = "";
     }
 
-    if (req.files?.mobile_banner && req.files.mobile_banner[0]) {
-      const file = req.files.mobile_banner[0];
-      const ext = path.extname(file.originalname).toLowerCase();
-      if (![".jpg", ".jpeg", ".png", ".webp"].includes(ext)) {
-        return res.status(400).json({ message: `Unsupported file type: ${file.originalname}` });
-      }
-
-      updateData.mobile_banner = [
+    // --- Handle mobile banner upload or removal ---
+    if (req.files?.mobile_banner?.[0]) {
+      project.mobile_banner = [
         {
-          filename: path.basename(file.key),
-          filepath: `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${file.key}`,
+          filename: req.files.mobile_banner[0].filename,
+          filepath: req.files.mobile_banner[0].location || req.files.mobile_banner[0].path,
         },
       ];
+    } else if (removeMobileBanner === "true") {
+      project.mobile_banner = [];
+      project.mobile_banner_alt = "";
     }
 
-    let newSeq;
-    
-        if (sequence !== undefined && sequence !== "") {
-          newSeq = parseInt(sequence, 10);
-          if (isNaN(newSeq) || newSeq < 1) {
-            return res.status(400).json({ message: "Sequence must be a positive number." });
-          }
-    
-          const docs = await ProjectsModel.find({ project_category: category }).sort({ sequence: 1 });
-          const allowedMax = category === existingProject.project_category 
-            ? docs.length 
-            : docs.length + 1;
+    // --- Handle sequence updates ---
+    const oldSeq = project.sequence; // store current sequence
+    const newSeq = sequence !== undefined && sequence !== "" ? parseInt(sequence, 10) : oldSeq;
+    const category = project_category || project.project_category;
 
-          if (newSeq > allowedMax) {
-            return res.status(400).json({
-              message: `Invalid sequence. Sequence cannot be greater than ${allowedMax}.`
-            });
-          }
-    
-          const ops = [];
-          docs.forEach((doc) => {
-            if (doc._id.equals(existingProject._id)) return;
-            if (doc.sequence >= newSeq && doc.sequence < existingProject.sequence) {
-              ops.push({ updateOne: { filter: { _id: doc._id }, update: { $inc: { sequence: 1 } } } });
-            }
-            if (doc.sequence <= newSeq && doc.sequence > existingProject.sequence) {
-              ops.push({ updateOne: { filter: { _id: doc._id }, update: { $inc: { sequence: -1 } } } });
-            }
-          });
-          if (ops.length) await ProjectsModel.bulkWrite(ops);
-        } else {
-          if (category !== existingProject.project_category) {
-            
-            await ProjectsModel.updateMany(
-              {
-                project_category: existingProject.project_category,
-                sequence: { $gt: existingProject.sequence },
-              },
-              { $inc: { sequence: -1 } }
-            );
-            const count = await ProjectsModel.countDocuments({ project_category: category });
-            newSeq = count + 1;
-          } else {
-            newSeq = existingProject.sequence;
-          }
+    if (isNaN(newSeq) || newSeq < 1) {
+      return res.status(400).json({ message: "Sequence must be a positive number." });
+    }
+
+    if (newSeq !== oldSeq || category !== project.project_category) {
+      // If moving within same category
+      if (category === project.project_category) {
+        if (newSeq < oldSeq) {
+          // Shift down sequences between newSeq and oldSeq-1
+          await ProjectsModel.updateMany(
+            { project_category: category, sequence: { $gte: newSeq, $lt: oldSeq } },
+            { $inc: { sequence: 1 } }
+          );
+        } else if (newSeq > oldSeq) {
+          // Shift up sequences between oldSeq+1 and newSeq
+          await ProjectsModel.updateMany(
+            { project_category: category, sequence: { $gt: oldSeq, $lte: newSeq } },
+            { $inc: { sequence: -1 } }
+          );
         }
-    
-        existingProject.sequence = newSeq ?? existingProject.sequence;
-        existingProject.project_category = category;
+      } else {
+        // Moving to different category
+        // Decrement sequence in old category
+        await ProjectsModel.updateMany(
+          { project_category: project.project_category, sequence: { $gt: oldSeq } },
+          { $inc: { sequence: -1 } }
+        );
 
-    if (alt !== undefined) updateData.alt = alt;
-    if (completion_date !== undefined) updateData.completion_date = completion_date;
-    if (title !== undefined) updateData.title = title;
-    if (location !== undefined) updateData.location = location;
-    if (excerpt !== undefined) updateData.excerpt = excerpt;
-    if (banner_alt !== undefined) updateData.banner_alt = banner_alt;
-    if (mobile_banner_alt !== undefined) updateData.mobile_banner_alt = mobile_banner_alt;
-    if (project_category !== undefined) updateData.project_category = project_category;
+        // Set new sequence as last in new category
+        const count = await ProjectsModel.countDocuments({ project_category: category });
+        project.sequence = count + 1;
+      }
 
-    Object.assign(existingProject, updateData);
+      project.sequence = newSeq;
+      project.project_category = category;
+    }
 
-       const updatedProject = await existingProject.save();
+    // --- Save project ---
+    await project.save();
 
+    res.status(200).json({ message: "Project updated successfully", project });
 
-    return res.status(200).json({
-      message: "Project updated successfully",
-      updatedProject,
-    });
   } catch (error) {
-    return res.status(500).json({
-      message: `Error updating project: ${error.message}`,
-    });
+    console.error("Error updating project:", error);
+    res.status(500).json({ message: "Failed to update project", error: error.message });
   }
 };
 
@@ -284,8 +283,7 @@ const getProjectWithBanners = async (req, res) => {
   }
 };
 
-
-const getBannersByTitle = async (req, res) => {
+const getBannersByProject = async (req, res) => {
   try {
     const paramSlug = slugify(req.params.name || "");
 
@@ -316,6 +314,7 @@ const getBannersByTitle = async (req, res) => {
     res.status(500).json({ message: `Server error ${err.message}` });
   }
 };
+
 
 const getProject = async (req, res) => {
   try {
@@ -362,19 +361,76 @@ const getProjects = async (req, res) => {
 
 const deleteProject = async (req, res) => {
   try {
-    const ProjectExists = await ProjectsModel.findById({
-      _id: req.params._id,
-    });
 
-    if (ProjectExists.length === 0) {
+     const { _id } = req.params;
+    const objectId = new mongoose.Types.ObjectId(_id);
+
+    const ProjectExists = await ProjectsModel.findById(objectId);
+    if (!ProjectExists) {
       return res.status(400).json({
-        message: "No Projects are created. Kindly create one.",
+        message: "No project found to delete. Kindly create one.",
       });
     }
 
-    const deletedProject = await ProjectsModel.findOneAndDelete({
-      _id: req.params._id,
-    });
+const deletedProject = await ProjectsModel.findByIdAndDelete(objectId);
+    if (!deletedProject) {
+      return res.status(400).json({ message: "Project not found or already deleted." });
+    }
+
+    // const deletedAbout = await AboutModel.deleteMany({
+    //   project: objectId,
+    // });
+
+    // const deletedAmenities = await AmenitiesModel.deleteMany({
+    //   project: objectId,
+    // });
+
+    //  const deletedBanks = await BanksModel.deleteMany({
+    //   project: objectId,
+    // });
+
+    // const deletedCurrentStatus = await CurrentStatusModel.deleteMany({
+    //   project: objectId,
+    // });
+
+    // const deletedDisclaimer = await DisclaimerModel.deleteMany({
+    //   project: objectId,
+    // });
+
+    // const deletedFAQ = await FAQModel.deleteMany({
+    //   project: objectId,
+    // });
+
+    // const deletedFeaturesContent = await FeaturesContentModel.deleteMany({
+    //   project: objectId,
+    // });
+
+    // const deletedFeatures = await FeaturesModel.deleteMany({
+    //   project: objectId,
+    // });
+
+    // const deletedGallery = await GalleryModel.deleteMany({
+    //   project: objectId,
+    // });
+
+    // const deletedHighlights = await HighlightsModel.deleteMany({
+    //   project: objectId,
+    // });
+
+    // const deletedLocation = await LocationModel.deleteMany({
+    //   project: objectId,
+    // });
+
+    // const deletedSitePlan = await SitePlanModel.deleteMany({
+    //   project: objectId,
+    // });
+
+    await ProjectsModel.updateMany(
+      { sequence: { $gt: deletedProject.sequence } },
+      { $inc: { sequence: -1 } }
+    );
+
+    const updatedList = await ProjectsModel.find().sort({ sequence: 1 }).lean();
 
     return res.status(200).json({
       message: "Project deleted successfully.",
@@ -392,7 +448,7 @@ module.exports = {
   createProject,
   updateProject,
   getProjectWithBanners,
-  getBannersByTitle,
+  getBannersByProject,
   getProject,
   getProjects,
   deleteProject

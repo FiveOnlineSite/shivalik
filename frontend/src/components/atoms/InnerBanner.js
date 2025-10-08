@@ -36,7 +36,11 @@ const InnerBanner = ({ page, gradient = 'white' }) => {
       
         <div className='inner-banner row'>
           {banner.image?.[0]?.filepath && (
-        <img src={banner.image?.[0]?.filepath} width='100%' alt={banner.alt} />
+        <img className="d-lg-block d-none" src={banner.image?.[0]?.filepath} width='100%' alt={banner.alt} />
+
+          )}
+          {banner.mobile_image?.[0]?.filepath && (
+        <img className="d-lg-none d-block" src={banner.mobile_image?.[0]?.filepath} width='100%' alt={banner.mobile_alt} />
 
           )}
         <div className={`${styles.innerPageTitle}`}>

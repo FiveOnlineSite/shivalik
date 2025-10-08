@@ -65,6 +65,9 @@ app.use("/api/bank", Route.banksRoute);
 app.use("/api/disclaimer", Route.disclaimerRoute);
 app.use("/api/faq", Route.faqRoute);
 app.use("/api/current-status", Route.currentStatusRoute);
+app.use("/api/location", Route.locationRoute);
+app.use("/api/meta-data", Route.metaDataRoute);
+app.use("/api/project-enquiry", Route.projectEnquiryRoute);
 
 connectDb();
 

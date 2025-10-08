@@ -98,6 +98,14 @@ import EditDisclaimer from './pages/admin/ProjectDetails/Disclaimers/EditDisclai
 import Status from './pages/admin/ProjectDetails/Status/Status';
 import AddStatus from './pages/admin/ProjectDetails/Status/AddStatus';
 import EditStatus from './pages/admin/ProjectDetails/Status/EditStatus';
+import LocationInfo from './pages/admin/ProjectDetails/LocationInfo/LocationInfo';
+import AddLocationInfo from './pages/admin/ProjectDetails/LocationInfo/AddLocationInfo';
+import EditLocationInfo from './pages/admin/ProjectDetails/LocationInfo/EditLocationInfo';
+import MetaData from './pages/admin/MetaData/MetaData';
+import AddMetaData from './pages/admin/MetaData/AddMetaData';
+import EditMetaData from './pages/admin/MetaData/EditMetaData';
+import ProjectEnquiry from './pages/admin/Projects/ProjectEnquiry';
+
 
 const App = () => {
   return (
@@ -231,6 +239,16 @@ const App = () => {
           <Route path="current-status" element={<Status />} />
           <Route path="add/current-status" element={<AddStatus />} />
           <Route path="edit/current-status/:id" element={<EditStatus />} />
+
+          <Route path="location" element={<LocationInfo />} />
+          <Route path="add/location" element={<AddLocationInfo />} />
+          <Route path="edit/location/:id" element={<EditLocationInfo />} />
+
+          <Route path="meta-data" element={<MetaData />} />
+          <Route path="add/meta-data" element={<AddMetaData />} />
+          <Route path="edit/meta-data/:id" element={<EditMetaData />} />
+
+          <Route path="project-enquiries" element={<ProjectEnquiry />} />
 
           </Route>
          </Routes>

@@ -105,13 +105,8 @@ const ProjectsTabSection = () => {
         </div>
         <div className='col-lg-6'>
             <div className={styles.projectDetails}>
-            <span className={`${styles.projectTag} mb-3`}>Completion by {new Date(
-                            shivalikHero.completion_date
-                          ).toLocaleDateString("en-US", {
-                            month: "long",
-                            year: "numeric",
-                          })
-                          }
+            <span className={`${styles.projectTag} mb-3`}>
+                            {shivalikHero.completion_date}
             </span>
             <h3 className={styles.sectionTitle}>{shivalikHero.title}</h3>
             <h5><strong>Location</strong></h5>

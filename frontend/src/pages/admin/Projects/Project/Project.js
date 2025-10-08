@@ -16,7 +16,6 @@ const Project = () => {
         const apiUrl = process.env.REACT_APP_API_URL;
         const response = await axios.get(`${apiUrl}/api/project`);
         const ProjectData = response.data.Projects;
-
         setProject(ProjectData);
         console.log("Fetched name:", ProjectData.title);
      } catch (error) {
@@ -94,7 +93,6 @@ const Project = () => {
                      <th className="text-center">Mobile Banner</th>
                      <th className="text-center">Sequence</th>
 
-                    
                     <th className="text-center">Edit</th>
                   </tr>
                 </thead>
@@ -119,13 +117,9 @@ const Project = () => {
                           )}
                         </td>
                         <td className="text-center"> {Project.alt}</td>
-                        <td className="text-center">{new Date(
-                            Project.completion_date
-                          ).toLocaleDateString("en-US", {
-                            month: "long",
-                            year: "numeric",
-                          })
-                          }</td>
+                        <td className="text-center">
+                            {Project.completion_date}
+                          </td>
                         <td className="text-center"> {Project.location}</td>
                         
                         <td className="text-center">
@@ -163,16 +157,45 @@ const Project = () => {
                             <i className="las la-pencil-alt"></i>
                           </Link>
                         </td>
-                        <td className="text-center">
-                          <button
-                            className="delete-btn"
-                            onClick={() =>
-                              handleDeleteProject(Project._id, Project.title)
-                            }
-                          >
-                            <i className="las la-trash"></i>{" "}
-                          </button>
-                        </td>
+                       <td className="text-center">
+  <button
+    className="delete-btn"
+    onClick={() => {
+      // disable delete if project has banner or mobile banner
+      if (
+        (Project.banner?.length && Project.banner[0]?.filepath) ||
+        (Project.mobile_banner?.length && Project.mobile_banner[0]?.filepath)
+      ) {
+        toast.warn("You cannot delete this project because it has a banner or mobile banner.");
+        return;
+      }
+      handleDeleteProject(Project._id, Project.title);
+    }}
+    style={{
+      cursor:
+        (Project.banner?.length && Project.banner[0]?.filepath) ||
+        (Project.mobile_banner?.length && Project.mobile_banner[0]?.filepath)
+          ? "not-allowed"
+          : "pointer",
+      opacity:
+        (Project.banner?.length && Project.banner[0]?.filepath) ||
+        (Project.mobile_banner?.length && Project.mobile_banner[0]?.filepath)
+          ? 0.9
+          : 1,
+    }}
+    disabled={
+      (Project.banner?.length && Project.banner[0]?.filepath) ||
+      (Project.mobile_banner?.length && Project.mobile_banner[0]?.filepath)
+    }
+    title={
+      (Project.banner?.length && Project.banner[0]?.filepath) ||
+      (Project.mobile_banner?.length && Project.mobile_banner[0]?.filepath) ?
+      "Inner page exist so cannot delete": ""}
+  >
+    <i className="las la-trash"></i>
+  </button>
+</td>
+
                       </tr>
                     ))}
                 </tbody>

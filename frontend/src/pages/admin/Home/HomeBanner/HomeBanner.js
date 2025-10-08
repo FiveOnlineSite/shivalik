@@ -90,6 +90,8 @@ const HomeBanner = () => {
                     <th className="text-center">Description</th>
                     <th className="text-center">Link</th>
 
+                    <th className="text-center">Sequence</th>
+
                     <th className="text-center">Edit</th>
                   </tr>
                 </thead>
@@ -129,6 +131,7 @@ const HomeBanner = () => {
                         <td className="text-center">{banner.title}</td>
                         <td className="text-center">{banner.description}</td>
                         <td className="text-center">{banner.link}</td>
+                        <td className="text-center">{banner.sequence}</td>
 
                         <td className="text-center">
                           <Link

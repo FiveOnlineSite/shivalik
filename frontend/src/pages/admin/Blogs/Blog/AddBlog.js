@@ -13,7 +13,9 @@ const AddBlog = () => {
   const [image, setImage] = useState({ file: "" });
   const [alt, setAlt] = useState("");
   const [content, setContent] = useState("");
-
+  const [metaTitle, setMetaTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
+  const [metaKeyword, setMetaKeyword] = useState("");
 
   const [validationError, setValidationError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,6 +57,10 @@ const AddBlog = () => {
 
       formData.append("alt", alt);
       formData.append("content", content);
+      formData.append("metaTitle", metaTitle);
+      formData.append("metaDescription", metaDescription);
+      formData.append("metaKeyword", metaKeyword);
+
 
       if (image.file) {
         formData.append("image", image.file);
@@ -152,7 +158,7 @@ const AddBlog = () => {
               </div>
             </div>
 
-             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+             <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                           <div className="theme-form">
                             <label>Content</label>
                             <CKEditor
@@ -176,6 +182,44 @@ const AddBlog = () => {
                           </div>
                         </div>
 
+                                                                                                           <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Meta Title</label>
+                <input
+                  type="text"
+                  name="metaTitle"
+                  value={metaTitle}
+                  required
+                  onChange={(e) => setMetaTitle(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Meta Description</label>
+                <input
+                  type="text"
+                  name="metaDescription"
+                  value={metaDescription}
+                  required
+                  onChange={(e) => setMetaDescription(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Meta Keyword</label>
+                <input
+                  type="text"
+                  name="metaKeyword"
+                  value={metaKeyword}
+                  required
+                  onChange={(e) => setMetaKeyword(e.target.value)}
+                />
+              </div>
+            </div>
 
             {errorMessage && (
               <div className="text-danger col-12 mt-2">{errorMessage}</div>

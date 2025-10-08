@@ -10,7 +10,7 @@ const groupByCategory = (array = []) => {
 
     if (!acc[catId]) {
       acc[catId] = {
-        category: item.faq_category, // keep full category object
+        category: item.faq_category,
         items: [],
       };
     }
@@ -20,11 +20,16 @@ const groupByCategory = (array = []) => {
 };
 
 const FaqLoanSection = () => {
-  const [activeId, setActiveId] = useState(1);
+  const [activeIds, setActiveIds] = useState(new Set());
   const [FAQContent, setFAQContent] = useState([]);
 
   const handleToggle = (id) => {
-    setActiveId((prev) => (prev === id ? '' : id));
+    setActiveIds((prev) => {
+      const updated = new Set(prev);
+      if (updated.has(id)) updated.delete(id);
+      else updated.add(id);
+      return updated;
+    });
   };
 
   useEffect(() => {
@@ -37,7 +42,21 @@ const FaqLoanSection = () => {
           url: 'faq-content',
         });
 
-        setFAQContent(response.data.Contents);
+        const contents = response.data.Contents || [];
+        setFAQContent(contents);
+
+        if (contents.length > 0) {
+          // ✅ Group by category
+          const grouped = groupByCategory(contents);
+
+          // ✅ Collect first FAQ from each category
+          const firstFaqIds = Object.values(grouped).map(
+            ({ items }) => items[0]?._id
+          );
+
+          // ✅ Set them as initially active
+          setActiveIds(new Set(firstFaqIds.filter(Boolean)));
+        }
       } catch (error) {
         console.error('Error fetching faq content:', error);
       }
@@ -55,11 +74,11 @@ const FaqLoanSection = () => {
           <h2 className="accordion-header" id={`heading-${faq._id}`}>
             <button
               className={`accordion-button ${
-                activeId === faq._id ? '' : 'collapsed'
+                activeIds.has(faq._id) ? '' : 'collapsed'
               }`}
               type="button"
               onClick={() => handleToggle(faq._id)}
-              aria-expanded={activeId === faq._id}
+              aria-expanded={activeIds.has(faq._id)}
               aria-controls={`collapse-${faq._id}`}
             >
               {faq.question}
@@ -68,7 +87,7 @@ const FaqLoanSection = () => {
           <div
             id={`collapse-${faq._id}`}
             className={`accordion-collapse collapse ${
-              activeId === faq._id ? 'show' : ''
+              activeIds.has(faq._id) ? 'show' : ''
             }`}
             aria-labelledby={`heading-${faq._id}`}
           >

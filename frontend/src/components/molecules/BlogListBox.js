@@ -28,8 +28,8 @@ const BlogListBox = () => {
   return (
     <>
         {Blogs && Blogs.map((blog) => (
-          <div className='col-lg-4' key={blog._id}>
-             <div className={`${homestyles.blogPack} position-relative`}>
+          <div className='col-xl-4 col-lg-6 col-md-6 mb-4' key={blog._id}>
+             <div className={`${styles.blogsmPack} position-relative`}>
            {blog.image[0].filepath && (
          <div className={homestyles.blogImg}>
            <img src={blog.image[0].filepath} alt={blog.alt} width="100%" />
@@ -37,7 +37,7 @@ const BlogListBox = () => {
            )}
          
          <div className={homestyles.blogLink}>
-           <a className={`${styles.commonBlogButton}`} href={`/blog/${blog.title
+           <a className={`${styles.commonBlogSmBtn}`} href={`/blog/${blog.title
                  .toLowerCase()
                   .trim()
                   .replace(/&/g, "and")

@@ -420,7 +420,7 @@ main {
 }
 .theme-form button {
   font-family: var(--primary-font);
-  color: var(--black-color);
+  color: var(--white-color);
   border-radius: 4px;
   background: var(--theme-color-prime);
   font-size: 15px;
@@ -654,7 +654,7 @@ embed {
 
 .delete-button-div .delete-btn {
   position: absolute;
-  bottom: 10%;
+  bottom: 0%;
   right: 5%;
   background-color: var(--red-color);
   color: var(--white-color);
@@ -663,7 +663,7 @@ embed {
 
 .delete-button-div .remove-btn {
   position: absolute;
-  bottom: 10%;
+  bottom: 0%;
   right: 5%;
   background-color: var(--text-color);
   color: var(--white-color);
@@ -711,6 +711,10 @@ select {
 .basic-placeholder {
   color: #888;
 }
+
+table tbody td img{
+    object-fit: contain !important;
+  }
 
 @media only screen and (max-width: 1200px) {
   .sidebar {
@@ -837,6 +841,8 @@ select {
     padding: 6px;
     font-size: 15px;
   }
+
+  
 
   .delete-button-div .delete-btn,
   .delete-button-div .remove-btn {

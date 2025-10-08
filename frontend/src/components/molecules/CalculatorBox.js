@@ -37,7 +37,7 @@ const CalculatorBox = () => {
     const value = parseFloat(propertyValue);
     if (!value || value <= 0 || !gender) return 0;
 
-    const rate = gender === 'male' ? 0.06 : 0.05;
+    const rate = gender === 'male' ? `${stampDuty.male}`/100 : `${stampDuty.female}`/100;
 
     return (value * rate).toLocaleString('en-IN', {
       style: 'currency',
@@ -63,7 +63,7 @@ const CalculatorBox = () => {
       fetchStampDuty();
     }, []);
 
-  const getRate = () => (gender === 'male' ? `${stampDuty.male}` : `${stampDuty.female}`);
+  const getRate = () => (gender === 'male' ? `${stampDuty.male}%` : `${stampDuty.female}%`);
 
 
   return (
@@ -77,7 +77,7 @@ const CalculatorBox = () => {
             <div className='col-lg-4'>
               <div className='mb-3'>
                 <label htmlFor="formState" className="form-label stp-txt">State</label>
-                <select className="form-select form-select-lg" disabled>
+                <select className="form-select form-select-lg calculator-select" disabled>
                   <option selected>{state}</option>
                 </select>
               </div>
@@ -109,7 +109,7 @@ const CalculatorBox = () => {
               <div className='mb-3'>
                 <label className="form-label stp-txt">Gender</label>
                 <select
-                  className="form-select dis-btn"
+                  className="form-select dis-btn calculator-select"
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
                 >

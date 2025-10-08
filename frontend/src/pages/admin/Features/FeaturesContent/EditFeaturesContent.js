@@ -206,7 +206,7 @@ setProjects(filtered);
                 <input
                   type="file"
                   name="image"
-                  accept=".webp, .png, .jpg, .jpeg"
+                  accept=".webp, .png, .jpg, .jpeg, .svg"
                   onChange={(e) => {
                     const file = e.target.files[0];
                     if (!file) return;

@@ -69,7 +69,7 @@ const Status = () => {
     <AdminLayout>
       <div className="pages-headers ">
         <h2>
-          Status
+          Current Status
           <NavLink to="/admin/add/current-status" className="theme-cta">
             <i className="las la-plus-circle"></i>
             Add Status

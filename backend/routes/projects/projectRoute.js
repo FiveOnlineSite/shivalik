@@ -31,7 +31,7 @@ route.patch(
 
 route.get("/banners", ProjectController.getProjectWithBanners);
 
-route.get("/title/:name", ProjectController.getBannersByTitle);
+route.get("/project/:name", ProjectController.getBannersByProject);
 
 route.get("/:_id", ProjectController.getProject);
 

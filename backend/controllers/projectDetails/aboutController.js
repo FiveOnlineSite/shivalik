@@ -94,21 +94,24 @@ const updateAbout = async (req, res) => {
     const about = await AboutModel.findById(aboutId);
     if (!about) return res.status(404).json({ message: "About not found" });
 
-    // --- Handle name duplicate check (same as before)
+    // --- Check for duplicate About under same project
     if (project) {
       const duplicate = await AboutModel.findOne({
-        project: project,   // check same project
-        _id: { $ne: aboutId } // exclude the current about
+        project: project,
+        _id: { $ne: aboutId },
       }).populate("project", "title");
 
       if (duplicate) {
         return res.status(400).json({
-          message: `About content for project "${duplicate.project.title}" already exists.`
+          message: `About content for project "${duplicate.project.title}" already exists.`,
         });
       }
     }
-    let updateData = {};
 
+    // --- Build update object dynamically
+    const updateData = {};
+
+    // 🖼️ Image upload
     if (req.files?.image?.[0]) {
       const file = req.files.image[0];
       const extname = path.extname(file.originalname).toLowerCase();
@@ -118,56 +121,60 @@ const updateAbout = async (req, res) => {
 
       updateData.image = [
         {
-                         filename: path.basename(file.key), // "1756968423495-2.jpg"
-                         filepath: `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${file.key}` // keep "images/banners/..."
-                        }
+          filename: path.basename(file.key),
+          filepath: `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${file.key}`,
+        },
       ];
     }
 
+    // 📄 Brochure upload
     if (req.files?.brochure?.[0]) {
       const file = req.files.brochure[0];
       const extname = path.extname(file.originalname).toLowerCase();
-      if (![".pdf"].includes(extname)) {
+      if (extname !== ".pdf") {
         return res.status(400).json({ message: "Unsupported brochure type." });
       }
+
       updateData.brochure = [
         {
-                         filename: path.basename(file.key), // "1756968423495-2.jpg"
-                         filepath: `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${file.key}` // keep "images/banners/..."
-                        }
+          filename: path.basename(file.key),
+          filepath: `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${file.key}`,
+        },
       ];
     }
 
+    // 📝 Basic fields
+    if (alt !== undefined) updateData.alt = alt;
+    if (description !== undefined) updateData.description = description;
+    if (contact !== undefined) updateData.contact = contact;
 
-    if (alt !== undefined) about.alt = alt;
-    // if (title !== undefined) about.title = title;
-    if (description !== undefined) about.description = description;
-    if (contact !== undefined) about.contact = contact;
-
-
+    // 🏗️ Validate project
     if (project) {
       if (!mongoose.Types.ObjectId.isValid(project)) {
         return res.status(400).json({ message: "Invalid project ID" });
       }
 
-      const projectExist = await ProjectModel.findById(
-        project
-      );
+      const projectExist = await ProjectModel.findById(project);
       if (!projectExist) {
         return res.status(400).json({ message: "Project not found" });
       }
 
-      about.project = project;
+      updateData.project = project;
     }
 
+    // ✅ Apply all updates
+    Object.assign(about, updateData);
     await about.save();
 
     res.status(200).json({
-      message: "project about updated successfully",
+      message: "About updated successfully",
       About: about,
     });
   } catch (error) {
-    res.status(500).json({ message: `Error updating project about: ${error.message}` });
+    console.error("Error updating project about:", error);
+    res
+      .status(500)
+      .json({ message: `Error updating project about: ${error.message}` });
   }
 };
 

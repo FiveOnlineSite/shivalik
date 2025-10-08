@@ -29,7 +29,12 @@ const EditProject = () => {
          },
          banner_alt: "",
          mobile_banner_alt: "",
-         sequence: ""
+         sequence: "",
+         metaTitle: "",
+         metaDescription: "",
+         metaKeyword: "",
+          removeBanner: false,
+          removeMobileBanner: false,
        });
 
   const navigate = useNavigate();
@@ -46,10 +51,10 @@ const EditProject = () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
         const response = await axios.get(`${apiUrl}/api/project/${id}`);
-        const convertDateForInput = (dateStr) => {
-        const [mm, dd, yyyy] = dateStr.split("-");
-        return `${yyyy}-${mm}-${dd}`;
-      };
+        // const convertDateForInput = (dateStr) => {
+        // const [mm, dd, yyyy] = dateStr.split("-");
+        // return `${yyyy}-${mm}-${dd}`;
+      // };
         const projectData = response.data.Project;
         setProject(projectData);
 
@@ -69,9 +74,7 @@ const EditProject = () => {
           excerpt: projectData.excerpt,
 
           project_category: projectData.project_category || "",
-          completion_date:  projectData.completion_date
-            ? convertDateForInput(projectData.completion_date)
-            : "",
+          completion_date:  projectData.completion_date || "",
           banner: {
             file: projectData.banner?.[0]?.filename || "",
             filepath: projectData.banner?.[0]?.filepath || "",
@@ -80,8 +83,10 @@ const EditProject = () => {
             file: projectData.mobile_banner?.[0]?.filename || "",
             filepath: projectData.mobile_banner?.[0]?.filepath || "",
           },
-          sequence: projectData.sequence
-
+          sequence: projectData.sequence,
+          metaTitle: projectData.metaTitle || "",
+          metaDescription: projectData.metaDescription || "",
+          metaKeyword: projectData.metaKeyword || "",
 
         });
 
@@ -116,6 +121,7 @@ const EditProject = () => {
             file: files[0],
             filepath: URL.createObjectURL(files[0]),
           },
+          removeBanner: false,
         }));
       } else if (name === "mobile_banner") {
         setFormData((prevFormData) => ({
@@ -123,7 +129,9 @@ const EditProject = () => {
           mobile_banner: {
             file: files[0],
             filepath: URL.createObjectURL(files[0]),
+            
           },
+          removeBanner: false,
         }));
       }
     } else {
@@ -137,10 +145,10 @@ const EditProject = () => {
  const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const convertDateToDisplayFormat = (isoDate) => { 
-    const [yyyy, mm, dd] = isoDate.split("-"); 
-    return `${mm}-${dd}-${yyyy}`; 
-  };
+  // const convertDateToDisplayFormat = (isoDate) => { 
+  //   const [yyyy, mm, dd] = isoDate.split("-"); 
+  //   return `${mm}-${dd}-${yyyy}`; 
+  // };
 
   if (isSubmitting) return;
 
@@ -154,6 +162,34 @@ const EditProject = () => {
     return;
   }
 
+  const hasAnyField =
+  formData.banner.file || formData.banner.filepath ||
+  formData.banner_alt ||
+  formData.mobile_banner.file || formData.mobile_banner.filepath ||
+  formData.mobile_banner_alt ||
+  formData.metaTitle ||
+  formData.metaDescription ||
+  formData.metaKeyword;
+
+const hasAllFields =
+  (formData.banner.file || formData.banner.filepath) &&
+  formData.banner_alt &&
+  (formData.mobile_banner.file || formData.mobile_banner.filepath) &&
+  formData.mobile_banner_alt &&
+  formData.metaTitle &&
+  formData.metaDescription &&
+  formData.metaKeyword;
+
+if (hasAnyField && !hasAllFields) {
+  setValidationError(
+    "If any of Banner or Meta fields is filled, please fill all 7 fields: banner, banner alt, mobile banner, mobile banner alt, meta title, meta description, meta keyword."
+  );
+  toast.error(
+    "Please fill all 7 fields (banner, banner alt, mobile banner, mobile banner alt, meta title, meta description, meta keyword) or leave all empty."
+  );
+  return;
+}
+
   setErrorMessage("");
   setValidationError("");
   setIsSubmitting(true);
@@ -166,13 +202,16 @@ const EditProject = () => {
     // Text fields
     formDataToSend.append("title", formData.title || "");
     formDataToSend.append("location", formData.location || "");
-    formDataToSend.append("completion_date", formData.completion_date ? convertDateToDisplayFormat(formData.completion_date) : "");
+    formDataToSend.append("completion_date", formData.completion_date || "");
     formDataToSend.append("excerpt", formData.excerpt || "");
     formDataToSend.append("alt", formData.alt || "");
     formDataToSend.append("banner_alt", formData.banner_alt || "");
     formDataToSend.append("mobile_banner_alt", formData.mobile_banner_alt || "");
     formDataToSend.append("sequence", formData.sequence || "");
     formDataToSend.append("project_category", formData.project_category || "");
+    formDataToSend.append("metaTitle", formData.metaTitle || "");
+    formDataToSend.append("metaDescription", formData.metaDescription || "");
+    formDataToSend.append("metaKeyword", formData.metaKeyword || "");
 
     // Files — only append if it’s a real File object, not a string
     if (formData.image.file instanceof File) {
@@ -184,6 +223,9 @@ const EditProject = () => {
     if (formData.mobile_banner.file instanceof File) {
       formDataToSend.append("mobile_banner", formData.mobile_banner.file);
     }
+
+      formDataToSend.append("removeBanner", formData.removeBanner || false);
+formDataToSend.append("removeMobileBanner", formData.removeMobileBanner || false);
 
     const response = await axios.patch(`${apiUrl}/api/project/${id}`, formDataToSend, {
       headers: {
@@ -224,6 +266,7 @@ const EditProject = () => {
                 <select
                   name="project_category"
                   required
+                  disabled
                   value={formData.project_category}
                   onChange={handleChange}
                   className="form-control"
@@ -349,18 +392,19 @@ const EditProject = () => {
               <div className="theme-form">
                 <label>Completion Date</label>
                 <input
-                  type="date"
+                  type="text"
                   name="completion_date"
                   required
-                  max={new Date().toISOString().split("T")[0]} // This restricts future dates
+                  // max={new Date().toISOString().split("T")[0]} // This restricts future dates
                   value={formData.completion_date}
                   onChange={handleChange}
                 />
               </div>
             </div>
 
-           {formData.project_category === "Shivalik" && (
-            <>
+            
+
+           <>
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <div className="theme-form">
                 <label>Banner</label>
@@ -393,14 +437,43 @@ const EditProject = () => {
                   }}
                 />
                  {formData.banner.filepath && (
-                  <img
-                    className="form-profile"
-                    src={formData.banner.filepath}
-                    alt={formData.banner_alt}
-                    
-                    loading="lazy"
-                  />
-                )}
+  <div className="position-relative d-inline-block" style={{ display: "inline-block" }}>
+    <img
+      src={formData.banner.filepath}
+      alt={formData.banner_alt || "Banner"}
+      className="form-profile"
+      loading="lazy"
+    />
+    <button
+      type="button"
+      onClick={() =>
+        setFormData((prev) => ({
+          ...prev,
+          banner: { file: "", filepath: "" },
+          removeBanner: true,
+        }))
+      }
+      className="btn btn-danger btn-sm position-absolute"
+      style={{
+        top: "0px",
+        right: "-2px",
+        borderRadius: "50%",
+        width: "18px",
+        height: "18px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "0",
+        fontWeight: "bold",
+        zIndex: 10,
+        backgroundColor: "red"
+      }}
+    >
+      ×
+    </button>
+  </div>
+)}
+
               </div>
             </div>
 
@@ -448,14 +521,42 @@ const EditProject = () => {
                   }}
                 />
                  {formData.mobile_banner.filepath && (
-                  <img
-                    className="form-profile"
-                    src={formData.mobile_banner.filepath}
-                    alt={formData.mobile_banner_alt}
-                    
-                    loading="lazy"
-                  />
-                )}
+  <div className="position-relative d-inline-block" style={{ display: "inline-block" }}>
+    <img
+      src={formData.mobile_banner.filepath}
+      alt={formData.mobile_banner_alt || "Mobile Banner"}
+      className="form-profile"
+      loading="lazy"
+    />
+    <button
+      type="button"
+      onClick={() =>
+        setFormData((prev) => ({
+          ...prev,
+          mobile_banner: { file: "", filepath: "" },
+          removeMobileBanner: true
+        }))
+      }
+      className="btn btn-danger btn-sm position-absolute"
+      style={{
+        top: "0px",
+        right: "-2px",
+        borderRadius: "50%",
+        width: "18px",
+        height: "18px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "0",
+        fontWeight: "bold",
+        zIndex: 10,
+        backgroundColor: "red"
+      }}
+    >
+      ×
+    </button>
+  </div>
+)}
               </div>
             </div>
 
@@ -470,8 +571,43 @@ const EditProject = () => {
                 />
               </div>
             </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Meta Title</label>
+                <input
+                  type="text"
+                  name="metaTitle"
+                  value={formData.metaTitle}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Meta Description</label>
+                <input
+                  type="text"
+                  name="metaDescription"
+                  value={formData.metaDescription}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Meta Keyword</label>
+                <input
+                  type="text"
+                  name="metaKeyword"
+                  value={formData.metaKeyword}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
             </>
-           )}
             
 
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">

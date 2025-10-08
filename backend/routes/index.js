@@ -25,6 +25,9 @@ const banksRoute = require("./projectDetails/banksRoute")
 const disclaimerRoute = require("./projectDetails/disclaimerRoute")
 const faqRoute = require("./projectDetails/faqRoute")
 const currentStatusRoute = require("./projectDetails/currentStatusRoute")
+const locationRoute = require("./projectDetails/locationRoute")
+const metaDataRoute = require("./metaDataRoute")
+const projectEnquiryRoute = require("./projects/projectEnquiryRoute")
 
 module.exports = {
     authRoute,
@@ -53,5 +56,8 @@ module.exports = {
     banksRoute,
     disclaimerRoute,
     faqRoute,
-    currentStatusRoute
+    currentStatusRoute,
+    locationRoute,
+    metaDataRoute,
+    projectEnquiryRoute
 }

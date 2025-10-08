@@ -54,7 +54,8 @@ const TestimonialBox = ({ quoteImage, rating, initials}) => {
     }, []);
 
   return (
-    <Slider {...settings} >
+    <div className='container'>
+       <Slider {...settings} >
     {Testimonials && Testimonials.map((testimonial) => (
       <div className='container'>
     <div className='row align-items-center' key={testimonial._id}>
@@ -133,6 +134,8 @@ const TestimonialBox = ({ quoteImage, rating, initials}) => {
      </div>
     ))}
     </Slider>
+    </div>
+   
     
   );
 };

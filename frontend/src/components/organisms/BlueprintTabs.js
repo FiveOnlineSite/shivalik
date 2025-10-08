@@ -1,31 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from '../../style/Common.module.css';
 import { ArrowRightAlt } from '@mui/icons-material';
-import emailjs from 'emailjs-com';
+
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-
-// const plans = {
-//   '1BHK': {
-//     '1BHK Floor Plan': 'images/shivalik-ventures-apartments-india-gulmohar.jpg',
-//     '1 BHK Unit Floor Plan': 'images/best-real-estate-company-india-gulmohar.jpg',
-//   },
-//   '2BHK': {
-//     '2BHK Floor Plan': 'images/shivalik-ventures-apartments-mumbai-gulmohar.jpg',
-//     '2 BHK Unit Floor Plan': 'images/top-real-estate-company-india-gulmohar.jpg',
-//   },
-// };
-
-// const planTitles = {
-//   '1BHK': {
-//     '1BHK Floor Plan': '1 BHK Floor Plan',
-//     '1 BHK Unit Floor Plan': '1 BHK Unit Plan',
-//   },
-//   '2BHK': {
-//     '2BHK Floor Plan': '2 BHK Floor Plan',
-//     '2 BHK Unit Floor Plan': '2 BHK Unit Plan',
-//   },
-// };
 
 const BlueprintTabs = () => {
     const [plans, setPlans] = useState([]);
@@ -35,13 +13,25 @@ const {name} = useParams()
 const [activeSubTab, setActiveSubTab] = useState(null);
 const [unlocked, setUnlocked] = useState({});
   const [formVisible, setFormVisible] = useState(false);
+  const formRef = useRef();
+   const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
+  const [errors, setErrors] = useState({});
+  
+
+  const [otp, setOtp] = useState('');
+  const [enteredOtp, setEnteredOtp] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [timer, setTimer] = useState(0);
+  const [isSendingOtp, setIsSendingOtp] = useState(false);
+const [isSubmitting, setIsSubmitting] = useState(false);
 
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-  });
+    // Load environment variables
+  const API_URL = process.env.REACT_APP_API_URL;
+  const API_TOKEN = "68|ncbSSlsNVuTuoPIyYMSFKXZ6UWXMrkgXXWTALQnH008f96ac";
+  const TEMPLATE_ID = "1707175318595098816";
+  const ENTITY_ID = "1701159921797802436";
 
    useEffect(() => {
   const fetchProjectSitePlan = async () => {
@@ -97,29 +87,79 @@ const [unlocked, setUnlocked] = useState({});
     setFormVisible(true);
   };
 
-  const handleFormSubmit = (e) => {
+   useEffect(() => {
+    if (timer <= 0) return;
+    const interval = setInterval(() => setTimer(t => t - 1), 1000);
+    return () => clearInterval(interval);
+  }, [timer]);
+
+  // Validation
+  const validate = () => {
+    const errors = {};
+    if (!formData.name.trim()) errors.name = 'Name is required';
+    if (!formData.email.trim()) errors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) errors.email = 'Invalid email';
+    if (!formData.phone.trim()) errors.phone = 'Phone is required';
+    return errors;
+  };
+
+
+ const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const generateOtp = () => Math.floor(1000 + Math.random() * 9000).toString();
+
+  // Send OTP
+  const handleSendOtp = async () => {
+    if (!formData.phone || formData.phone.length !== 10) {
+      return;
+    }
+
+    const newOtp = generateOtp();
+    setOtp(newOtp);
+    setIsSendingOtp(true);
+
+    try {
+      const message = `Dear User Your OTP code for Shivalik Ventures is ${newOtp} DO NOT disclose it to anyone.`;
+      const apiUrl = `https://dtasit.ai/backend/api/http/sms/send?recipient=91${formData.phone}&sender_id=SHIVAK&message=${encodeURIComponent(message)}&api_token=${API_TOKEN}&dlt_template_id=${TEMPLATE_ID}&type=plain&entity_id=${ENTITY_ID}`;
+      
+      const response = await axios.get(apiUrl);
+      if (response.data.status === 'success') {
+        setOtpSent(true);
+        setTimer(30); // 2 minutes
+      } 
+    } catch (err) {
+      console.error('OTP Send Error:', err);
+     } finally {
+      setIsSendingOtp(false);
+    }
+  };
+
+  const handleVerifyOtp = () => {
+    if (enteredOtp.trim() === otp.trim()) {
+      setOtpVerified(true);
+     } 
+  };
+
+  // Submit form
+  const handleSubmit = async e => {
     e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    if (!otpVerified) {
+      return;
+    }
 
-    const pageName = window.location.pathname.split('/').filter(Boolean).pop() || 'home';
-    const pageNameTitle = 'Gulmohar Avenue 1BHK and 2BHK Plan';
-    
-    const templateParams = {
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      page: pageName,
-      subject: `${pageNameTitle || 'Unknown Page'}`, 
-    };
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post(`${API_URL}/api/project-enquiry`, {
+        ...formData,
+        page: window.location.pathname
+      });
 
-    emailjs
-      .send(
-        'service_7yt4sc5',     // replace with actual
-      'template_cwwiuc9',    // replace with actual
-      templateParams,
-      'zt1IjjWWqmHaJnJ_O'      // replace with actual
-      )
-      .then((response) => {
-        console.log('Email sent successfully!', response);
+      console.log('Email sent successfully!', response);
 
         // Unlock all BHKs and sub-tabs
         const updated = {};
@@ -132,11 +172,20 @@ const [unlocked, setUnlocked] = useState({});
         setUnlocked(updated);
         sessionStorage.setItem('blueprintUnlocked', JSON.stringify(updated));
         setFormVisible(false);
-      })
-      .catch((err) => {
-        console.error('Failed to send email:', err);
-      });
+
+      // Reset
+      setFormData({ name: '', email: '', phone: '' });
+      setOtp('');
+      setEnteredOtp('');
+      setOtpSent(false);
+      setOtpVerified(false);
+      setTimer(0); 
+
+    } catch (err) {
+      console.error('Form Submit Error:', err);
+     }
   };
+
 
   const isUnlocked = unlocked[`${activeTab}-${activeSubTab}`];
 
@@ -213,35 +262,85 @@ const [unlocked, setUnlocked] = useState({});
           <div className="popup-form">
             <button className="close-icon" onClick={() => setFormVisible(false)}>×</button>
             <h3>Enquiry Form</h3>
-            <form onSubmit={handleFormSubmit}>
-              <input
-                type="text"
-                placeholder="Name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-              />
-              <input
-                type="tel"
-                placeholder="Phone"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                required
-              />
-              <button
-                type="submit"
-                className={`${styles.commonBlueButton} ${styles.enquireNowBtn} ${styles.enquireNowBtn2} border-0 mt-3`}
-              >
-                Submit <ArrowRightAlt />
-              </button>
-            </form>
+            <form onSubmit={handleSubmit} ref={formRef} className={styles.modalForm}>
+            <div>
+              <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} className="form-control" required/>
+              {errors.name && <small className="text-danger">{errors.name}</small>}
+            </div>
+
+            <div>
+              <input type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} className="form-control" required />
+              {errors.email && <small className="text-danger">{errors.email}</small>}
+            </div>
+
+           <div className="d-flex gap-2 align-items-center">
+  {/* Phone input */}
+  <input
+    type="tel"
+    name="phone"
+    placeholder="Phone"
+    value={formData.phone}
+    onChange={handleChange}
+    className="form-control"
+    required
+  />
+  </div>
+
+  {/* Show Send OTP only if OTP not sent */}
+  {!otpSent && (
+    <button
+      onClick={handleSendOtp}
+      disabled={isSendingOtp}
+      style={{
+    cursor: isSendingOtp ? "not-allowed" : "pointer",
+    opacity: isSendingOtp ? 0.7 : 1,
+  }}
+          className={`${styles.commonBlueButton} ${styles.enquireNowBtn} ${styles.enquireNowBtn2} border-0 mt-3`}
+        >
+      {isSendingOtp ? 'Sending...' : 'Send OTP'} <ArrowRightAlt />
+    </button>
+  )}
+
+    {otpSent && !otpVerified && (
+    <div>
+      <input type="text" name="otp" placeholder="Enter OTP" value={enteredOtp} onChange={e => setEnteredOtp(e.target.value)} className="form-control" />
+      <div>
+        <p className="text-primary mt-4" style={{ cursor: timer <= 0 ? 'pointer' : 'default', fontSize: "15px" }}
+            onClick={() => timer <= 0 && handleSendOtp()}>
+        {timer > 0 ? `Resend in ${timer}s` : 'Resend OTP'}
+      </p>
+      <button
+  type="button"
+  onClick={handleVerifyOtp}
+  disabled={isSubmitting}
+  style={{
+    cursor: isSubmitting ? "not-allowed" : "pointer",
+    opacity: isSubmitting ? 0.7 : 1,
+  }}
+  className={`${styles.commonBlueButton} ${styles.enquireNowBtn} border-0 mt-3`}
+>
+  Verify OTP <ArrowRightAlt />
+</button>
+      </div>
+      
+
+    </div>
+  )}
+{/* Show Submit & Download only if OTP verified */}
+{otpVerified && (
+  <button
+    type="submit"
+    className={`${styles.commonBlueButton} ${styles.enquireNowBtn} border-0 mt-3`}
+    disabled={isSubmitting}
+    style={{
+    cursor: isSubmitting ? "not-allowed" : "pointer",
+    opacity: isSubmitting ? 0.7 : 1,
+  }}
+  >
+   {isSubmitting ? 'Submitting...' : 'Submit'} <ArrowRightAlt />
+  </button>
+)}
+          </form>
           </div>
         </div>
       )}

@@ -74,7 +74,7 @@ const ContactUs = () => {
                                      <h5>Social Network</h5>
                                       <div className={styles.socialIcon}>
                                         <ul className='d-flex'>
-                                {contactContent.social_media && contactContent.social_media.map((socialMedia) => (
+                                        {contactContent.social_media && contactContent.social_media.map((socialMedia) => (
 
                                             <li key={socialMedia._id}>
                                                 <a href={socialMedia.link} className='icon-you-one' rel='noreferrer' target='_blank'>
@@ -86,12 +86,8 @@ const ContactUs = () => {
                                             ))}
                                         </ul>
                                     </div>
-                
-                                  
                                 </div>
                             </div>
-                           
-                            
                         </div>
                          )}
                     </div>
@@ -99,7 +95,6 @@ const ContactUs = () => {
                 <div className='col-lg-5'>
                     <ContactForm />
                 </div>
-                
             </div>
     </div>
     <div className='container-fluid'>

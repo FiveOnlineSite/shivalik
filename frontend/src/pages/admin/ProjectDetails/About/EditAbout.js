@@ -311,6 +311,7 @@ setProjects(filtered);
                       ...prev,
                         brochure: {
                           file,
+                          filename: file.name,
                         filepath: URL.createObjectURL(file),
                         }
                     }));

@@ -2,7 +2,6 @@ const HomeBannerModel = require("../../models/home/homeBannerModel")
 const path = require("path")
 
 const createHomeBanner = async (req, res) => {
-
   try {
     const { title, description, link, alt, mobile_alt } = req.body;
 
@@ -50,6 +49,8 @@ const createHomeBanner = async (req, res) => {
                 }
     }
 
+        const totalHomeBanners = await HomeBannerModel.countDocuments();
+    
     const newHomeBanner = new HomeBannerModel({
       image: imageData ? [imageData] : [],
       alt,
@@ -58,6 +59,7 @@ const createHomeBanner = async (req, res) => {
       title,
       description,
       link,
+      sequence: totalHomeBanners + 1,
     });
 
     await newHomeBanner.save();
@@ -75,8 +77,13 @@ const createHomeBanner = async (req, res) => {
 
 const updateHomeBanner = async (req, res) => {
   try {
-    const { title, description, link, alt, mobile_alt} = req.body;
+    const { title, description, link, alt, mobile_alt, sequence} = req.body;
     const bannerId = req.params._id;
+
+    const existingBanner = await HomeBannerModel.findById(bannerId);
+        if (!existingBanner) {
+          return res.status(404).json({ message: "Banner not found." });
+        }
 
     let updateData = {};
 
@@ -109,6 +116,39 @@ const updateHomeBanner = async (req, res) => {
       ];
     }
 
+    if (sequence && sequence !== existingBanner.sequence) {
+  const banners = await HomeBannerModel.find().sort({ sequence: 1 });
+  const maxSequence = banners.length;
+  if (sequence > maxSequence) {
+    return res.status(400).json({
+      message: `Invalid sequence. The sequence cannot be greater than ${maxSequence}.`,
+    });
+  }
+
+  const updateOperations = [];
+
+  banners.forEach((t) => {
+    if (t._id.toString() !== existingBanner._id.toString()) {
+      if (sequence < existingBanner.sequence && t.sequence >= sequence && t.sequence < existingBanner.sequence) {
+        updateOperations.push({
+          updateOne: { filter: { _id: t._id }, update: { $inc: { sequence: 1 } } },
+        });
+      } else if (sequence > existingBanner.sequence && t.sequence <= sequence && t.sequence > existingBanner.sequence) {
+        updateOperations.push({
+          updateOne: { filter: { _id: t._id }, update: { $inc: { sequence: -1 } } },
+        });
+      }
+    }
+  });
+
+  if (updateOperations.length > 0) {
+    await HomeBannerModel.bulkWrite(updateOperations);
+  }
+
+  updateData.sequence = sequence; // <-- important
+}
+
+
     // Add text fields (only if provided)
     if (alt !== undefined) updateData.alt = alt;
     if (mobile_alt !== undefined) updateData.mobile_alt = mobile_alt;
@@ -119,7 +159,9 @@ const updateHomeBanner = async (req, res) => {
     const updatedHomeBanner = await HomeBannerModel.findByIdAndUpdate(
       bannerId,
       { $set: updateData },
-      { new: true } // return updated doc
+      { new: true }, 
+      sequence,
+
     );
 
     if (!updatedHomeBanner) {
@@ -159,7 +201,7 @@ const getHomeBanner = async (req, res) => {
 
 const getHomeBanners = async (req, res) => {
   try {
-    const banners = await HomeBannerModel.find();
+    const banners = await HomeBannerModel.find().sort({sequence: 1});
 
     if (banners.length === 0) {
       return res.status(400).json({
@@ -190,10 +232,25 @@ const deleteHomeBanner = async (req, res) => {
       });
     }
 
+    const deletedSequence = bannerExists.sequence;
+
     const deletedHomeBanner = await HomeBannerModel.findOneAndDelete({
       _id: req.params._id,
     });
 
+    if (!deletedHomeBanner) {
+          return res.status(500).json({
+            message: "Error in deleting the home banner.",
+          });
+        }
+
+        const updateResult = await HomeBannerModel.updateMany(
+                  { sequence: { $gt: deletedSequence } },
+                  { $inc: { sequence: -1 } }
+                );
+        
+        console.log(`Updated ${updateResult.modifiedCount} testimonial's seq.`);
+    
     return res.status(200).json({
       message: "Home banner deleted successfully.",
       deletedHomeBanner,

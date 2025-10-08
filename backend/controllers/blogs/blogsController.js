@@ -16,7 +16,9 @@ const slugify = (str = "") =>
 
 const createBlog = async (req, res) => {
   try {
-    const { alt, title, content } = req.body;
+    const { alt, title, content, metaTitle,
+      metaDescription,
+      metaKeyword } = req.body;
     if (!alt || !alt.trim()) {
       return res.status(400).json({ message: "Alt text is required." });
     }
@@ -44,6 +46,9 @@ const createBlog = async (req, res) => {
       title,
       content,
       sequence: totalBlogs + 1,
+      metaTitle,
+      metaDescription,
+      metaKeyword
     });
 
     await newBlog.save();
@@ -60,7 +65,9 @@ const createBlog = async (req, res) => {
 const updateBlog = async (req, res) => {
   try {
     const { alt, title, content
-      , sequence
+      , sequence, metaTitle,
+      metaDescription,
+      metaKeyword
     } = req.body;
     const BlogId = req.params._id;
 
@@ -89,6 +96,9 @@ const updateBlog = async (req, res) => {
     if (alt !== undefined) existingBlog.alt = alt;
     if (title !== undefined) existingBlog.title = title;
     if (content !== undefined) existingBlog.content = content;
+    if (metaTitle !== undefined) existingBlog.metaTitle = metaTitle;
+    if (metaDescription !== undefined) existingBlog.metaDescription = metaDescription;
+    if (metaKeyword !== undefined) existingBlog.metaKeyword = metaKeyword;
 
     if (sequence && sequence !== existingBlog.sequence) {
       const allBlogs = await BlogsModel.find().sort({ sequence: 1 });
@@ -186,7 +196,7 @@ const getBlog = async (req, res) => {
 
 const getBlogs = async (req, res) => {
   try {
-    const Blogs = await BlogsModel.find()
+    const Blogs = await BlogsModel.find().sort({sequence: 1})
 
     if (!Blogs.length) {
       return res.status(400).json({ message: "No Blogs found" });

@@ -149,9 +149,11 @@ const getContents = async (req, res) => {
 
 const deleteContent = async (req, res) => {
   try {
-    const Contents = await FaqContentModel.findOne({});
 
-    if (Contents.length === 0) {
+    const { _id } = req.params; 
+    const Contents = await FaqContentModel.findById(_id);
+
+    if (!Contents) {
       return res.status(400).json({
         message: "No Content added to delete. Kindly add one.",
       });
@@ -159,7 +161,7 @@ const deleteContent = async (req, res) => {
 
     const deletedContent =
       await FaqContentModel.findByIdAndDelete(
-        Contents._id
+        _id
       );
 
     return res.status(200).json({

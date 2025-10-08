@@ -63,38 +63,32 @@ const EditStatus = () => {
         return `${yyyy}-${mm}-${dd}`;
       };
 
-       const convertPossessionForInput = (dateStr) => {
-        const [mm, dd, yyyy] = dateStr.split("-");
-        return `${yyyy}-${mm}-${dd}`;
-      };
         const StatusData = response.data.Status;
         
          setFormData({
           date: convertDateForInput(StatusData.date),
           status: StatusData.status,
           maharera: StatusData.maharera,
-
-
-          possession: convertPossessionForInput(StatusData.possession),
+          possession: convertDateForInput(StatusData.possession),
           images: [{
             image: {
             file: StatusData.image?.[0]?.filename || "",
             filepath: StatusData.image?.[0]?.filepath || "",
           },
-            alt: StatusData.alt
+          alt: StatusData.alt
           },],
           project: StatusData.project?._id || StatusData.project || "",
         });
 
-        setCurrentStatus(
-  StatusData.image?.map(img => ({
+       setCurrentStatus(
+  (StatusData.images || []).map(img => ({
     _id: img._id,
     image: {
-      file: null, // only used when uploading new
-      filepath: img.filepath || "", // backend path
+      file: null,
+      filepath: img.image?.[0]?.filepath || "", // get first filepath
     },
     alt: img.alt || "",
-  })) || []
+  }))
 );
 
         } catch (error) {
@@ -127,89 +121,89 @@ const EditStatus = () => {
 };
 
   const handleSubmit = async (e) => {
-    e.primgentDefault();
+  e.preventDefault();
 
-    const convertDateToDisplayFormat = (isoDate) => {
-      const [yyyy, mm, dd] = isoDate.split("-");
-      return `${mm}-${dd}-${yyyy}`;
-    };
-
-    const convertPossessionToDisplayFormat = (isoDate) => {
-      const [yyyy, mm, dd] = isoDate.split("-");
-      return `${mm}-${dd}-${yyyy}`;
-    };
-    if (isSubmitting) return;
-
-    if (errorMessage) {
-                                  toast.error(errorMessage);
-                                  return;
-                                }
-
-    setIsSubmitting(true);
-    setErrorMessage("");
-
-    const hasImageErrors = setCurrentStatus.some((images) => {
-      return !images._id && !(images.image instanceof File);
-    });
-
-    if (hasImageErrors) {
-      setErrorMessage("Please upload image for new images.");
-      setIsSubmitting(false);
-      return;
-    }
-
-    try {
-      const access_token = localStorage.getItem("access_token");
-      const apiUrl = process.env.REACT_APP_API_URL;
-      const formData = new FormData();
-
-      formData.append("date", convertDateToDisplayFormat(formData.date) || "");
-      formData.append("status", formData.status);
-      formData.append("possession", convertPossessionToDisplayFormat(formData.possession) || "");
-      formData.append("maharera", formData.maharera);
-
-
-      const imagesArray = currentStatus.map((images, index) => {
-        const imageKey = `image_${index}`;
-
-        // Only append if it's a new file (not already uploaded object)
-        if (images.image instanceof File) {
-          formData.append(imageKey, images.image);
-        }
-
-        return {
-          alt: images.alt,
-          _id: images._id,
-          image_key: imageKey,
-        };
-      });
-
-      formData.append("images", JSON.stringify(imagesArray));
-
-      await axios.patch(`${apiUrl}/api/current-status`, formData, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      setTimeout(() => {
-        navigate("/admin/current-status");
-      }, 1000);
-
-      toast.success("current status updated successfully!");
-      
-    } catch (error) {
-      console.error("Error updating current status:", error);
-      setErrorMessage(error.response?.data?.message || "An error occurred");
-      toast.error("Failed to update current status");
-      
-    } finally {
-      setIsSubmitting(false);
-    }
+  const convertDateToDisplayFormat = (isoDate) => {
+    if (!isoDate) return "";
+    const [yyyy, mm, dd] = isoDate.split("-");
+    return `${mm}-${dd}-${yyyy}`;
   };
 
-  const handleDeleteImages = async (imagesId) => {
+  if (isSubmitting) return;
+
+  if (errorMessage) {
+    toast.error(errorMessage);
+    return;
+  }
+
+  setIsSubmitting(true);
+  setErrorMessage("");
+
+  const hasImageErrors = currentStatus.some((img) => {
+    return !img._id && !(img.image?.file instanceof File);
+  });
+
+  if (hasImageErrors) {
+    setErrorMessage("Please upload image for new images.");
+    setIsSubmitting(false);
+    return;
+  }
+
+  try {
+    const access_token = localStorage.getItem("access_token");
+    const apiUrl = process.env.REACT_APP_API_URL;
+
+    const fd = new FormData();
+
+    // append basic fields
+    fd.append("date", convertDateToDisplayFormat(formData.date) || "");
+    fd.append("status", formData.status);
+    fd.append(
+      "possession",
+      convertDateToDisplayFormat(formData.possession) || ""
+    );
+    fd.append("maharera", formData.maharera);
+    fd.append("project", formData.project);
+
+    const imagesArray = currentStatus.map((img, index) => {
+      const imageKey = `image_${index}`;
+
+      if (img.image?.file instanceof File) {
+        fd.append(imageKey, img.image.file);
+      }
+
+      return {
+        alt: img.alt,
+        _id: img._id, // if it exists
+        image_key: imageKey,
+      };
+    });
+
+    fd.append("images", JSON.stringify(imagesArray));
+
+    // API call
+    await axios.patch(`${apiUrl}/api/current-status/${id}`, fd, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    toast.success("Current status updated successfully!");
+    setTimeout(() => {
+      navigate("/admin/current-status");
+    }, 1000);
+  } catch (error) {
+    console.error("Error updating current status:", error);
+    setErrorMessage(error.response?.data?.message || "An error occurred");
+    toast.error("Failed to update current status");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+
+  const handleDeleteImages = async (imageId) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this images?"
     );
@@ -219,14 +213,14 @@ const EditStatus = () => {
       const access_token = localStorage.getItem("access_token");
       const apiUrl = process.env.REACT_APP_API_URL;
 
-      await axios.delete(`${apiUrl}/api/current-status/${imagesId}`, {
+      await axios.delete(`${apiUrl}/api/current-status/image/${imageId}`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       });
 
       // Remove from local state
-      const updatedStatus = currentStatus.filter((img) => img._id !== imagesId);
+      const updatedStatus = currentStatus.filter((img) => img._id !== imageId);
       setCurrentStatus(updatedStatus);
                                       toast.success("Image deleted successfully!");
       
@@ -402,7 +396,7 @@ const EditStatus = () => {
                 {image._id ? (
                   <button
                     type="button"
-                    className="btn m-2 delete-btn"
+                    className="btn mt-2 delete-btn"
                     onClick={() => handleDeleteImages(image._id)}
                   >
                     Delete
@@ -410,7 +404,7 @@ const EditStatus = () => {
                 ) : (
                   <button
                     type="button"
-                    className="btn remove-btn m-2"
+                    className="btn remove-btn mt-2"
                     onClick={() => {
                       const updated = [...currentStatus];
                       updated.splice(index, 1);

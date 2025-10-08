@@ -95,115 +95,124 @@ const updateStatus = async (req, res) => {
     const { project, date, status, possession, maharera } = req.body;
     const statusId = req.params._id;
 
+    // fetch existing DB record
     const existingStatus = await CurrentStatusModel.findById(statusId);
-        if (!existingStatus) return res.status(404).json({ message: "Status not found" });
-    
-        const statusValue = status || existing.status;
+    if (!existingStatus) return res.status(404).json({ message: "Status not found" });
+
+    // use provided status if non-empty, otherwise fall back to existing record
+    const statusValue = status && String(status).trim() !== "" ? status : existingStatus.status;
     if (!["Ongoing Construction", "Completed"].includes(statusValue)) {
       return res.status(400).json({ message: "Invalid status. Use 'Ongoing Construction' or 'Completed'." });
     }
-    // Parse images JSON (if sent)
+
+    // parse images JSON if provided
     let ImagesData = [];
     if (req.body.images && req.body.images !== "undefined") {
-      ImagesData = JSON.parse(req.body.images);
+      try {
+        ImagesData = JSON.parse(req.body.images);
+        if (!Array.isArray(ImagesData)) ImagesData = [];
+      } catch (err) {
+        return res.status(400).json({ message: "Invalid images payload (not JSON)." });
+      }
     }
 
-    // Build a map of uploaded files (if any)
+    // build map of uploaded files for quick lookup (fieldname -> file)
     const files = req.files || [];
     const fileMap = {};
     for (const file of files) {
       fileMap[file.fieldname] = file;
     }
 
-    const uploadedImages = [];
-    const modifiedStatus = []; 
-
+    const uploadedImages = []; // new images to append
+    const modifiedStatus = []; // items that were updated (existing ones)
     const MAX_FILE_SIZE = 500 * 1024;
 
+    // iterate the ImagesData array (from frontend), match files by image_{index}
     for (let i = 0; i < ImagesData.length; i++) {
       const images = ImagesData[i];
-
       const fileFieldName = `image_${i}`;
       const file = fileMap[fileFieldName];
 
-      let imageData = [];
+      let imageData = null; // will hold [{ filename, filepath }] if a file was uploaded
 
       if (file) {
         const extname = path.extname(file.originalname).toLowerCase();
         const isImage = [".webp", ".jpg", ".jpeg", ".png"].includes(extname);
         if (!isImage) {
-          return res
-            .status(400)
-            .json({ message: `Unsupported image type: ${file.originalname}` });
+          return res.status(400).json({ message: `Unsupported image type: ${file.originalname}` });
         }
 
         if (file.size > MAX_FILE_SIZE) {
-          return res
-            .status(400)
-            .json({ message: `File size exceeds 500KB for ${file.originalname}` });
+          return res.status(400).json({ message: `File size exceeds 500KB for ${file.originalname}` });
         }
 
+        // file.key is typically provided by your S3 upload util. fallback safely if absent.
+        const s3Key = file.key || file.filename || file.originalname;
         imageData = [
           {
-            filename: path.basename(file.key),
-            filepath: `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${file.key}`,
+            filename: path.basename(s3Key),
+            filepath: `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${s3Key}`,
           },
         ];
       }
 
+      // if the entry targets an existing image (images._id), update the existing one
       if (images._id) {
-        const existingIndex = currentStatus.images.findIndex(
-          (sm) => sm._id.toString() === images._id
+        const existingIndex = existingStatus.images.findIndex(
+          (sm) => sm._id && sm._id.toString() === images._id
         );
 
         if (existingIndex !== -1) {
-          const existingItem = currentStatus.images[existingIndex];
-          currentStatus.images[existingIndex] = {
-            ...existingItem,
-            alt: images.alt,
+          // convert mongoose subdoc to plain object safely if needed
+          const existingItem = existingStatus.images[existingIndex];
+          const existingObj = existingItem.toObject ? existingItem.toObject() : existingItem;
 
-            image: imageData.length > 0 ? imageData : existingItem.image,
+          const updatedItem = {
+            ...existingObj,
+            alt: images.alt !== undefined ? images.alt : existingObj.alt,
+            image: imageData && imageData.length > 0 ? imageData : existingObj.image,
           };
-          modifiedStatus.push(currentStatus.images[existingIndex]);
+
+          // update the in-memory existingStatus object so final images list contains latest
+          existingStatus.images[existingIndex] = updatedItem;
+          modifiedStatus.push(updatedItem);
         }
       } else {
+        // new image entry — attach whatever imageData we have (could be null if frontend mis-sent)
         uploadedImages.push({
           alt: images.alt || "",
-          image: imageData,
+          image: imageData || [],
         });
       }
     }
 
+    // if project is provided, validate it
     if (project) {
-          if (!mongoose.Types.ObjectId.isValid(project)) {
-            return res.status(400).json({ message: "Invalid project ID" });
-          }
-    
-          const projectExist = await ProjectsModel.findById(
-            project
-          );
-          if (!projectExist) {
-            return res.status(400).json({ message: "Project not found" });
-          }
-    
-          existingStatus.project = project;
-        }
-    
+      if (!mongoose.Types.ObjectId.isValid(project)) {
+        return res.status(400).json({ message: "Invalid project ID" });
+      }
+      const projectExist = await ProjectsModel.findById(project);
+      if (!projectExist) {
+        return res.status(400).json({ message: "Project not found" });
+      }
+    }
 
+    // compute final images list: use the existingStatus.images (which we mutated above) plus newly uploaded ones
+    const finalImages = Array.isArray(existingStatus.images)
+      ? existingStatus.images.concat(uploadedImages)
+      : uploadedImages;
+
+    // prepare updated fields (fall back to existing values if fields are not provided)
     const updatedFields = {
-      project,
-      date,
-      status,
-      possession,
-      maharera,
-      images: [...currentStatus.images, ...uploadedImages],
+      project: project || existingStatus.project,
+      date: date || existingStatus.date,
+      status: statusValue,
+      possession: possession || existingStatus.possession,
+      maharera: maharera || existingStatus.maharera,
+      images: finalImages,
     };
 
-    const updatedStatus = await CurrentStatusModel.findByIdAndUpdate(
-      currentStatus._id,
-      updatedFields,
-      { new: true }
-    );
+    const updatedStatus = await CurrentStatusModel.findByIdAndUpdate(statusId, updatedFields, { new: true });
 
     return res.status(200).json({
       message: "Status updated successfully.",
@@ -211,6 +220,7 @@ const updateStatus = async (req, res) => {
       updatedStatus,
     });
   } catch (error) {
+    console.error("updateStatus error:", error);
     return res.status(500).json({
       message: `Error in updating Status: ${error.message || error}`,
     });
@@ -310,6 +320,7 @@ const getStatuses = async (req, res) => {
   try {
     const Statuses = await CurrentStatusModel.find()
       .populate("project", "title")
+       .sort({ "project.title": 1, date: -1 }) 
       .lean();
 
     if (Statuses.length === 0) {
@@ -318,14 +329,8 @@ const getStatuses = async (req, res) => {
       });
     }
 
-    const totalStatus = Statuses.reduce(
-      (acc, doc) => acc + (doc.Status?.length || 0),
-      0
-    );
-
     return res.status(200).json({
       message: "Statuss fetched successfully.",
-    
       Statuses,
     });
   } catch (error) {
@@ -340,46 +345,47 @@ const deleteImages = async (req, res) => {
     const { imageId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(imageId)) {
-      return res.status(400).json({ message: "Invalid imagesId" });
+      return res.status(400).json({ message: "Invalid imageId" });
     }
 
-    const images = await CurrentStatusModel.findOne({
+    const status = await CurrentStatusModel.findOne({
       "images._id": imageId,
     });
 
-    if (!images) {
+    if (!status) {
       return res.status(404).json({
-        message: "images not found in any Status.",
+        message: "Image not found in any Status.",
       });
     }
 
-    const deletedimages = images.images.find((a) => a._id.toString() === imagesId);
+    const deletedImage = status.images.find(
+      (img) => img._id.toString() === imageId
+    );
 
-    if (!deletedimages) {
+    if (!deletedImage) {
       return res.status(404).json({
-        message: "images not found in the array.",
+        message: "Image not found in the array.",
       });
     }
 
-    const updatedimages = await CurrentStatusModel.findByIdAndUpdate(
-      images._id,
-      {
-        $pull: { images: { _id: imagesId } },
-      },
+    const updatedStatus = await CurrentStatusModel.findByIdAndUpdate(
+      status._id,
+      { $pull: { images: { _id: imageId } } },
       { new: true }
     );
 
     return res.status(200).json({
-      message: "images deleted successfully.",
-      deletedimages,
-      updatedimages,
+      message: "Image deleted successfully.",
+      deletedImage,
+      updatedStatus,
     });
   } catch (error) {
     return res.status(500).json({
-      message: `Error deleting images from Status: ${error.message}`,
+      message: `Error deleting image from Status: ${error.message}`,
     });
   }
 };
+
 
 const deleteStatus = async (req, res) => {
   try {

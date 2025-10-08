@@ -3,8 +3,9 @@ import axios from "axios";
 import AdminLayout from "../../../../components/atoms/AdminLayout";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-// import CKEditor from "@ckeditor/ckeditor5-react";
-// import ClassicEditor from '../../../../ckeditor/ckeditor';
+
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 
 const EditHomeBanner = () => {
@@ -16,7 +17,8 @@ const EditHomeBanner = () => {
   const [validationError, setValidationError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [totalHomeBanners, setTotalHomeBanners] = useState(0)
+  
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -31,6 +33,7 @@ const EditHomeBanner = () => {
       filepath: "",
     },
     mobile_alt: "",
+    sequence: ""
   });
 
   useEffect(() => {
@@ -49,6 +52,8 @@ const EditHomeBanner = () => {
           link: homeBannerData.link,
           alt: homeBannerData.alt,
           mobile_alt: homeBannerData.mobile_alt,
+          sequence: homeBannerData.sequence,
+
           image: {
             file: homeBannerData.image?.[0]?.filename || "",
             filepath: homeBannerData.image?.[0]?.filepath || "",
@@ -58,6 +63,11 @@ const EditHomeBanner = () => {
             filepath: homeBannerData.mobile_image?.[0]?.filepath || "",
           },
         });
+        const totalHomeBanners = await axios.get(`${apiUrl}/api/home-banner`);
+        
+                    const totalCount = totalHomeBanners.data.count
+                     setTotalHomeBanners(totalCount);
+                        console.log("Count", totalCount);
       } catch (error) {
         console.error("Error fetching home banner:", error);
       } finally {
@@ -140,6 +150,8 @@ const EditHomeBanner = () => {
       formDataToSend.append("link", formData.link || "");
       formDataToSend.append("alt", formData.alt || "");
       formDataToSend.append("mobile_alt", formData.mobile_alt || "");
+      formDataToSend.append("sequence", formData.sequence || "");
+
 
       if (isImage) {
         formDataToSend.append("image", formData.image.file);
@@ -305,7 +317,7 @@ const EditHomeBanner = () => {
               </div>
             </div>
             
-             {/* <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <div className="theme-form">
                 <label>Description</label>
                  <CKEditor
@@ -326,7 +338,7 @@ const EditHomeBanner = () => {
                                                                                                                                         }}
                  />
               </div>
-            </div> */}
+            </div>
 
              <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <div className="theme-form">
@@ -335,6 +347,19 @@ const EditHomeBanner = () => {
                   type="text"
                   name="link"
                   value={formData.link}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Sequence</label>
+                <input
+                  type="text"
+                  name="sequence"
+                  required
+                  value={formData.sequence}
                   onChange={handleChange}
                 />
               </div>

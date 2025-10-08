@@ -2,33 +2,24 @@ const ProjectEnquiryModel = require("../../models/projects/projectEnquiryModel")
 
 const createEnquiry = async (req, res, skipResponse = false) => {
   try {
-    const { name, email, phone, message, page } = req.body;
-
+    const { name, email, phone, page } = req.body;
+ console.log("Enquiry received:", req.body);
     const newEnquiry = new ProjectEnquiryModel({
       name,
       email,
       phone,
       page,
-      message,
     });
-
     await newEnquiry.save();
 
-    if (!skipResponse) {
       return res.status(200).json({
         message: "Added Enquiry content successfully.",
         newEnquiry,
       });
-    }
-
-    return newEnquiry; 
   } catch (error) {
-    if (!skipResponse) {
       return res.status(500).json({
         message: `Error in adding Enquiry due to ${error.message}`,
       });
-    }
-    throw error;
   }
 };
 

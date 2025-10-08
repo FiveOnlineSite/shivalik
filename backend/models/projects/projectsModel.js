@@ -44,7 +44,17 @@ const ProjectsSchema = new mongoose.Schema({
   },
   sequence: {
     type: Number,
-  }
+  },
+  metaTitle: {
+    type: String,
+  },
+  metaDescription: {
+    type: String,
+  },
+  
+  metaKeyword: {
+    type: String,
+  },
 });
 
 const ProjectsModel = mongoose.model("projects", ProjectsSchema);

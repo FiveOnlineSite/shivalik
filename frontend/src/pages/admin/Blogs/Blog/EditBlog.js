@@ -25,7 +25,10 @@ const EditBlog = () => {
       file: "",
       filepath: "",
     },
-    sequence: ""
+    sequence: "",
+    metaTitle: "",
+    metaDescription: "",
+    metaKeyword: ""
   });
 
   useEffect(() => {
@@ -45,6 +48,9 @@ const EditBlog = () => {
           content: blogData.content,
           alt: blogData.alt,
           sequence: blogData.sequence,
+          metaTitle: blogData.metaTitle,
+          metaDescription: blogData.metaDescription,
+          metaKeyword: blogData.metaKeyword,
 
           image: {
             file: blogData.image?.[0]?.filename || "",
@@ -84,7 +90,7 @@ const EditBlog = () => {
     } else {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [name]: value.trim(),
+        [name]: value,
       }));
     }
   };
@@ -130,6 +136,9 @@ const EditBlog = () => {
 
       formDataToSend.append("alt", formData.alt || "");
       formDataToSend.append("sequence", formData.sequence || "");
+      formDataToSend.append("metaTitle", formData.metaTitle || "");
+      formDataToSend.append("metaDescription", formData.metaDescription || "");
+      formDataToSend.append("metaKeyword", formData.metaKeyword || "");
 
       if (isimage) {
         formDataToSend.append("image", formData.image.file);
@@ -240,7 +249,7 @@ const EditBlog = () => {
               </div>
             </div>
 
-             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+             <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                            <div className="theme-form">
                              <label>Content</label>
                               <CKEditor
@@ -271,6 +280,45 @@ const EditBlog = () => {
                   type="text"
                   name="sequence"
                   value={formData.sequence}
+                  required
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Meta Title</label>
+                <input
+                  type="text"
+                  name="metaTitle"
+                  value={formData.metaTitle}
+                  required
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Meta Description</label>
+                <input
+                  type="text"
+                  name="metaDescription"
+                  value={formData.metaDescription}
+                  required
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Meta Keyword</label>
+                <input
+                  type="text"
+                  name="metaKeyword"
+                  value={formData.metaKeyword}
                   required
                   onChange={handleChange}
                 />

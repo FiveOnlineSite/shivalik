@@ -23,11 +23,11 @@ route.post("/", async (req, res) => {
     const { name, email, phone, message, page } = req.body;
 
     const mailOptions = {
-      from: `"Natroyal Contact" <${process.env.SMTP_USER}>`,
+      from: `"Shivalik Contact" <${process.env.SMTP_USER}>`,
       to: "mansi.fiveonline@gmail.com",
-      subject: "New Contact Form Submission",
+      subject: "Shivalik Contact Form Submission",
       html: `
-        <h3>New Contact Request</h3>
+        <h3>Shivalik Contact Request</h3>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Phone:</strong> ${phone}</p>

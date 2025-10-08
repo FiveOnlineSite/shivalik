@@ -11,9 +11,9 @@ const LocationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  location_info: [
+  info: [
     {
-      phone: {
+      place: {
         type: String,
       },
       distance: {

@@ -25,7 +25,7 @@ const CurrentStatusSchema = new mongoose.Schema({
     default: "Ongoing Construction",
   },
   possession: {
-    type: Date,
+    type: String,
     required: true,
   },
   maharera: {

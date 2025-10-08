@@ -25,7 +25,7 @@ const ContactResponse = () => {
         },
         });
 
-        const ContactResponseData = response.data.ContactResponses;
+        const ContactResponseData = response.data.contacts;
 
         const sortedContactResponse = [...ContactResponseData].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)

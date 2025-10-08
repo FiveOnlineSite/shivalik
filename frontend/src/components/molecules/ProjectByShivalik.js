@@ -10,7 +10,7 @@ const ProjectByShivalik = ({
     <div className='col-lg-6 mb-5'>
       <div className={`${styles.projectPicture} position-relative mb-3`}>
         {item.image?.[0]?.filepath && (
-        <img src={item.image?.[0]?.filepath} width='100%' alt={item.alt} />
+        <img src={item.image?.[0]?.filepath} width='100%' style={{height: "390px", objectFit: "contain"}} alt={item.alt} />
 
         )}
         {item.banner_alt && (
@@ -40,14 +40,15 @@ const ProjectByShivalik = ({
             <p>{item.location}</p>
           </div>
           <div className='col-lg-4'>
-            <span className={`${styles.projectTag} mb-3 bg-blue text-center`}>Completed {" "}
-              {new Date(
+            <span className={`${styles.projectTag} mb-3 bg-blue text-center`}>
+              {/* {new Date(
                             item.completion_date
                           ).toLocaleDateString("en-US", {
                          
                             year: "numeric",
                           })
-                          }
+                          } */}
+                          {item.completion_date}
             </span>
           </div>
         </div>

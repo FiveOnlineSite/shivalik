@@ -95,7 +95,7 @@ const AddNewsWorthy = () => {
   return (
     <AdminLayout>
       <div className="theme-form-header">
-        <h2>Add New and Worthy Mention</h2>
+        <h2>Add News and Worthy Mention</h2>
       </div>
       <div className="form-white-bg">
         <form onSubmit={handleSubmit}>
@@ -135,19 +135,7 @@ const AddNewsWorthy = () => {
               </div>
             </div>
 
-            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
-              <div className="theme-form">
-                <label>Publisher Name</label>
-                <input
-                  type="text"
-                  name="publisher_name"
-                  required
-                  value={publisherName}
-                  onChange={(e) => setPublisherName(e.target.value)}
-                />
-              </div>
-            </div>
-
+           
 
             {/* Image */}
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
@@ -195,6 +183,20 @@ const AddNewsWorthy = () => {
                 />
               </div>
             </div>
+
+             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Publisher Name</label>
+                <input
+                  type="text"
+                  name="publisher_name"
+                  required
+                  value={publisherName}
+                  onChange={(e) => setPublisherName(e.target.value)}
+                />
+              </div>
+            </div>
+
 
              <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <div className="theme-form">

@@ -8,7 +8,7 @@ const uploadMedia = createUpload("current-status");
 
 route.post(
   "/",
-  uploadMedia.array("image", 10),
+  uploadMedia.any(),
   adminMiddleware,
   CurrentStatusController.createStatus
 );

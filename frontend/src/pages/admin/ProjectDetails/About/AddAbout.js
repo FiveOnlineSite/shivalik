@@ -151,7 +151,7 @@ const AddAbout = () => {
                   type="file"
                   name="image"
                   required
-                  accept=".webp, .png, .jpg, .jpeg"
+                  accept=".webp, .png, .jpg, .jpeg, .svg"
                   onChange={(e) => {
                     const file = e.target.files[0];
                     if (!file) return;

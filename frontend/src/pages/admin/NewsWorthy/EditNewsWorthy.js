@@ -125,7 +125,6 @@ setValidationError("");
       return;
     }
 
-    // allow new item at the end
     const allowedMax = totalNews > 0 ? totalNews : 1;
     if (seq > allowedMax) {
       setErrorMessage(`Sequence cannot be greater than ${allowedMax}`);
@@ -191,7 +190,7 @@ setValidationError("");
   return (
     <AdminLayout>
       <div className="theme-form-header">
-        <h2>Edit News Worthy Mention</h2>
+        <h2>Edit News and Worthy Mention</h2>
       </div>
       <div className="form-white-bg">
         <form onSubmit={handleSubmit}>
@@ -205,6 +204,7 @@ setValidationError("");
                   value={formData.news_category}
                   onChange={handleChange}
                   className="form-control"
+                  disabled
                 >
                    <option disabled value="">Select Category</option>
                   

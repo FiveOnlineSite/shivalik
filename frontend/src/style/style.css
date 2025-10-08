@@ -610,8 +610,8 @@ gap: 20px;
 
 .cont-rt p{
     /* font-size: 18px; */
-    font-weight: 600;
-    color: #5D5D5D;
+    font-weight: 500;
+    color: #212529;
 }
 
 .cont-rt .ct-link{
@@ -657,7 +657,7 @@ gap: 20px;
     font-size: 16px;
 }
 
-.cont-sec input[type="text"], input[type="email"] {
+.cont-sec input[type="text"], input[type="email"], .cont-sec textarea {
   background-color: transparent;
   border: none;
   border-bottom: 1px solid #000000;
@@ -685,6 +685,13 @@ gap: 20px;
     background-color: #191E3F;
     color:#ffffff;
     border-top-right-radius: 18px;
+}
+
+.form-check .label-one p
+ {
+    color: #5d5d5d;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 .map-one{
@@ -1064,6 +1071,22 @@ div.scrollmenu a:hover, div.scrollmenu a:active,  div.scrollmenu a:focus {
   -ms-overflow-style: none;  /* IE/Edge */
   scrollbar-width: none;     /* Firefox */
 }
+
+.calculator-select{
+  -webkit-appearance: none !important ;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+.cont-rt li a img{
+  width: 24px;
+}
+
+.cont-rt a{
+  font-weight: 500;
+  text-decoration: underline;
+}
+
 
 
 /* ✅ Mobile scroll fix */

@@ -29,7 +29,7 @@ const createFeaturesContent = async (req, res) => {
     if (req.file) {
       const file = req.file;
       const extname = path.extname(file.originalname).toLowerCase();
-      const isImage = [".webp", ".jpg", ".jpeg", ".png"].includes(extname);
+      const isImage = [".webp", ".jpg", ".jpeg", ".png", ".svg"].includes(extname);
       if (!isImage)
         return res.status(400).json({ message: "Unsupported image type." });
       if (!alt || !alt.trim())
@@ -88,7 +88,7 @@ const updateFeaturesContent = async (req, res) => {
 
     if (file) {
       const ext = path.extname(file.originalname).toLowerCase();
-      if (![".jpg", ".jpeg", ".png", ".webp"].includes(ext)) {
+      if (![".jpg", ".jpeg", ".png", ".webp", ".svg"].includes(ext)) {
         return res
           .status(400)
           .json({ message: `Unsupported file type: ${file.originalname}` });

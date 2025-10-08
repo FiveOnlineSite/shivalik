@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const Addimage = () => {
+const AddBanner = () => {
 
   const [image, setImage] = useState({ file: "" });
   const [alt, setAlt] = useState("");
@@ -16,8 +16,6 @@ const Addimage = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-//   const [allPages, setAllPages] = useState([])
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +33,7 @@ const Addimage = () => {
 
     setIsSubmitting(true);
     setErrorMessage("");
+    setValidationError("")
 
   const isImage = !!image.file;
     const isMobileImage = !!mobileImage.file;
@@ -50,6 +49,7 @@ const Addimage = () => {
       setIsSubmitting(false);
       return;
     }
+    
     if (isImage && alt.trim() === "") {
       setValidationError("Alt text is required when uploading an desktop banner.");
       setIsSubmitting(false);
@@ -130,8 +130,9 @@ setValidationError("")
                       return;
                     }
 
-                    // Clear any previous error
                     setErrorMessage("");
+    setValidationError("");
+
 
                     // Proceed if size is okay
                     setImage({
@@ -150,9 +151,8 @@ setValidationError("")
                 <input
                   type="text"
                   name="alt"
-                  value={alt}
                   required
-                  onChange={(e) => setAlt(e.target.value)}
+                  onChange={(e) => {setAlt(e.target.value); setErrorMessage(""); setValidationError(""); }}
                 />
               </div>
             </div>
@@ -180,6 +180,8 @@ setValidationError("")
 
                     // Clear any previous error
                     setErrorMessage("");
+    setValidationError("");
+                    
 
                     // Proceed if size is okay
                     setMobileImage({
@@ -200,7 +202,7 @@ setValidationError("")
                   name="mobile_alt"
                   value={mobileAlt}
                   required
-                  onChange={(e) => setMobileAlt(e.target.value)}
+                  onChange={(e) => {setMobileAlt(e.target.value); setErrorMessage(""); setValidationError("");}}
                 />
               </div>
             </div>
@@ -213,7 +215,7 @@ setValidationError("")
                   name="title"
                   required
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={(e) => {setTitle(e.target.value); setErrorMessage(""); setValidationError("");}}
                 />
               </div>
             </div>
@@ -225,31 +227,22 @@ setValidationError("")
                   name="page"
                   required
                   value={page}
-                  onChange={(e) => setPage(e.target.value)}
+                  onChange={(e) =>{setPage(e.target.value); setErrorMessage(""); setValidationError("");}}
                 >
                   <option value="" disabled>
                     Select a Page
                   </option>
 
-                  {/* Static pages */}
                   <option value="/about-us">About Us</option>
                   <option value="/projects">Projects</option>
-                  <option value="/crs">CSR</option>
+                  <option value="/csr">CSR</option>
                   <option value="/faqs">FAQs</option>
-                  <option value="/emi-calculator">EMI Calculator</option>
-                  <option value="/stamp-duty-calculator">Stamp Duty Calculator</option>
-                  <option value="/news">News</option>
-                  <option value="/blogs">Blogs</option>
-                  <option value="/stamp-duty-calculator">Stamp Duty Calculator</option>
+                  {/* <option value="/emi-calculator">EMI Calculator</option> */}
+                  {/* <option value="/stamp-duty-calculator">Stamp Duty Calculator</option> */}
+                  {/* <option value="/news">News</option> */}
+                  {/* <option value="/blogs">Blogs</option> */}
                   <option value="/contact-us">Contact Us</option>
                 
-
-                  {/* Dynamic pages from API */}
-                  {/* {allPages.map((p, idx) => (
-                    <option key={idx} value={p.url}>
-                      {p.label}
-                    </option>
-                  ))} */}
                 </select>
               </div>
             </div>
@@ -258,6 +251,12 @@ setValidationError("")
             {errorMessage && (
               <div className="error-message text-danger mt-2">
                 {errorMessage}
+              </div>
+            )}
+
+            {validationError && (
+              <div className="validation-message text-danger mt-2">
+                {validationError}
               </div>
             )}
 
@@ -285,4 +284,4 @@ setValidationError("")
   );
 };
 
-export default Addimage;
+export default AddBanner;

@@ -1,5 +1,6 @@
 const FaqCategoryModel = require("../../models/faq/faqCategoryModel");
 const FaqContentModel = require("../../models/faq/faqContentModel")
+const mongoose = require("mongoose")
 
 const createCategory = async (req, res) => {
   try {
@@ -97,31 +98,42 @@ const getCategories = async (req, res) => {
 
 const deleteCategory = async (req, res) => {
   try {
-    const Categorys = await FaqCategoryModel.findOne({});
+    const { _id } = req.params;
 
-    if (Categorys.length === 0) {
-      return res.status(400).json({
-        message: "No Category added to delete. Kindly add one.",
+    if (!_id) {
+      return res.status(400).json({ message: "Category ID is required" });
+    }
+
+    const existingCategory = await FaqCategoryModel.findById(_id);
+    if (!existingCategory) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+
+    const deletedCategory = await FaqCategoryModel.findByIdAndDelete(_id);
+
+    let deletedFaqContent;
+
+    try {
+      // Try deleting by ObjectId first
+      deletedFaqContent = await FaqContentModel.deleteMany({
+        faq_category: new mongoose.Types.ObjectId(_id),
+      });
+    } catch (err) {
+      // If some are stored as string, delete by title too
+      deletedFaqContent = await FaqContentModel.deleteMany({
+        faq_category: existingCategory.title,
       });
     }
 
-    const deletedCategory =
-      await FaqCategoryModel.findByIdAndDelete(
-        Categorys._id
-      );
-
-      const deletedFaqContent = await FaqContentModel.deleteMany({
-      faq_category: _id,
-    });
-
     return res.status(200).json({
-      message: "Category deleted successfully.",
+      message: "Category and its FAQ contents deleted successfully.",
       deletedCategory,
-      deletedFaqContent
+      deletedFaqContent,
     });
   } catch (error) {
+    console.error("Error deleting category:", error);
     return res.status(500).json({
-      message: `Error in deleting Category due to ${error.message}`,
+      message: `Error deleting category: ${error.message}`,
     });
   }
 };

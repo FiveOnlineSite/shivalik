@@ -22,7 +22,9 @@ const AddProject = () => {
   const [image, setImage] = useState({ file: "" });
   const [banner, setBanner] = useState({ file: "" });
   const [mobileBanner, setMobileBanner] = useState({ file: "" });
-  
+  const [metaTitle, setMetaTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
+  const [metaKeyword, setMetaKeyword] = useState("");
 
   const [validationError, setValidationError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,11 +36,11 @@ const AddProject = () => {
 
   
   // format date
-  const formattedDate = (() => {
-    if (!completionDate) return "";
-    const [year, month, day] = completionDate.split("-");
-    return `${month}-${day}-${year}`;
-  })();
+  // const formattedDate = (() => {
+  //   if (!completionDate) return "";
+  //   const [year, month, day] = completionDate.split("-");
+  //   return `${month}-${day}-${year}`;
+  // })();
 
   if (!image.file) {
     setValidationError("Image is required.");
@@ -49,13 +51,41 @@ const AddProject = () => {
     return;
   }
 
- if (banner.file || mobileBanner.file) {
-  if (!banner.file || !bannerAlt.trim() || !mobileBanner.file || !mobileBannerAlt.trim()) {
-    setValidationError(
-      "Banner, Banner Alt, Mobile Banner, and Mobile Banner Alt are all required when adding a banner."
-    );
-    return;
-  }
+//  if (banner.file || mobileBanner.file) {
+//   if (!banner.file || !bannerAlt.trim() || !mobileBanner.file || !mobileBannerAlt.trim() || metaTitle || metaDescription || metaKeyword) {
+//     setValidationError(
+//       "Banner, Banner Alt, Mobile Banner, Mobile Banner Alt, Meta Title, Meta Description and Meta Keyword are all required when adding a banner."
+//     );
+//     return;
+//   }
+// }
+
+const hasAnyField =
+  banner.file || banner.filepath ||
+  bannerAlt ||
+  mobileBanner.file || mobileBanner.filepath ||
+  mobileBannerAlt ||
+  metaTitle ||
+  metaDescription ||
+  metaKeyword;
+
+const hasAllFields =
+  (banner.file || banner.filepath) &&
+  bannerAlt &&
+  (mobileBanner.file || mobileBanner.filepath) &&
+  mobileBannerAlt &&
+  metaTitle &&
+  metaDescription &&
+  metaKeyword;
+
+if (hasAnyField && !hasAllFields) {
+  setValidationError(
+    "If any of Banner or Meta fields is filled, please fill all 7 fields: banner, banner alt, mobile banner, mobile banner alt, meta title, meta description, meta keyword."
+  );
+  toast.error(
+    "Please fill all 7 fields (banner, banner alt, mobile banner, mobile banner alt, meta title, meta description, meta keyword) or leave all empty."
+  );
+  return;
 }
 
 // reset errors
@@ -73,15 +103,18 @@ const AddProject = () => {
     formData.append("title", title);
     formData.append("excerpt", excerpt || "");
     formData.append("location", location);
-    formData.append("completion_date", formattedDate);
+    formData.append("completion_date", completionDate);
     formData.append("alt", alt);
+    formData.append("metaTitle", metaTitle || "");
+    formData.append("metaDescription", metaDescription || "");
+    formData.append("metaKeyword", metaKeyword || "");
 
-    formData.append("banner_alt", bannerAlt || "");
-    formData.append("mobile_banner_alt", mobileBannerAlt || "");
+    formData.append("bannerAlt", bannerAlt || "");
+    formData.append("mobileBannerAlt", mobileBannerAlt || "");
 
-    if (image.file) formData.append("image", image.file);
+    if (image.file)formData.append("image", image.file);
     if (banner.file) formData.append("banner", banner.file);
-    if (mobileBanner.file) formData.append("mobile_banner", mobileBanner.file);
+    if (mobileBanner.file) formData.append("mobileBanner", mobileBanner.file);
 
     await axios.post(`${apiUrl}/api/project`, formData, {
       headers: {
@@ -231,15 +264,17 @@ const AddProject = () => {
               <div className="theme-form">
                 <label>Completion Date</label>
                 <input
-                  type="date"
+                  type="text"
                   name="completion_date"
                   required
-                  max={new Date().toISOString().split("T")[0]} // This restricts future dates
+                  // max={new Date().toISOString().split("T")[0]} // This restricts future dates
                   value={completionDate}
                   onChange={(e) => setCompletionDate(e.target.value)}
                 />
               </div>
             </div>
+
+            
 
           {projectCategory === "Shivalik" && (
             <>
@@ -280,7 +315,7 @@ const AddProject = () => {
                 <label>Banner Alt</label>
                 <input
                   type="text"
-                  name="banner_alt"
+                  name="bannerAlt"
                   value={bannerAlt}
                   onChange={(e) => setBannerAlt(e.target.value)}
                 />
@@ -292,7 +327,7 @@ const AddProject = () => {
                 <label>Mobile Banner</label>
                 <input
                   type="file"
-                  name="mobile_banner"
+                  name="mobileBanner"
                   accept=".webp, .png, .jpg, .jpeg"
                   onChange={(e) => {
                     const file = e.target.files[0];
@@ -312,7 +347,6 @@ const AddProject = () => {
                     setMobileBanner({
                         file,
                         filepath: URL.createObjectURL(file),
-                      
                     });
                   }}
                 />
@@ -324,9 +358,45 @@ const AddProject = () => {
                 <label>Mobile Banner Alt</label>
                 <input
                   type="text"
-                  name="mobile_banner_alt"
+                  name="mobileBannerAlt"
                   value={mobileBannerAlt}
                   onChange={(e) => setMobileBannerAlt(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Meta Title</label>
+                <input
+                  type="text"
+                  name="metaTitle"
+                  value={metaTitle}
+                  onChange={(e) => setMetaTitle(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Meta Description</label>
+                <input
+                  type="text"
+                  name="metaDescription"
+                  value={metaDescription}
+                  onChange={(e) => setMetaDescription(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Meta Keyword</label>
+                <input
+                  type="text"
+                  name="metaKeyword"
+                  value={metaKeyword}
+                  onChange={(e) => setMetaKeyword(e.target.value)}
                 />
               </div>
             </div>

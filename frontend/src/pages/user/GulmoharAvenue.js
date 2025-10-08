@@ -26,7 +26,7 @@ const [projectFeatures, setProjectFeatures] = useState([])
 const [projectHighlight, setProjectHighlight] = useState([])
 const [projectAmenities, setProjectAmenities] = useState([])
 const [projectDisclaimer, setProjectDisclaimer] = useState([])
-const [projectFAQ, setProjectFAQ] = useState([])
+const [projectLocation, setProjectLocation] = useState([])
 
 const {name} = useParams()
 
@@ -35,7 +35,7 @@ const {name} = useParams()
     const fetchProjectBanner = async () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
-        const response = await axios.get(`${apiUrl}/api/project/title/${name}`);
+        const response = await axios.get(`${apiUrl}/api/project/project/${name}`);
         const ProjectBannerData = response.data.banner;
         console.log("banner", ProjectBannerData)
         setProjectBanner(ProjectBannerData);
@@ -143,6 +143,21 @@ const {name} = useParams()
       }
     };
     fetchProjectDisclaimer();
+  }, [name]);
+
+  useEffect(() => {
+    const fetchProjectLocation = async () => {
+      try {
+        const apiUrl = process.env.REACT_APP_API_URL;
+        const response = await axios.get(`${apiUrl}/api/location/project/${name}`);
+        const ProjectLocationData = response.data.Location;
+        console.log("Location", ProjectLocationData)
+        setProjectLocation(ProjectLocationData);
+      } catch (error) {
+        console.error("Error fetching project Location:", error);
+      }
+    };
+    fetchProjectLocation();
   }, [name]);
 
   return (
@@ -351,12 +366,16 @@ const {name} = useParams()
       {/* Well connected to all that is important section start */}
       <section className='mt-5 mb-5' id='location'>
         <div className='container'>
+           {projectLocation && projectLocation.map((location) => (
           <div className='row align-items-center'>
+
             <div className='col-lg-12'>
               <GradientLine />
               <h3 className={styles.sectionTitle}>Well connected to all that is important</h3>
             </div>
-            <div className='col-lg-5'>
+            {location.info && location.info.length > 0 ? (
+              <div className='row align-items-center'>
+                 <div className='col-lg-5'>
               <div className={styles.placeDistance}>
                 <div class="table-responsive place-distance">
   <table class="table align-middle">
@@ -367,30 +386,13 @@ const {name} = useParams()
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="align-top">Bandra station</td>
-        <td>0.7 KM</td>
+      {location.info && location.info.map((info) => (
+        <tr key={info._id}>
+        <td class="align-top">{info.place}</td>
+        <td>{info.distance}</td>
       </tr>
-      <tr>
-        <td class="align-top">Khar station</td>
-        <td>0.3 KM</td>
-      </tr>
-      <tr>
-        <td class="align-top">BKC</td>
-        <td>1.7 KM</td>
-      </tr>
-      <tr>
-        <td class="align-top">Airport</td>
-        <td>2.5 KM</td>
-      </tr>
-      <tr>
-        <td class="align-top">Western express</td>
-        <td>0.2 KM</td>
-      </tr>
-      <tr>
-        <td class="align-top">SCLR</td>
-        <td>2 KM</td>
-      </tr>
+      ))}
+      
     </tbody>
   </table>
 </div>
@@ -398,7 +400,7 @@ const {name} = useParams()
             </div>
             <div className='col-lg-7'>
               <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7541.714359560538!2d72.845875!3d19.070016!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c97f07d70c05%3A0xb99ce1df52c83126!2sBandra%20North!5e0!3m2!1sen!2sus!4v1751287254973!5m2!1sen!2sus"
+                  src={location.map_link}
                   width="100%"
                   height="450"
                   style={{ border: 0 }}
@@ -408,7 +410,26 @@ const {name} = useParams()
                   title="Google Map"
                 />
             </div>
+              </div>
+         
+            ) : (
+            <div className='col-lg-12'>
+              <iframe
+                  src={location.map_link}
+                  width="100%"
+                  height="450"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Google Map"
+                />
+            </div>
+            )}
+           
+
           </div>
+  ))}
         </div>
       </section>
       {/* Well connected to all that is important section close */}
