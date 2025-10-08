@@ -351,6 +351,8 @@ const EditStatus = () => {
                             return;
                           }
 
+                          setErrorMessage("");
+                          
                           const updated = [...currentStatus];
                           updated[index].image = { file, filepath: URL.createObjectURL(file) };
 

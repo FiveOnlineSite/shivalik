@@ -81,7 +81,7 @@ const TestimonialBox = ({ quoteImage, rating, initials}) => {
         </div>
       </div>
       <div className='col-lg-7'>
-        <img className='mb-3 pb-3' src='images/Quotes.png' alt="quote" />
+        <img className='mb-3 pb-3' src='/images/Quotes.png' alt="quote" />
         <div className={styles.testiText}>
           <div className={styles.testiInfo}>
             <div className={`mb-3`}>

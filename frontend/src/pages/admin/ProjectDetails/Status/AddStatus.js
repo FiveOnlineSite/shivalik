@@ -274,6 +274,8 @@ const AddStatus = () => {
                             return;
                           }
 
+                          setErrorMessage("");
+
                           const updated = [...images];
                           updated[index].image = file;
                           setImages(updated);
