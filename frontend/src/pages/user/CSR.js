@@ -1,7 +1,7 @@
 import React from 'react';
 import CSRTabs from '../../components/molecules/CSRTabs';
 import Layout from '../../components/templates/Layout';
-import InnerBanner from '../../components/atoms/InnerBanner';
+import CSRBanner from '../../components/molecules/CSRBanner';
 import { useLocation } from 'react-router-dom';
 import MetaDataComponent from "../../components/atoms/MetaDataComponent"
 
@@ -15,7 +15,7 @@ const CSR = () => {
       <MetaDataComponent/>
 
       {/* CSR BANNER SECTION START */}
-                <InnerBanner page={currentPath}/>
+                <CSRBanner/>
 
       {/* CSR BANNER SECTION CLOSE */}
       <section className='pt-5 pb-5 csr_section'>

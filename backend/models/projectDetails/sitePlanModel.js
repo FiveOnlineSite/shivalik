@@ -9,8 +9,7 @@ const SitePlanSchema = new mongoose.Schema({
   },
   site_plan: {
     type: String,
-    enum: ["1 BHK", "2 BHK"],
-    default: "1 BHK",
+    required: true,
   },
   floor_plan: {
     type: Array,

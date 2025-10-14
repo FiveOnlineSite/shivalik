@@ -105,7 +105,9 @@ import MetaData from './pages/admin/MetaData/MetaData';
 import AddMetaData from './pages/admin/MetaData/AddMetaData';
 import EditMetaData from './pages/admin/MetaData/EditMetaData';
 import ProjectEnquiry from './pages/admin/Projects/ProjectEnquiry';
-
+import CSRBanners from './pages/admin/CSRBanners/CSRBanners';
+import AddCSRBanners from './pages/admin/CSRBanners/AddCSRBanners';
+import EditCSRBanners from './pages/admin/CSRBanners/EditCSRBanners';
 
 const App = () => {
   return (
@@ -249,6 +251,10 @@ const App = () => {
           <Route path="edit/meta-data/:id" element={<EditMetaData />} />
 
           <Route path="project-enquiries" element={<ProjectEnquiry />} />
+
+          <Route path="csr-banners" element={<CSRBanners />} />
+          <Route path="add/csr-banners" element={<AddCSRBanners />} />
+          <Route path="edit/csr-banners/:id" element={<EditCSRBanners />} />
 
           </Route>
          </Routes>

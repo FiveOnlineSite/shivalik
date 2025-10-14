@@ -334,7 +334,7 @@ const {name} = useParams()
               <div className='row g-0'>
       {projectFeatures && projectFeatures.map((feature) => (
 
-                <div className='col-lg-6' key={feature._id}>
+                <div className='col-lg-6 pe-4' key={feature._id}>
                   <div className={`${styles.iconsProjectList} row align-items-center g-0`}>
                         <div className='col-lg-2 col-2 pe-2'>
                           {feature.image?.[0]?.filepath && (

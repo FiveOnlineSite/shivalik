@@ -39,7 +39,7 @@ app.get("/api", (req, res) => {
 });
 
 app.use("/api/auth", Route.authRoute);
-app.use("/api/home-banner", Route.homeRoute);
+app.use("/api/home-banner", Route.homeBannerRoute);
 app.use("/api/counter", Route.counterRoute);
 app.use("/api/testimonial", Route.testimonialRoute);
 app.use("/api/banner", Route.bannerRoute);
@@ -68,6 +68,7 @@ app.use("/api/current-status", Route.currentStatusRoute);
 app.use("/api/location", Route.locationRoute);
 app.use("/api/meta-data", Route.metaDataRoute);
 app.use("/api/project-enquiry", Route.projectEnquiryRoute);
+app.use("/api/csr-banner", Route.csrBannerRoute);
 
 connectDb();
 

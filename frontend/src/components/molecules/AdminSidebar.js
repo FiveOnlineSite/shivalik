@@ -102,11 +102,25 @@ const AdminSidebar = () => {
             ]}
           />
 
-           <li>
-            <NavLink to="/admin/edit/csr" title="CSR">
-              <span className="las la-cogs"></span> <span>CSR</span>
-            </NavLink>
-          </li>
+          <SidebarAccordion
+            title="CSR"
+            iconClass="las la-home"
+            isOpen={openAccordion === "csr"}
+            toggleOpen={() => handleAccordionToggle("csr")}
+            links={[
+              {
+                to: "/admin/csr-banners",
+                linkIcon: "las la-home",
+                label: "CSR Banners",
+              },
+              {
+                to: "/admin/edit/csr",
+                linkIcon: "las la-home",
+                label: "CSR",
+              },
+              
+            ]}
+          />
 
            <li>
             <NavLink to="/admin/edit/stamp-duty-calculator" title="Stamp Duty Calculator">

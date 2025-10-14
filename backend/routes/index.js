@@ -1,5 +1,5 @@
 const authRoute = require("./authRoute")
-const homeRoute = require("./home/homeBannerRoute")
+const homeBannerRoute = require("./home/homeBannerRoute")
 const counterRoute = require("./home/counterRoute")
 const testimonialRoute = require("./home/testimonialsRoute")
 const bannerRoute = require("./bannerRoute")
@@ -28,10 +28,11 @@ const currentStatusRoute = require("./projectDetails/currentStatusRoute")
 const locationRoute = require("./projectDetails/locationRoute")
 const metaDataRoute = require("./metaDataRoute")
 const projectEnquiryRoute = require("./projects/projectEnquiryRoute")
+const csrBannerRoute = require("./csrBannerRoute")
 
 module.exports = {
     authRoute,
-    homeRoute,
+    homeBannerRoute,
     counterRoute,
     testimonialRoute,
     bannerRoute,
@@ -59,5 +60,6 @@ module.exports = {
     currentStatusRoute,
     locationRoute,
     metaDataRoute,
-    projectEnquiryRoute
+    projectEnquiryRoute,
+    csrBannerRoute
 }
