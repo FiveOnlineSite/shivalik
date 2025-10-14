@@ -7,6 +7,7 @@ import homestyles from '../../style/Home.module.css';
 import styles from '../../style/Common.module.css';
 import AwardsSlider from '../../components/organisms/AwardsSlider';
 import { useLocation } from 'react-router-dom';
+import MetaDataComponent from "../../components/atoms/MetaDataComponent"
 
 const AboutUs = () => {
 
@@ -14,6 +15,7 @@ const AboutUs = () => {
     const currentPath = location.pathname;
   return (
     <Layout>
+      <MetaDataComponent/>
       {/* ABOUT US BANNER SECTION START */}
         <InnerBanner page={currentPath}/>
       {/* ABOUT US BANNER SECTION CLOSE */}

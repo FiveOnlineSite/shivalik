@@ -7,6 +7,7 @@ import ContactForm from '../../components/molecules/ContactForm';
 import OfficeLocation from '../../components/atoms/OfficeLocation';
 import styles from '../../style/Common.module.css';
 import axios from 'axios';
+import MetaDataComponent from "../../components/atoms/MetaDataComponent"
 
 const ContactUs = () => {
 
@@ -36,6 +37,8 @@ const ContactUs = () => {
     
   return (
    <Layout>
+      <MetaDataComponent/>
+
     {/* Contact us BANNER SECTION START */}
         <InnerBanner page={currentPath}/>
       {/* Contact us BANNER SECTION CLOSE */}

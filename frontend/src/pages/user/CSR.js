@@ -3,6 +3,7 @@ import CSRTabs from '../../components/molecules/CSRTabs';
 import Layout from '../../components/templates/Layout';
 import InnerBanner from '../../components/atoms/InnerBanner';
 import { useLocation } from 'react-router-dom';
+import MetaDataComponent from "../../components/atoms/MetaDataComponent"
 
 const CSR = () => {
 
@@ -11,6 +12,8 @@ const CSR = () => {
 
   return (
     <Layout>
+      <MetaDataComponent/>
+
       {/* CSR BANNER SECTION START */}
                 <InnerBanner page={currentPath}/>
 

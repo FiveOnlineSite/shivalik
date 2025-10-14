@@ -48,14 +48,10 @@ const updateMetaData = async (req, res) => {
           page: existingMetaData.page,
         });
 
-        updatedPage = page; // Assign the new page to the current banner
-      } else {
-        // No conflict, update page normally
-        updatedPage = page;
+        updatedPage = page; 
       }
     }
 
-    // Create object with updated fields
     const updatedFields = {
       page: updatedPage,
       metaTitle,
@@ -102,7 +98,6 @@ const getMetaDataByPage = async (req, res) => {
   try {
     let page = req.params.page || "";
 
-    // If nothing passed → treat as "/"
     if (page === "") {
       page = "/";
     } else if (!page.startsWith("/")) {

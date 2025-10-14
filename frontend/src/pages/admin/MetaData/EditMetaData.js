@@ -154,7 +154,7 @@ const EditMetaData = () => {
                   <option value="" disabled>
                     Select a Page
                   </option>
-                  <option value="/">Home</option>
+                  <option value="/home">Home</option>
                   <option value="/about-us">About Us</option>
                   <option value="/projects">Projects</option>
                   <option value="/csr">CSR</option>

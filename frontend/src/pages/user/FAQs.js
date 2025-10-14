@@ -5,6 +5,7 @@ import FaqsSection from '../../components/templates/FaqsLoanSection';
 import FaqsLoanSection from '../../components/templates/FaqsLoanSection';
 import FaqsNRIPIOHelpSection from '../../components/templates/FaqsNRIPIOHelpSection';
 import { useLocation } from 'react-router-dom';
+import MetaDataComponent from "../../components/atoms/MetaDataComponent"
 
 const FAQs = () => {
 
@@ -13,6 +14,8 @@ const FAQs = () => {
 
   return (
     <Layout>
+      <MetaDataComponent/>
+
       {/* FAQS BANNER SECTION START */}
         <InnerBanner page={currentPath}
 />

@@ -14,8 +14,7 @@ import BlueprintTabs from '../../components/organisms/BlueprintTabs';
 import BrochureModal from '../../components/organisms/BrochureModel';
 import axios from 'axios';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-
+import { useParams, useLocation } from 'react-router-dom';
 const GulmoharAvenue = () => {
 
 const [showModal, setShowModal] = useState(false);
@@ -174,6 +173,61 @@ const {name} = useParams()
       };
       fetchProjectGallery();
     }, [name]);
+
+    const location = useLocation(); // gives current URL (pathname, search, hash)
+
+  useEffect(() => {
+    const fetchMetaTag = async () => {
+      // Add canonical tag
+      const canonicalUrl = `${window.location.origin}${window.location.pathname}`;
+      let linkCanonical = document.querySelector('link[rel="canonical"]');
+      if (linkCanonical) {
+        linkCanonical.setAttribute("href", canonicalUrl);
+      } else {
+        linkCanonical = document.createElement("link");
+        linkCanonical.rel = "canonical";
+        linkCanonical.href = canonicalUrl;
+        document.head.appendChild(linkCanonical);
+      }
+
+      try {
+        const apiUrl = process.env.REACT_APP_API_URL;
+
+        let page = location.pathname;
+
+        const response = await axios.get(`${apiUrl}/api/project/project/${name}`);
+        const metaTag = response.data.banner;
+
+        document.title = metaTag.metaTitle || "Default Title";
+
+        let metaDescription = document.querySelector('meta[name="description"]');
+        if (metaDescription) {
+          metaDescription.setAttribute("content", metaTag.metaDescription || "");
+        } else {
+          metaDescription = document.createElement("meta");
+          metaDescription.name = "description";
+          metaDescription.content = metaTag.metaDescription || "";
+          document.head.appendChild(metaDescription);
+        }
+
+        // Meta keywords
+        let metaKeyword = document.querySelector('meta[name="keywords"]');
+        if (metaKeyword) {
+          metaKeyword.setAttribute("content", metaTag.metaKeyword || "");
+        } else {
+          metaKeyword = document.createElement("meta");
+          metaKeyword.name = "keywords"; 
+          metaKeyword.content = metaTag.metaKeyword || "";
+          document.head.appendChild(metaKeyword);
+        }
+      } catch (error) {
+        console.error("Error fetching meta tag:", error);
+      }
+    };
+
+    fetchMetaTag();
+  }, [location]);
+
 
   return (
     <Layout>
@@ -442,20 +496,12 @@ const {name} = useParams()
             </div>
             )}
           </div>
-  ))}
+          ))}
         </div>
       </section>
-      {/* Well connected to all that is important section close */}
-
-      {/* Project Gallery section start */}
-      
-
+    
             <GalleryGrid />
          
-      
-      {/* Project Gallery section close */}
-
-      {/* Key Features Section Start */}
       <TestimonialsSection />
       {/* Key Features Section Close */}
 
@@ -497,7 +543,8 @@ const {name} = useParams()
       {/*  */}
 
       {/* rera section start */}
-      <section className={`${styles.reraSection} mb-5`}>
+      {projectDisclaimer && projectDisclaimer.length > 0 && (
+<section className={`${styles.reraSection} mb-5`}>
         <div className='container-fluid'>
       {projectDisclaimer && projectDisclaimer.map((disclaimer) => (
 
@@ -510,7 +557,7 @@ const {name} = useParams()
                 <div className='col-lg-3 col-md-3 col-sm-3 col-4'>
                   {disclaimer.qr?.[0]?.filepath && (<img src={disclaimer.qr?.[0]?.filepath} width='100%' alt={disclaimer.alt} />)}
                   </div>
-                <div className='col-lg-3 col-md-3 col-sm-3 col-4'><img src='images/maharera.png' width='100%' /></div>
+                <div className='col-lg-3 col-md-3 col-sm-3 col-4'><img src='/images/maharera.png' width='100%' /></div>
                 <div className='col-lg-6'>
                   <p className='mb-0'>RERA Registeration No.: {disclaimer.registration_no}</p>
                   <p className=''><a href="maharerait.mahaonline.gov.in" className='text-dark text-decoration-none' target='_blank'>maharerait.mahaonline.gov.in</a></p>
@@ -521,6 +568,8 @@ const {name} = useParams()
       ))}
         </div>
       </section>
+      )}
+      
       {/* rera section close */}
 
     </Layout>

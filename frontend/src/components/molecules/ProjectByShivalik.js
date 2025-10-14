@@ -4,15 +4,19 @@ import styles from '../../style/Common.module.css';
 import { ArrowRightAlt } from '@mui/icons-material';
 
 const ProjectByShivalik = ({
-  item, index// Full JSX button (e.g., <a>...</a>) passed from parent
+  item, index
 }) => {
   return (
     <div className='col-lg-6 mb-5'>
       <div className={`${styles.projectPicture} position-relative mb-3`}>
         {item.image?.[0]?.filepath && (
         <img src={item.image?.[0]?.filepath} width='100%' style={{height: "390px", objectFit: "contain"}} alt={item.alt} />
-
         )}
+
+          <span className='overlayText'>
+            Artistic impression for representation purpose only
+          </span>
+
         {item.banner_alt && (
     <div className={styles.projectButton}>
                      <a

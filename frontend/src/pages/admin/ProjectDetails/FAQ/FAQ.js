@@ -54,7 +54,7 @@ const ProjectFAQ = () => {
         ProjectFAQ.filter((ProjectFAQ) => ProjectFAQ._id !== id)
       );
       setTimeout(() => {
-        navigate("/admin/faq");
+        navigate("/admin/project-faqs");
       }, 3000);
       toast.success("FAQ deleted successfully!");
 

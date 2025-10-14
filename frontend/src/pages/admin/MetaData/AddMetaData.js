@@ -114,7 +114,7 @@ setValidationError("")
                   </option>
 
                   {/* Static pages */}
-                  <option value="/">Home</option>
+                  <option value="/home">Home</option>
                   <option value="/about-us">About Us</option>
                   <option value="/projects">Projects</option>
                   <option value="/csr">CSR</option>

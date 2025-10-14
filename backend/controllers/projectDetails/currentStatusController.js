@@ -319,9 +319,19 @@ const getStatus = async (req, res) => {
 const getStatuses = async (req, res) => {
   try {
     const Statuses = await CurrentStatusModel.find()
-      .populate("project", "title")
-       .sort({ "project.title": 1, date: -1 }) 
-      .lean();
+  .populate("project", "title")
+  .lean();
+
+Statuses.sort((a, b) => {
+  // Sort by project title first (ascending)
+  const titleA = a.project?.title?.toLowerCase() || "";
+  const titleB = b.project?.title?.toLowerCase() || "";
+  if (titleA < titleB) return -1;
+  if (titleA > titleB) return 1;
+
+  // Then sort by date (descending)
+  return new Date(b.date) - new Date(a.date);
+});;
 
     if (Statuses.length === 0) {
       return res.status(400).json({

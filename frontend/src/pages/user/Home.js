@@ -7,10 +7,14 @@ import ProjectsSection from '../../components/templates/ProjectsSection'
 import KeyFeaturesSection from '../../components/templates/KeyFeaturesSection'
 import BlogsSection from '../../components/templates/BlogsSection'
 import TestimonialsSection from '../../components/templates/TestimonialsSection'
+import MetaDataComponent from "../../components/atoms/MetaDataComponent"
 
 const Home = () => {
+
   return (
     <Layout>
+      
+    <MetaDataComponent/>
 
       {/* banner section start */}
       <Banner />

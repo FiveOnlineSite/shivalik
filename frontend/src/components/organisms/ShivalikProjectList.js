@@ -11,7 +11,6 @@ const groupBy = (arr, key) =>
     return acc;
   }, {});
 
-
 const ShivalikProjectList = ({data}) => {
 
    const grouped = groupBy(data, "news_category");
@@ -28,7 +27,6 @@ const ShivalikProjectList = ({data}) => {
              index = {index}
           />
             ))}
-            
     </div>
  ))}
     </>
