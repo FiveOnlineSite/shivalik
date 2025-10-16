@@ -252,24 +252,52 @@ const {name} = useParams()
       </section>
 
       {/* PROJECT NAV BAR SECTION START */}
-      <section className={styles.projectDetNav}>
-        <div className='container navbar-container'>
-          <div className='col-lg-12'>
-            <div className="scrollmenu text-center">
-              <a href="#about">About</a>
-              <a href="#amenities">Amenities</a>
-              <a href="#plan">Plan</a>
-              <a href="#location">Location</a>
-              <a href="#gallery">Gallery</a>
-              <a href="#client">Client Review</a>
-              <a href="#current">Current Status</a>  
-              <a href="#faq">FAQ's</a>
-              <a href="#bank">Bank Tie-ups</a>
-            </div>
-          </div>
-          
-        </div>
-      </section>
+     <section className={styles.projectDetNav}>
+  <div className="container navbar-container">
+    <div className="col-lg-12">
+      <div className="scrollmenu text-center">
+        {/* About Section */}
+        {projectAbout?.length > 0 && (
+          <a href="#about">About</a>
+        )}
+
+        {/* Amenities Section */}
+        {projectAmenities?.length > 0 && (
+          <a href="#amenities">Amenities</a>
+        )}
+
+        {/* Plan Section */}
+        {projectContent?.length > 0 && (
+          <a href="#plan">Plan</a>
+        )}
+
+        {/* Location Section */}
+        {projectLocation?.length > 0 && (
+          <a href="#location">Location</a>
+        )}
+
+        {/* Gallery Section */}
+        {projectGallery?.length > 0 && (
+          <a href="#gallery">Gallery</a>
+        )}
+
+        {/* Testimonials Section */}
+        <a href="#client">Client Review</a>
+
+        {/* Timeline / Current Status */}
+        <a href="#current">Current Status</a>
+
+        {/* FAQ Section */}
+        <a href="#faq">FAQ's</a>
+
+        {/* Bank Tie-ups */}
+        <a href="#bank">Bank Tie-ups</a>
+
+      </div>
+    </div>
+  </div>
+</section>
+
       {/* PROJECT NAV BAR SECTION CLOSE */}
 
       {/* ABOUT SECTION START */}
