@@ -115,7 +115,7 @@ const EditStatus = () => {
   } else {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: value.trim() === "" ? "" : value,
+      [name]: value,
     }));
   }
 };
@@ -352,7 +352,7 @@ const EditStatus = () => {
                           }
 
                           setErrorMessage("");
-                          
+
                           const updated = [...currentStatus];
                           updated[index].image = { file, filepath: URL.createObjectURL(file) };
 

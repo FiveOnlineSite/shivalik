@@ -41,7 +41,7 @@ const AddHomeBanner = () => {
       setIsSubmitting(false);
       return;
     }
-    if (image.file && alt.trim() === "") {
+    if (image.file && alt=== "") {
       setValidationError("Alt text is required when uploading an image.");
       setIsSubmitting(false);
       return;
@@ -52,7 +52,7 @@ const AddHomeBanner = () => {
       setIsSubmitting(false);
       return;
     }
-    if (mobileImage.file && mobileAlt.trim() === "") {
+    if (mobileImage.file && mobileAlt === "") {
       setValidationError("Alt text is required when uploading an mobile image.");
       setIsSubmitting(false);
       return;

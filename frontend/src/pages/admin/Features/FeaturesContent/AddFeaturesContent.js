@@ -60,7 +60,7 @@ const AddFeaturesContent = () => {
       return;
     }
 
-    if (image.file && alt.trim() === "") {
+    if (image.file && alt === "") {
       setValidationError("Alt text is required when uploading an image.");
       setIsSubmitting(false);
       return;

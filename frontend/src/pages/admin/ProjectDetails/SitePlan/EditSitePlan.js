@@ -110,7 +110,7 @@ const EditSitePlan = () => {
   } else {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: value.trim() === "" ? "" : value,
+      [name]: value,
     }));
   }
 };

@@ -43,7 +43,7 @@ const ext = media.file.name.split(".").pop().toLowerCase();
 const isImage = ["webp", "jpg", "jpeg", "png"].includes(ext);
 const isVideo = ["mp4"].includes(ext);
 
-if (isImage && alt.trim() === "") {
+if (isImage && alt === "") {
   setValidationError("Alt text is required for images.");
   setIsSubmitting(false);
   return;

@@ -97,7 +97,7 @@ const EditCSRBanners = () => {
     } else {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [name]: value.trim(),
+        [name]: value,
       }));
     }
   };

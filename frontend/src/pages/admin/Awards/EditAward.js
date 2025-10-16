@@ -78,7 +78,7 @@ const EditAward = () => {
     } else {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [name]: value.trim(),
+        [name]: value,
       }));
     }
   };

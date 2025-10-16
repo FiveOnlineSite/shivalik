@@ -94,7 +94,7 @@ setValidationError("");
       } else {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [name]: value.trim() === "" ? "" : value,
+        [name]: value
       }));
   }
 }

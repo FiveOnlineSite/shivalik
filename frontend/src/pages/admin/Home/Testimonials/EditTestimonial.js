@@ -87,7 +87,7 @@ const EditTestimonial = () => {
   } else {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [name]: value.trim() === "" ? "" : value,
+        [name]: value
       }));
     }
   }
@@ -121,7 +121,7 @@ const EditTestimonial = () => {
     const isImage = formData.type === "image";
   const isVideo = formData.type === "video";
 
-  if (isImage && formData.alt.trim() === "") {
+  if (isImage && formData.alt === "") {
     setValidationError("Alt text is required for images.");
     setIsSubmitting(false);
     return;
