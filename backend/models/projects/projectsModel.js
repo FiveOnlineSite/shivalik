@@ -18,6 +18,9 @@ const ProjectsSchema = new mongoose.Schema({
   excerpt: {
     type: String,
   },
+  disclaimer: {
+    type: String,
+  },
   image: {
     type: Array,
     required: true,

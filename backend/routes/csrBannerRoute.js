@@ -1,4 +1,4 @@
-const CSRBannerController = require("../controllers/CSRBannerController");
+const CSRBannerController = require("../controllers/csrBannerController");
 const express = require("express");
 const adminMiddleware = require("../middleware/adminMiddleware");
 const route = express.Router();

@@ -37,6 +37,7 @@ const createProject = async (req, res) => {
       banner_alt,
       mobile_banner_alt,
       metaTitle,
+      disclaimer,
       metaDescription,
       metaKeyword
     } = req.body;
@@ -126,7 +127,8 @@ const createProject = async (req, res) => {
       sequence: newSeq,
       metaTitle,
       metaDescription,
-      metaKeyword
+      metaKeyword,
+      disclaimer
     });
 
     await newProject.save();
@@ -160,6 +162,7 @@ const updateProject = async (req, res) => {
       metaKeyword,
       removeBanner,
       removeMobileBanner,
+      disclaimer
     } = req.body;
 
     const project = await ProjectsModel.findById(_id);
@@ -173,10 +176,13 @@ const updateProject = async (req, res) => {
     project.completion_date = completion_date || project.completion_date;
     project.excerpt = excerpt || project.excerpt;
     project.alt = alt || project.alt;
+    project.disclaimer = disclaimer || project.disclaimer;
+
     project.banner_alt = banner_alt || project.banner_alt;
     project.mobile_banner_alt = mobile_banner_alt || project.mobile_banner_alt;
     project.project_category = project_category || project.project_category;
     project.metaTitle = metaTitle || project.metaTitle;
+    
     project.metaDescription = metaDescription || project.metaDescription;
     project.metaKeyword = metaKeyword || project.metaKeyword;
 

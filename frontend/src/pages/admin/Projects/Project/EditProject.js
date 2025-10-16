@@ -12,6 +12,8 @@ const EditProject = () => {
     const [formData, setFormData] = useState({
          title: "",
          alt: "",
+         disclaimer: "",
+
          image: {
            file: "",
            filepath: "",
@@ -71,6 +73,8 @@ const EditProject = () => {
           },
           location: projectData.location || "",
           title: projectData.title || "",
+          disclaimer: projectData.disclaimer || "",
+
           excerpt: projectData.excerpt,
 
           project_category: projectData.project_category || "",
@@ -210,6 +214,8 @@ if (hasAnyField && !hasAllFields) {
     formDataToSend.append("sequence", formData.sequence || "");
     formDataToSend.append("project_category", formData.project_category || "");
     formDataToSend.append("metaTitle", formData.metaTitle || "");
+    formDataToSend.append("disclaimer", formData.disclaimer || "");
+
     formDataToSend.append("metaDescription", formData.metaDescription || "");
     formDataToSend.append("metaKeyword", formData.metaKeyword || "");
 
@@ -404,7 +410,17 @@ formDataToSend.append("removeMobileBanner", formData.removeMobileBanner || false
               </div>
             </div>
 
-            
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Disclaimer</label>
+                <input
+                  type="text"
+                  name="disclaimer"
+                  value={formData.disclaimer}
+                   onChange={handleChange}
+                />
+              </div>
+            </div>
 
            <>
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">

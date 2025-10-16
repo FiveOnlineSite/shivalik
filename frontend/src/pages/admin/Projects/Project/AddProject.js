@@ -15,6 +15,8 @@ const AddProject = () => {
   const [excerpt, setExcerpt] = useState("");
   const [completionDate, setCompletionDate] = useState("");
   const [alt, setAlt] = useState("");
+  const [disclaimer, setDisclaimer] = useState("");
+
   const [bannerAlt, setBannerAlt] = useState("");
   const [mobileBannerAlt, setMobileBannerAlt] = useState("");
   const [projectCategory, setProjectCategory] = useState("")
@@ -106,6 +108,8 @@ if (hasAnyField && !hasAllFields) {
     formData.append("completion_date", completionDate);
     formData.append("alt", alt);
     formData.append("metaTitle", metaTitle || "");
+    formData.append("disclaimer", disclaimer || "");
+
     formData.append("metaDescription", metaDescription || "");
     formData.append("metaKeyword", metaKeyword || "");
 
@@ -274,7 +278,17 @@ if (hasAnyField && !hasAllFields) {
               </div>
             </div>
 
-            
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="theme-form">
+                <label>Disclaimer</label>
+                <input
+                  type="text"
+                  name="disclaimer"
+                  value={disclaimer}
+                  onChange={(e) => setDisclaimer(e.target.value)}
+                />
+              </div>
+            </div>
 
           {projectCategory === "Shivalik" && (
             <>

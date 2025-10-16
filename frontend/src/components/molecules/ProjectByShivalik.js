@@ -13,9 +13,12 @@ const ProjectByShivalik = ({
         <img src={item.image?.[0]?.filepath} width='100%' style={{height: "390px", objectFit: "contain"}} alt={item.alt} />
         )}
 
-          <span className='overlayText'>
-            Artistic impression for representation purpose only
+{item.disclaimer && (
+<span className='overlayText'>
+           {item.disclaimer}
           </span>
+)}
+          
 
         {item.banner_alt && (
     <div className={styles.projectButton}>
