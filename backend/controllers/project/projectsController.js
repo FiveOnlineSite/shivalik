@@ -170,21 +170,25 @@ const updateProject = async (req, res) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    // --- Update text/meta fields ---
-    project.title = title || project.title;
-    project.location = location || project.location;
-    project.completion_date = completion_date || project.completion_date;
-    project.excerpt = excerpt || project.excerpt;
-    project.alt = alt || project.alt;
-    project.disclaimer = disclaimer || project.disclaimer;
+    // --- Update text/meta fields safely ---
+    const textFields = {
+      title,
+      location,
+      completion_date,
+      excerpt,
+      alt,
+      banner_alt,
+      mobile_banner_alt,
+      project_category,
+      metaTitle,
+      metaDescription,
+      metaKeyword,
+      disclaimer,
+    };
 
-    project.banner_alt = banner_alt || project.banner_alt;
-    project.mobile_banner_alt = mobile_banner_alt || project.mobile_banner_alt;
-    project.project_category = project_category || project.project_category;
-    project.metaTitle = metaTitle || project.metaTitle;
-    
-    project.metaDescription = metaDescription || project.metaDescription;
-    project.metaKeyword = metaKeyword || project.metaKeyword;
+    for (const [key, value] of Object.entries(textFields)) {
+      if (value !== undefined) project[key] = value; // allow empty string
+    }
 
     // --- Handle main image upload ---
     if (req.files?.image?.[0]) {
@@ -223,7 +227,7 @@ const updateProject = async (req, res) => {
     }
 
     // --- Handle sequence updates ---
-    const oldSeq = project.sequence; // store current sequence
+    const oldSeq = project.sequence;
     const newSeq = sequence !== undefined && sequence !== "" ? parseInt(sequence, 10) : oldSeq;
     const category = project_category || project.project_category;
 
@@ -232,30 +236,27 @@ const updateProject = async (req, res) => {
     }
 
     if (newSeq !== oldSeq || category !== project.project_category) {
-      // If moving within same category
       if (category === project.project_category) {
         if (newSeq < oldSeq) {
-          // Shift down sequences between newSeq and oldSeq-1
+          // Shift down
           await ProjectsModel.updateMany(
             { project_category: category, sequence: { $gte: newSeq, $lt: oldSeq } },
             { $inc: { sequence: 1 } }
           );
         } else if (newSeq > oldSeq) {
-          // Shift up sequences between oldSeq+1 and newSeq
+          // Shift up
           await ProjectsModel.updateMany(
             { project_category: category, sequence: { $gt: oldSeq, $lte: newSeq } },
             { $inc: { sequence: -1 } }
           );
         }
       } else {
-        // Moving to different category
-        // Decrement sequence in old category
+        // Moving to a different category
         await ProjectsModel.updateMany(
           { project_category: project.project_category, sequence: { $gt: oldSeq } },
           { $inc: { sequence: -1 } }
         );
 
-        // Set new sequence as last in new category
         const count = await ProjectsModel.countDocuments({ project_category: category });
         project.sequence = count + 1;
       }
@@ -268,10 +269,12 @@ const updateProject = async (req, res) => {
     await project.save();
 
     res.status(200).json({ message: "Project updated successfully", project });
-
   } catch (error) {
     console.error("Error updating project:", error);
-    res.status(500).json({ message: "Failed to update project", error: error.message });
+    res.status(500).json({
+      message: "Failed to update project",
+      error: error.message,
+    });
   }
 };
 

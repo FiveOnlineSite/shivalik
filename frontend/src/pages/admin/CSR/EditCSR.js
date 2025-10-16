@@ -108,14 +108,14 @@ if (errorMessage) {
       <div className="form-white-bg">
         <form onSubmit={handleSubmit}>
           <div className="row">
-            <div className="col-lg-12 col-12">
+            <div className="col-lg-6 col-12">
               <div className="theme-form">
                 <label>Title</label>
            <input type="text" name="title" value={formData.title} required onChange={handleChange}/>
               </div>
             </div>
 
-            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                          <div className="theme-form">
                            <label>Content</label>
                            <CKEditor
