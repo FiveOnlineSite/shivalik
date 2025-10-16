@@ -157,7 +157,9 @@ const getFAQs = async (req, res) => {
 
 const deleteFAQ = async (req, res) => {
   try {
-    const FAQs = await FAQModel.findOne({});
+    const FAQs = await FAQModel.findById({
+      _id: req.params._id,
+    });
 
     if (FAQs.length === 0) {
       return res.status(400).json({
@@ -166,9 +168,9 @@ const deleteFAQ = async (req, res) => {
     }
 
     const deletedFAQ =
-      await FAQModel.findByIdAndDelete(
-        FAQs._id
-      );
+      await FAQModel.findOneAndDelete({
+      _id: req.params._id,
+    })
 
     return res.status(200).json({
       message: "FAQ deleted successfully.",
