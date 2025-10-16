@@ -1,4 +1,4 @@
-const CSRBannerModel = require("../models/CSRBannerModel")
+const CSRBannerModel = require("../models/csrBannerModel")
 const path = require("path")
 
 const createCSRBanner = async (req, res) => {
