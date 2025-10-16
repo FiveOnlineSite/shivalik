@@ -147,6 +147,7 @@ const AddBlog = () => {
 
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <div className="theme-form">
+                
                 <label>Alt</label>
                 <input
                   type="text"

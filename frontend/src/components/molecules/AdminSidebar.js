@@ -114,7 +114,7 @@ const AdminSidebar = () => {
                 label: "CSR Banners",
               },
               {
-                to: "/admin/edit/csr",
+                to: "/admin/csr",
                 linkIcon: "las la-home",
                 label: "CSR",
               },

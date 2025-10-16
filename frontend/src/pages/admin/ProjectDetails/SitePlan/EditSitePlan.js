@@ -223,23 +223,13 @@ const EditSitePlan = () => {
              <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <div className="theme-form">
                 <label>Site Plan</label>
-                <select
+                <input
+                  type="text"
                   name="site_plan"
-                  required
                   value={formData.site_plan}
+                  required
                   onChange={handleChange}
-                  className="form-control"
-                  disabled
-                >
-                  <option selected disabled value="">Select Site Plan</option>
-                  
-                    <option value="1 BHK">
-                      1 BHK
-                    </option>
-                    <option value="2 BHK">
-                      2 BHK
-                    </option>
-                </select>
+                />
               </div>
             </div>
 

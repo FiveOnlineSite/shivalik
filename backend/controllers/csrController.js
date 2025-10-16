@@ -2,12 +2,11 @@ const CsrModel = require("../models/csrModel")
 
 const createCSR = async (req, res) => {
   try {
-    const { health_camp_description, women_empowerment_description, educational_description } = req.body;
+    const { title, description} = req.body;
 
     const newCsr = new CsrModel({
-      health_camp_description,
-      women_empowerment_description,
-      educational_description
+      title,
+      description,
     });
 
     await newCsr.save();
@@ -25,9 +24,10 @@ const createCSR = async (req, res) => {
 
 const updateCSR = async (req, res) => {
   try {
-    const { health_camp_description, women_empowerment_description, educational_description} = req.body;
+    const { title, description} = req.body;
+    const csrId = req.params._id;
 
-    const currentCSR = await CsrModel.findOne({});
+    const currentCSR = await CsrModel.findById(req.params._id);
     if (!currentCSR) {
       return res
         .status(404)
@@ -36,11 +36,9 @@ const updateCSR = async (req, res) => {
 
      const updatedFields = {};
 
-    if (typeof health_camp_description !== "undefined")
-      updatedFields.health_camp_description = health_camp_description;
-    if (typeof women_empowerment_description !== "undefined")
-      updatedFields.women_empowerment_description = women_empowerment_description;
-    if (typeof educational_description !== "undefined") updatedFields.educational_description = educational_description;
+    if (typeof title !== "undefined")
+      updatedFields.title = title;
+    if (typeof description !== "undefined") updatedFields.description = description;
 
     const updatedCSR =
       await CsrModel.findByIdAndUpdate(currentCSR._id, 
@@ -60,7 +58,7 @@ const updateCSR = async (req, res) => {
 
 const getCSR = async (req, res) => {
   try {
-    const csr = await CsrModel.findOne({})
+    const csr = await CsrModel.findById(req.params._id)
 
     if (!csr) {
       return res.status(400).json({
@@ -78,10 +76,30 @@ const getCSR = async (req, res) => {
   }
 };
 
+const getCSRs = async (req, res) => {
+  try {
+    const csr = await CsrModel.find();
+
+    if (csr.length === 0) {
+      return res.status(400).json({
+        message: "No csr are created. Kindly create one.",
+      });
+    }
+    return res.status(200).json({
+      message: "All csr fetched successfully.",
+      count: csr.length,
+      csr,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `Error in fetching csr due to ${error.message}`,
+    });
+  }
+};
 
 const deleteCSR = async (req, res) => {
   try {
-    const Csr = await CsrModel.findOne({});
+    const Csr = await CsrModel.findById({ _id: req.params._id,});
 
     if (Csr.length === 0) {
       return res.status(400).json({
@@ -90,9 +108,9 @@ const deleteCSR = async (req, res) => {
     }
 
     const deletedCsr =
-      await CsrModel.findByIdAndDelete(
-        Csr._id
-      );
+      await CsrModel.findOneAndDelete({
+              _id: req.params._id,
+      });
 
     return res.status(200).json({
       message: "CSR deleted successfully.",
@@ -109,5 +127,6 @@ module.exports = {
   createCSR,
   updateCSR,
   getCSR,
+  getCSRs,
   deleteCSR,
 };

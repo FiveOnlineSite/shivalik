@@ -17,9 +17,9 @@ const createSitePlan = async (req, res) => {
       return res.status(400).json({ message: "project not found" });
     }
 
-    if (!["1 BHK", "2 BHK"].includes(site_plan)) {
-      return res.status(400).json({ message: "Site plan must be '1 BHK' or '2 BHK'" });
-    }
+    // if (!["1 BHK", "2 BHK"].includes(site_plan)) {
+    //   return res.status(400).json({ message: "Site plan must be '1 BHK' or '2 BHK'" });
+    // }
 
     const sitePlan = await SitePlanModel.findOne({ project, site_plan });
     if (sitePlan) {
@@ -66,7 +66,6 @@ const createSitePlan = async (req, res) => {
           .status(400)
           .json({ message: "Alt text is required for unit plan." });
       }
-     
 
       unitPlanData =  {
                  filename: path.basename(unitPlanFile.key), // "1756968423495-2.jpg"
@@ -104,10 +103,10 @@ const updateSitePlan = async (req, res) => {
     const existingSitePlan = await SitePlanModel.findById(_id);
     if (!existingSitePlan) return res.status(404).json({ message: "existingSitePlan not found" });
 
-    const sitePlan = site_plan || existingSitePlan.site_plan;
-    if (!["1 BHK", "2 BHK"].includes(sitePlan)) {
-      return res.status(400).json({ message: "Invalid site plan. Use '1 BHK' or '2 BHK'." });
-    }
+    // const sitePlan = site_plan || existingSitePlan.site_plan;
+    // if (!["1 BHK", "2 BHK"].includes(sitePlan)) {
+    //   return res.status(400).json({ message: "Invalid site plan. Use '1 BHK' or '2 BHK'." });
+    // }
 
     if (project) {
       const duplicate = await SitePlanModel.findOne({
@@ -155,7 +154,8 @@ const updateSitePlan = async (req, res) => {
       ];
     }
 
-    existingSitePlan.site_plan = sitePlan;
+    // existingSitePlan.site_plan = sitePlan;
+    if (site_plan !== undefined) existingSitePlan.site_plan = site_plan;
 
     if (floor_plan_alt !== undefined) existingSitePlan.floor_plan_alt = floor_plan_alt;
    if (unit_plan_alt !== undefined) existingSitePlan.unit_plan_alt = unit_plan_alt;

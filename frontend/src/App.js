@@ -49,7 +49,7 @@ import EditFAQCategory from './pages/admin/FAQ/FAQCategory/EditFAQCategory';
 import FAQContent from './pages/admin/FAQ/FAQContent/FAQContent';
 import AddFAQContent from './pages/admin/FAQ/FAQContent/AddFAQContent';
 import EditFAQContent from './pages/admin/FAQ/FAQContent/EditFAQContent';
-import EditCSR from './pages/admin/EditCSR';
+
 import StampDuty from './pages/admin/StampDuty';
 import NewsWorthy from './pages/admin/NewsWorthy/NewsWorthy';
 import AddNewsWorthy from './pages/admin/NewsWorthy/AddNewsWorthy';
@@ -108,6 +108,9 @@ import ProjectEnquiry from './pages/admin/Projects/ProjectEnquiry';
 import CSRBanners from './pages/admin/CSRBanners/CSRBanners';
 import AddCSRBanners from './pages/admin/CSRBanners/AddCSRBanners';
 import EditCSRBanners from './pages/admin/CSRBanners/EditCSRBanners';
+import AdminCSR from './pages/admin/CSR/CSR';
+import AddCSR from './pages/admin/CSR/AddCSR';
+import EditCSR from './pages/admin/CSR/EditCSR';
 
 const App = () => {
   return (
@@ -255,6 +258,10 @@ const App = () => {
           <Route path="csr-banners" element={<CSRBanners />} />
           <Route path="add/csr-banners" element={<AddCSRBanners />} />
           <Route path="edit/csr-banners/:id" element={<EditCSRBanners />} />
+
+          <Route path="csr" element={<AdminCSR />} />
+          <Route path="add/csr" element={<AddCSR />} />
+          <Route path="edit/csr/:id" element={<EditCSR />} />
 
           </Route>
          </Routes>

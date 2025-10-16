@@ -6,28 +6,25 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const BlueprintTabs = () => {
-    const [plans, setPlans] = useState([]);
-const [planTitles, setPlanTitles] = useState([]);
-const {name} = useParams()
+  const [plans, setPlans] = useState([]);
+  const [planTitles, setPlanTitles] = useState([]);
+  const {name} = useParams()
   const [activeTab, setActiveTab] = useState(null);
-const [activeSubTab, setActiveSubTab] = useState(null);
-const [unlocked, setUnlocked] = useState({});
+  const [activeSubTab, setActiveSubTab] = useState(null);
+  const [unlocked, setUnlocked] = useState({});
   const [formVisible, setFormVisible] = useState(false);
   const formRef = useRef();
-   const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
   const [errors, setErrors] = useState({});
   
-
   const [otp, setOtp] = useState('');
   const [enteredOtp, setEnteredOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const [timer, setTimer] = useState(0);
   const [isSendingOtp, setIsSendingOtp] = useState(false);
-const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-
-    // Load environment variables
   const API_URL = process.env.REACT_APP_API_URL;
   const API_TOKEN = "68|ncbSSlsNVuTuoPIyYMSFKXZ6UWXMrkgXXWTALQnH008f96ac";
   const TEMPLATE_ID = "1707175318595098816";
@@ -39,7 +36,6 @@ const [isSubmitting, setIsSubmitting] = useState(false);
       const apiUrl = process.env.REACT_APP_API_URL;
       const response = await axios.get(`${apiUrl}/api/site-plan/project/${name}`);
 
-      // Default to [] if SitePlan is missing
       const sitePlans = response.data?.SitePlan || [];
 
       if (sitePlans.length === 0) {
@@ -47,7 +43,6 @@ const [isSubmitting, setIsSubmitting] = useState(false);
         return;
       }
 
-      // Transform into plans + titles
       const newPlans = {};
       const newTitles = {};
 
@@ -68,7 +63,6 @@ const [isSubmitting, setIsSubmitting] = useState(false);
       setPlans(newPlans);
       setPlanTitles(newTitles);
 
-      // set defaults
       const firstBhk = Object.keys(newPlans)[0];
       if (firstBhk) {
         setActiveTab(firstBhk);
@@ -103,12 +97,10 @@ const [isSubmitting, setIsSubmitting] = useState(false);
     return errors;
   };
 
-
  const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const generateOtp = () => Math.floor(1000 + Math.random() * 9000).toString();
 
-  // Send OTP
   const handleSendOtp = async () => {
     if (!formData.phone || formData.phone.length !== 10) {
       return;
@@ -125,8 +117,9 @@ const [isSubmitting, setIsSubmitting] = useState(false);
       const response = await axios.get(apiUrl);
       if (response.data.status === 'success') {
         setOtpSent(true);
-        setTimer(30); // 2 minutes
+        setTimer(30);
       } 
+      
     } catch (err) {
       console.error('OTP Send Error:', err);
      } finally {
@@ -140,7 +133,6 @@ const [isSubmitting, setIsSubmitting] = useState(false);
      } 
   };
 
-  // Submit form
   const handleSubmit = async e => {
     e.preventDefault();
     const validationErrors = validate();
@@ -161,7 +153,6 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 
       console.log('Email sent successfully!', response);
 
-        // Unlock all BHKs and sub-tabs
         const updated = {};
         Object.keys(plans).forEach((bhk) => {
           Object.keys(plans[bhk]).forEach((subTab) => {
@@ -173,7 +164,6 @@ const [isSubmitting, setIsSubmitting] = useState(false);
         sessionStorage.setItem('blueprintUnlocked', JSON.stringify(updated));
         setFormVisible(false);
 
-      // Reset
       setFormData({ name: '', email: '', phone: '' });
       setOtp('');
       setEnteredOtp('');
@@ -185,7 +175,6 @@ const [isSubmitting, setIsSubmitting] = useState(false);
       console.error('Form Submit Error:', err);
      }
   };
-
 
   const isUnlocked = unlocked[`${activeTab}-${activeSubTab}`];
 
@@ -199,7 +188,9 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 
   return (
     <div className="blueprint-wrapper">
+
       {/* Horizontal Tabs */}
+      {Object.keys(plans).length > 1 && (
       <div className="horizontal-tabs">
         {Object.keys(plans).map((tab) => (
           <button
@@ -214,6 +205,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
           </button>
         ))}
       </div>
+      )}
 
       {/* Main Layout */}
       <div className="blueprint-body">
@@ -232,7 +224,6 @@ const [isSubmitting, setIsSubmitting] = useState(false);
         </div>
         )}
 
-        {/* Image + Title Section */}
         {activeTab && activeSubTab && (
         <div className="blueprint-right-section">
           <div className={`blueprint-image-wrapper ${isUnlocked ? 'unblurred' : 'blurred'}`}>

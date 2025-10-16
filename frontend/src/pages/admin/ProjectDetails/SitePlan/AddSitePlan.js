@@ -153,20 +153,13 @@ const AddSitePlan = () => {
              <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <div className="theme-form">
                 <label>Site Plan</label>
-                <select
-                  required
+                <input
+                  type="text"
+                  name="site_plan"
                   value={sitePlan}
+                  required
                   onChange={(e) => setSitePlan(e.target.value)}
-                  className="form-control"
-                >
-                  <option selected disabled value="">Select Site Plan</option>
-                    <option value="1 BHK">
-                      1 BHK
-                    </option>
-                    <option value="2 BHK">
-                      2 BHK
-                    </option>
-                </select>
+                />
               </div>
             </div>
 
