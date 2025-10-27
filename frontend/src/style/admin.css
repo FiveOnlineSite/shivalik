@@ -74,8 +74,16 @@ a:hover {
 }
 
 .admin-logo {
-  height: 30px;
+  height: 90%;
+  width: auto;
 }
+
+
+#nav-toggle:checked + .sidebar .sidebar-brand .admin-logo {
+  height: 90%;
+  width: 100%;
+}
+
 .sidebar-menu a {
   padding-left: 0;
   display: block;
@@ -115,7 +123,7 @@ a:hover {
 #nav-toggle:checked + .sidebar .sidebar-brand,
 #nav-toggle:checked + .sidebar li {
   padding-left: 1.2rem;
-  text-align: center;
+  text-align: start;
 }
 #nav-toggle:checked .sidebar li a {
   padding-left: 5px;
@@ -723,7 +731,7 @@ table tbody td img{
   .sidebar .sidebar-brand,
   .sidebar li {
     padding-left: 1rem;
-    text-align: center;
+    text-align: start;
   }
   .sidebar li a {
     padding-left: 0rem;

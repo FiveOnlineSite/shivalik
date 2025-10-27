@@ -31,7 +31,7 @@ const AdminSidebar = () => {
         <NavLink to="/admin/dashboard">
           <img
             className="admin-logo"
-            src="/images/logo.png"
+            src="/images/logo.svg"
             alt="Logo"
             loading="lazy"
           />{" "}
