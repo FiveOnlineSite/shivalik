@@ -1111,6 +1111,15 @@ div.scrollmenu a:hover, div.scrollmenu a:active,  div.scrollmenu a:focus {
     z-index: 2;
 }
 
+.odometer.odometer-auto-theme .odometer-digit .odometer-value, .odometer.odometer-theme-default .odometer-digit .odometer-value{
+   font-family: "Abhaya Libre", serif !important;
+}
+
+.counter-text div{
+  font-family: "Helvetica";
+  color: #5d5d5d;
+}
+
 @media (max-width: 768px) {
   .timeline-container {
     overflow-x: auto;

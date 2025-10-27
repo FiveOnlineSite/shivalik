@@ -25,6 +25,7 @@
     "highcharts": "^12.3.0",
     "highcharts-react-official": "^3.2.2",
     "lexkit": "^0.0.33",
+    "odometer": "^0.4.8",
     "react": "^19.1.0",
     "react-apexcharts": "^1.7.0",
     "react-dom": "^19.1.0",
