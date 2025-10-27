@@ -19,7 +19,7 @@ const ProjectsSection = () => {
         <div className='row align-items-end'>
         <div className='col-lg-6 mb-3'>
                 <div className={homestyles.highlightProject}>
-                    <img src='images/gulmohar-avenue.jpg' width='100%' />
+                    <img src='/images/gulmohar-avenue.jpg' width='100%' />
                 </div>
             </div>
             <div className='col-lg-6 mb-3'>
@@ -30,7 +30,7 @@ const ProjectsSection = () => {
                     <p>Bandra has always been one of the most prestigious localities of Mumbai city and Gulmohar Avenue is nestled in this much sought-after abode. Bandra is known for its unmatched surroundings, seamless connectivity and non-stop progressive social infrastructure.</p>
                     </div>
                     <div className='col-lg-3'>
-                        <a className={styles.commonBlueButton} href='gulmohar-avenue'><ArrowRightAlt className='m-0' /></a>
+                        <a className={styles.commonBlueButton} href='/project/gulmohar-avenue'><ArrowRightAlt className='m-0' /></a>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@ const ProjectsSection = () => {
         <div className='row row-reverse align-items-end mb-5 align-bottom-section'>
         <div className='col-lg-6 mb-3 h-100'>
                 <div className={homestyles.highlightProject}>
-                    <img src='images/prabhat-darshan.jpg' width='100%' />
+                    <img src='/images/prabhat-darshan.jpg' width='100%' />
                 </div>
             </div>
             <div className='col-lg-6 mb-3 h-100 d-flex flex-column justify-content-end'>
@@ -50,14 +50,14 @@ const ProjectsSection = () => {
                     <p>Situated in one of Mumbai's city centers Prabhat Darshan is a composite building surrounded by a flourishing hub for residential, commercial, educational and social infrastructure. This project is located opposite Khar Station granting easy access to south, central and extended suburbs of Mumbai.</p>
                     </div>
                     <div className='col-lg-3'>
-                        <a className={`${styles.commonBlueButton}`} href='prabhat-darshan'><ArrowRightAlt className='m-0' /></a>
+                        <a className={`${styles.commonBlueButton}`} href='/project/prabhat-darshan'><ArrowRightAlt className='m-0' /></a>
                     </div>
                 </div>
             </div>
             </div>
         </div>
         <div className='row justify-content-start mb-5'>
-       <div className='col-lg-3'><a className={styles.commonBlueButton} href='projects'>More Projects <ArrowRightAlt /></a></div> 
+       <div className='col-lg-3'><a className={styles.commonBlueButton} href='/projects'>More Projects <ArrowRightAlt /></a></div> 
         </div>
       </div>
     </section>

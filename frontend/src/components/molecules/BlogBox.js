@@ -38,7 +38,7 @@ const BlogBox = () => {
         )}
       
       <div className={homestyles.blogLink}>
-        <a className={`${styles.commonBlogButton}`} href={`/${blog.title
+        <a className={`${styles.commonBlogButton}`} href={`/blog/${blog.title
                .toLowerCase()
                 .trim()
                 .replace(/&/g, "and")
