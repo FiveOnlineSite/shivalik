@@ -5,6 +5,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 // import pages
 import Home from './pages/user/Home'
+import Home1 from './pages/user/Home1'
+
 import AboutUs from './pages/user/AboutUs'
 import Blogs from './pages/user/Blogs';
 import ContactUs from './pages/user/ContactUs';
@@ -123,6 +125,8 @@ const App = () => {
 
  
          <Route path='/' element={<Home />} />
+         <Route path='/home1' element={<Home1 />} />
+
          <Route path='/about-us' element={<AboutUs />} />
         
           {/* blog pages internal */}
