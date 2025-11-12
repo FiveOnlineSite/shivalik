@@ -44,105 +44,90 @@ const TestimonialBox = () => {
   return (
     <div className="container">
       <Slider {...settings}>
-        {testimonials.map((testimonial, index) => {
-          const text = testimonial.content || "";
-          const sentences = text.split(".");
-          const isExpanded = expandedIndex === index;
-          const visibleSentences = isExpanded
-            ? sentences
-            : sentences.slice(0, 3);
+  {testimonials.map((testimonial, index) => {
+    const text = testimonial.content || "";
+    const isExpanded = expandedIndex === index;
+    const charLimit = 200; // Adjust this number if you want longer/shorter previews
+    const visibleText = isExpanded ? text : text.slice(0, charLimit);
 
-          return (
-            <div className="container" key={testimonial._id}>
-              <div className="row align-items-center">
-                <div className="col-lg-5">
-                  <div className={`${styles.testiImg} pt-3 pb-3`}>
-                    {testimonial.type === "image" &&
-                      testimonial.media?.filepath && (
-                        <img
-                          src={testimonial.media.filepath}
-                          width="100%"
-                          alt={testimonial.alt || ""}
-                        />
-                      )}
+    return (
+      <div className="container" key={testimonial._id}>
+        <div className="row align-items-center">
+          {/* Left: Image or Video */}
+          <div className="col-lg-5">
+            <div className={`${styles.testiImg} pt-3 pb-3`}>
+              {testimonial.type === "image" && testimonial.media?.filepath && (
+                <img
+                  src={testimonial.media.filepath}
+                  width="100%"
+                  alt={testimonial.alt || ""}
+                />
+              )}
 
-                    {testimonial.type === "video" &&
-                      testimonial.media?.filepath && (
-                        <video
-                          src={testimonial.media.filepath}
-                          width="100%"
-                          muted
-                          autoPlay
-                          playsInline
-                          controls
-                          style={{ height: "500px", objectFit: "cover" }}
-                        />
-                      )}
-                  </div>
-                </div>
-
-                {/* Right side: Text */}
-                <div className="col-lg-7">
-                  <img
-                    className="mb-3 pb-3"
-                    src="/images/Quotes.png"
-                    alt="quote"
-                  />
-                  <div className={styles.testiText}>
-                    <div className={styles.testiInfo}>
-                      <div className="mb-3">
-                        {[...Array(5)].map((_, i) => (
-                          <FontAwesomeIcon
-                            key={i}
-                            icon={faStar}
-                            style={{ fontSize: "1.2rem", color: "#F58634" }}
-                          />
-                        ))}
-                      </div>
-
-                      <div
-                        className={`testimonialText ${
-                          isExpanded ? "expanded" : ""
-                        }`}
-                      >
-                        {visibleSentences.map(
-                          (line, i) =>
-                            line.trim() && (
-                              <p
-                                key={i}
-                                dangerouslySetInnerHTML={{
-                                  __html: line.trim(),
-                                }}
-                              />
-                            )
-                        )}
-                      </div>
-
-                      {sentences.length > 3 && (
-                        <button
-                          className="readMoreBtn mt-1 ps-0"
-                          onClick={() =>
-                            setExpandedIndex(isExpanded ? null : index)
-                          }
-                        >
-                          {isExpanded ? "Read Less" : "Read More"}
-                        </button>
-                      )}
-                    </div>
-
-                    <ul className="d-flex align-items-center gap-2">
-                      <li className={styles.initialsCircle}>
-                        {getInitials(testimonial.name)}
-                      </li>
-                      <li>{testimonial.name}</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+              {testimonial.type === "video" && testimonial.media?.filepath && (
+                <video
+                  src={testimonial.media.filepath}
+                  width="100%"
+                  muted
+                  autoPlay
+                  playsInline
+                  controls
+                  style={{ height: "500px", objectFit: "cover" }}
+                />
+              )}
             </div>
-          );
-        })}
-      </Slider>
+          </div>
+
+          {/* Right: Text */}
+          <div className="col-lg-7">
+            <img className="mb-3 pb-3" src="/images/Quotes.png" alt="quote" />
+
+            <div className={styles.testiText}>
+              <div className={styles.testiInfo}>
+                {/* Stars */}
+                <div className="mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <FontAwesomeIcon
+                      key={i}
+                      icon={faStar}
+                      style={{ fontSize: "1.2rem", color: "#F58634" }}
+                    />
+                  ))}
+                </div>
+
+                {/* Testimonial text */}
+                <div className={`testimonialText ${isExpanded ? "expanded" : ""}`}>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: visibleText + (!isExpanded && text.length > charLimit ? "..." : ""),
+                    }}
+                  />
+                </div>
+
+                {/* Read More / Less Button */}
+                {text.length > charLimit && (
+                  <button
+                    className="readMoreBtn mt-1 ps-0"
+                    onClick={() => setExpandedIndex(isExpanded ? null : index)}
+                  >
+                    {isExpanded ? "Read Less" : "Read More"}
+                  </button>
+                )}
+              </div>
+
+              {/* User Info */}
+              <ul className="d-flex align-items-center gap-2">
+                <li className={styles.initialsCircle}>{getInitials(testimonial.name)}</li>
+                <li>{testimonial.name}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</Slider>
+
     </div>
   );
 };
