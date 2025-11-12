@@ -1,13 +1,13 @@
 import React from 'react';
 import Logo from '../atoms/Logo';
 import styles from '../../style/Common.module.css';
-import BlogsSection from '../templates/BlogsSection';
+import BlogsSection1 from '../templates/BlogsSection1';
 
-const Footer = () => {
+const Footer1 = () => {
   return (
 <>
      {/* Blogs section start */}
-          <BlogsSection />
+          <BlogsSection1 />
      {/* Blogs section close */}
 
     <footer className='mt-5'>
@@ -15,7 +15,7 @@ const Footer = () => {
         <div className='row mb-5'>
           <div className='col-lg-4'>
             <div className='footer_logo mb-3'><Logo /></div>
-            <p className='mb-3'>Shivalik Venture’s New residential projects in Bandra and Khar, built with integrity, driven by purpose.</p>
+            <p className='mb-3'>Building homes with integrity, driven by purpose. At Shivalik, every square foot speaks of trust.</p>
             <div className={styles.socialIcon}>
               <ul className='d-flex'>
               <li><a href='https://www.youtube.com/channel/UCzGodQJIXPM4yUl4BHY1Hug' className='icon-you-one' target='_blank'><i class="fa-brands fa-youtube"></i></a></li>
@@ -57,4 +57,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default Footer1

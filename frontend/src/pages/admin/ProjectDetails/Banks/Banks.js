@@ -36,7 +36,7 @@ const Banks = () => {
       const apiUrl = process.env.REACT_APP_API_URL;
 
       const response = await axios.delete(
-        `${apiUrl}/api/banks/${id}`,
+        `${apiUrl}/api/bank/${id}`,
         {
           headers: {
             Authorization: `Bearer ${access_token}`,

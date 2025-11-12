@@ -9,7 +9,7 @@ const CalculatorBox = () => {
   const [gender, setGender] = useState(''); // Start with blank
   const [error, setError] = useState('');
   const state = 'Maharashtra';
-  const maxValue = 1000000000; // 100 crores
+  const maxValue = 1000000000;
 
   const handleChange = (e) => {
     const value = e.target.value;

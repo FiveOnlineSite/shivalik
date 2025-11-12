@@ -2,7 +2,7 @@ import React from 'react'
 import Layout from '../../components/templates/Layout'
 import Banner from '../../components/molecules/Banner'
 import Counters from '../../components/organisms/Counters'
-import AboutUsSection from '../../components/templates/AboutUsSection'
+import AboutUsSection1 from '../../components/templates/AboutUsSection1'
 import ProjectsSection1 from '../../components/templates/ProjectsSection1'
 import KeyFeaturesSection from '../../components/templates/KeyFeaturesSection'
 import BlogsSection from '../../components/templates/BlogsSection'
@@ -25,7 +25,7 @@ const Home1 = () => {
       {/* Counter section close */}
 
       {/* You’re in good hands section start */}
-      <AboutUsSection />
+      <AboutUsSection1 />
       {/* You’re in good hands section close */}
 
       {/* Projects Section Start */}

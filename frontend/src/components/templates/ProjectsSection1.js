@@ -18,7 +18,7 @@ const ProjectsSection1 = () => {
         </div>
         <div className='row align-items-end'>
         <div className='col-lg-6 mb-3'>
-                 <div className={homestyles.highlightProject}>
+                 <div className={homestyles.highlightProject1}>
                                     <img src='/images/gulmohar-avenue.jpg' width='100%' />
                                 </div>
 
@@ -39,7 +39,7 @@ const ProjectsSection1 = () => {
         </div>
         <div className='row row-reverse align-items-end mb-5 align-bottom-section'>
         <div className='col-lg-6 mb-3 h-100'>
-                <div className={homestyles.highlightProject}>
+                <div className={homestyles.highlightProject1}>
                     <img src='/images/prabhat-darshan.jpg' width='100%' />
                 </div>
             </div>

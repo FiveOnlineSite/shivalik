@@ -63,7 +63,7 @@ const TestimonialBox1 = () => {
                           src={testimonial.media.filepath}
                           width="100%"
                           alt={testimonial.alt || ""}
-                          className={`${styles1.testiImg}`}
+                          className={`${styles1.testiImg1}`}
                         />
                       )}
 

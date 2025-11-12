@@ -71,7 +71,7 @@ const ProjectsTabSection = () => {
             </div>
         </div>
         <div className='col-lg-6 offset-lg-1'>
-            <p>Each project by Shivalik is a testament to our vision of purposeful urban living. Thoughtfully located, meticulously designed, and built to last, our developments blend functionality with elegance—offering residents not just homes, but a lifestyle anchored in comfort, connectivity, and community.</p>
+            <p>Each project by Shivalik is a testament to our vision of purposeful urban living. Thoughtfully located housing in Mumbai’s prime location, meticulously designed, and built to last, our developments blend functionality with elegance, offering residents not just homes, but a lifestyle anchored in comfort, connectivity, and community.</p>
         </div>
       </div>
       {/*  */}

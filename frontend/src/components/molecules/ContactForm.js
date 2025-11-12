@@ -221,7 +221,7 @@ if (!isAgreed) {
           </div>
 
           <div class="form-check"><input class="form-check-input border border-secondary" id="agreeCheck" type="checkbox" name="agree" required checked={isAgreed}
-    onChange={(e) => setIsAgreed(e.target.checked)}/><label class="form-check-label label-one" htmlFor="agreeCheck"><p>By submitting an enquiry, I authorize Shivalik ventures to contact me via Call, SMS, RCS, WhatsApp, Emailer or any other relevant medium. Also by submitting, I agree to the<a class="sa-txt" href="/terms-and-conditions" data-discover="true"> Terms &amp; Conditions </a>and<a class="sa-txt" href="/privacy-policy" data-discover="true"> Privacy Policy</a>.</p></label></div>
+    onChange={(e) => setIsAgreed(e.target.checked)}/><label class="form-check-label label-one" htmlFor="agreeCheck"><p>By submitting an enquiry, I authorize Shivalik Ventures to contact me via Call, SMS, RCS, WhatsApp, Email, or any other relevant medium. Also by submitting, I agree to the <a class="sa-txt" href="/terms-and-conditions" data-discover="true"> Terms &amp; Conditions </a>and<a class="sa-txt" href="/privacy-policy" data-discover="true"> Privacy Policy</a>.</p></label></div>
 
            {!otpSent && (
     <button

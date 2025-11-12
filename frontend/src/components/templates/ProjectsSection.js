@@ -12,7 +12,8 @@ const ProjectsSection = () => {
             <div className='col-lg-10'>
                 <GradientLine />
                 <h3 className={styles.sectionTitle}>Signature Developments</h3>
-                <p>Driven by purpose and precision, our projects stand as milestones in Mumbai's evolving skyline—designed to offer comfort, convenience, and community.</p>
+                <p>Driven by purpose and precision, our projects redefine Mumbai’s skyline with their contemporary design and thoughtful execution.</p>
+                <p>They offer comfort, convenience, and a strong sense of community for those seeking the best real estate investment in Mumbai. </p>
             </div>
             
         </div>
@@ -27,7 +28,7 @@ const ProjectsSection = () => {
                 <div className='row align-items-end'>
                     <div className='col-lg-9'>
                     <h2>Gulmohar Avenue</h2>
-                    <p>Bandra has always been one of the most prestigious localities of Mumbai city and Gulmohar Avenue is nestled in this much sought-after abode. Bandra is known for its unmatched surroundings, seamless connectivity and non-stop progressive social infrastructure.</p>
+                    <p>Bandra has always been one of the most prestigious localities of Mumbai city and Gulmohar Avenue is our new residential project in Bandra-(E). Bandra is known for its unmatched surroundings, seamless connectivity and non-stop progressive social infrastructure. </p>
                     </div>
                     <div className='col-lg-3'>
                         <a className={styles.commonBlueButton} href='/project/gulmohar-avenue'><ArrowRightAlt className='m-0' /></a>
@@ -47,7 +48,7 @@ const ProjectsSection = () => {
                 <div className='row align-items-end'>
                     <div className='col-lg-9'>
                     <h2>Prabhat Darshan</h2>
-                    <p>Situated in one of Mumbai's city centers Prabhat Darshan is a composite building surrounded by a flourishing hub for residential, commercial, educational and social infrastructure. This project is located opposite Khar Station granting easy access to south, central and extended suburbs of Mumbai.</p>
+                    <p>Located in one of Mumbai’s most well-connected neighbourhoods, Prabhat Darshan is among the most preferred residential projects in Khar. With its location right opposite Khar Station, residents enjoy effortless travel and connectivity across the city. Surrounded by dynamic social and commercial infrastructure, these apartments in Khar are ideal for those seeking residential properties for sale near Khar.</p>
                     </div>
                     <div className='col-lg-3'>
                         <a className={`${styles.commonBlueButton}`} href='/project/prabhat-darshan'><ArrowRightAlt className='m-0' /></a>

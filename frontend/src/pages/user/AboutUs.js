@@ -32,9 +32,9 @@ const AboutUs = () => {
                         {/* <span className={styles.gradientLine}></span> */}
                         <GradientLine />
                         <h3 className={styles.sectionTitle}>Quality. Vision. Affordability. The Founders’ Promise.</h3>
-                        <p>It all began in the early 80s, when two socially conscious gentlemen, Ramakant R. Jadhav and Prakash V. Ajgaonkar, rose to meet the challenge of making housing affordable for the lower and the middle class population of Mumbai. Today, almost three decades, many companies and success stories later, the social commitment is just as serious; except that with the growing number of realty houses making the same effort, the commitment is now reflected in the quality of projects and the value it brings to its owners. </p>
+                        <p>It all began in the early 80s, when two socially conscious visionaries, Ramakant R. Jadhav and Prakash V. Ajgaonkar, set out to make quality housing accessible for Mumbai’s lower and middle-class families. Nearly four decades and many success stories later, their social commitment remains just as strong,  now reflected through the quality of every project and the lasting value it offers to its residents.</p>
 
-<p>In all, Ramakant R. Jadhav and Prakash V. Ajgaonkar did not just begin a movement towards making affordable housing a reality in Mumbai. Empowered by a vision of 'better homes for all at large', they have shown how to think beyond traditional limits and create value within the framework of law and regulations.</p>
+<p>What they started was more than just a business; it was a movement to make budget 1BHK and 2BHK homes with optimum utilization of space a reality in Mumbai. In all, Ramakant R. Jadhav and Prakash V. Ajgaonkar did not just begin a movement towards making Smart housing a reality in Mumbai. Guided by the vision of “better homes for all”, they continue to inspire an approach that balances innovation, integrity and compliance within the city’s evolving urban landscape.</p>
                         {/* <a className={styles.commonBlueButton} href='#'>Learn more <ArrowRightAlt /></a> */}
 
                         <div className='row mt-5 pt-5'>
@@ -52,7 +52,7 @@ const AboutUs = () => {
                           <div className='col-lg-3 col-3'><img src='images/mission.svg' width='100%' /></div>
                           <div className='col-lg-9 col-9'><h3>Mission</h3></div>
                           <div className='col-lg-12 mt-3'>
-                            <p>Shivalik Ventures strives to bring social upliftment through customer-centric approach.</p>
+                            <p>Bring social upliftment through customer-centric approach.</p>
                           </div>
                         </div>
                       </div>
@@ -75,11 +75,11 @@ const AboutUs = () => {
             <div className='col-lg-5'>
             
                 <GradientLine />
-                <h3 className={styles.sectionSubtitle1}>Unique Differentiator</h3>
+                <h3 className={styles.sectionSubtitle1}>What Makes Us Different</h3>
               
             </div>
             <div className='col-lg-7'>
-              <p>Shivalik Ventures has always been fair and transparent in its operations. Over the years, Shivalik Ventures has built goodwill and trust among the slum dwellers and maintained excellent relations with the Government of Maharashtra and SRA.</p>
+              <p>Shivalik Ventures, stands on a foundation of fairness and transparency. Over the years, it has earned the trust of communities it works with, from slum dwellers to government bodies, building strong partnerships with the Government of Maharashtra and the SRA through consistent integrity and collaboration. Shivalik Ventures properly stands as the best property to invest in Mumbai</p>
             </div>
             
           </div>
@@ -99,9 +99,9 @@ const AboutUs = () => {
             <div className='col-lg-12'>
               <GradientLine />
                 <h3 className={`${styles.sectionSubtitle1} mb-5`}>Distinguishing Strength</h3>
-                <p>We bring to the table a strong expertise across the value chain. Our teams operate to facilitate formation of societies, providing temporary accommodation, constructing permanent rehabilitation buildings, after getting necessary approvals from the respective authorities. Our teams in the field are driven by Management team which brings their expertise in Project management, Finance and overall project execution along with proficient branding and sales network.</p>
-                <p>Shivalik Ventures’s major constituents include Unitech Limited and Rohan group, apart from the original promoters namely Mr. Ramakant Jadhav and Mr. Prakash Ajgaonkar. Shivalik Ventures, by virtue of its constituents, has its commitment to strong corporate governance, review systems, and high quality standards in design and construction.</p>
-                <p>Shivalik Ventures starts its operations by identifying slum clusters, getting consents from slum dwellers through an interactive process and approvals from SRA, and acquisition of land. It completes the approval process by getting the Letter of Intent (LOI) from SRA along with the Intimation of Approval (IOA) and Commencement Certificate (CC) with the help of its experienced operations and project management team. Shivalik Ventures has led to corporate synergy which ensures smooth and economically viable project implementation mechanism.</p>
+                <p>Shivalik Ventures brings extensive experience across every stage of real estate projects in Mumbai The company’s teams manage the process from society formation and obtaining statutory approvals to providing temporary accommodation and constructing permanent rehabilitation buildings.</p>
+                <p>The organization is backed by its key promoters, Mr. Ramakant Jadhav and Mr. Prakash Ajgaonkar, along with prominent partners Unitech Limited and Rohan Group. Together, they uphold strong corporate governance practices and maintain high standards in project management, finance, design, and construction.</p>
+                <p>Operating under the Slum Rehabilitation Authority (SRA) framework, Shivalik Ventures identifies eligible slum clusters, secures necessary consents from residents, and obtains approvals such as the Letter of Intent (LOI), Intimation of Approval (IOA), and Commencement Certificate (CC).This systematic and compliant approach has enabled the company to deliver large-scale housing projects in Mumbai efficiently and transparently, strengthening its position among trusted real estate developers in Mumbai and builders known for their residential properties in Mumbai.</p>
             </div>
           </div>
         </div>

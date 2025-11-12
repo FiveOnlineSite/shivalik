@@ -173,18 +173,15 @@ const EMICalculatorBox = () => {
                           '--progress': `${((loanAmount - 100000) / (1000000000 - 100000)) * 100}%`
                         }}
                       />
-
                     </div>
                 </div>
                
-              
-
-                {/* Interest Rate */}
                 <div className="mt-4">
                   <div className="row">
                     <div className="col-6">
                      <label className="mb-2">Interest Rate (%)</label>
                     </div>
+
                     <div className="col-6">
                       <input
                         type="number"

@@ -122,7 +122,6 @@ const App = () => {
                <ToastContainer position="top-right" style={{ marginTop: "70px" }} autoClose={3000} />
 
          <Routes>
-
  
          <Route path='/' element={<Home />} />
          <Route path='/home1' element={<Home1 />} />
