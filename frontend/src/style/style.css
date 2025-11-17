@@ -1106,10 +1106,10 @@ div.scrollmenu a:hover, div.scrollmenu a:active,  div.scrollmenu a:focus {
 }
 
 .overlayText {
-    background: #00000080;
+    background: #00000030;
     border-radius: 4px;
     color: #fff;
-    font-size: 13px;
+    font-size: 7px;
     left: 8px;
     padding: 2px 6px;
     position: absolute;

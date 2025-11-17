@@ -12,7 +12,7 @@ const KeyFeaturesSection = () => {
                     <div className={`${homestyles.keyFeatureBox} pt-5 pb-5 pl-5 pr-5 mt-5 mb-5`}>
                         <GradientLine />
                         <h3 className={styles.sectionTitle}>Built on Trust</h3>
-                        <p>For over four decades, Shivalik has been a name built on integrity, transparency, and excellence. From blueprint to delivery, every project reflects our purpose, which is to create homes in Mumbai that offer comfort, connection, and a sense of belonging.</p>
+                        <p>For over three decades, Shivalik has been a name built on integrity, transparency, and excellence. From blueprint to delivery, every project reflects our purpose, which is to create homes in Mumbai that offer comfort, connection, and a sense of belonging.</p>
                         <p>Each development is a reflection of our people-first approach and commitment to purposeful design. Because for us, building isn’t just about structures; it’s about shaping lives and nurturing communities </p>
                         <div className='row'>
                             <div className='col-lg-3 col-6 text-center'>
