@@ -34,7 +34,7 @@ const AboutUs = () => {
                         <h3 className={styles.sectionTitle}>Quality. Vision. Affordability. The Founders’ Promise.</h3>
                         <p>It all began in the early 80s, when two socially conscious visionaries, Ramakant R. Jadhav and Prakash V. Ajgaonkar, set out to make quality housing accessible for Mumbai’s lower and middle-class families. Nearly four decades and many success stories later, their social commitment remains just as strong,  now reflected through the quality of every project and the lasting value it offers to its residents.</p>
 
-<p>What they started was more than just a business; it was a movement to make budget 1BHK and 2BHK homes with optimum utilization of space a reality in Mumbai. In all, Ramakant R. Jadhav and Prakash V. Ajgaonkar did not just begin a movement towards making Smart housing a reality in Mumbai. Guided by the vision of “better homes for all”, they continue to inspire an approach that balances innovation, integrity and compliance within the city’s evolving urban landscape.</p>
+<p>What they started was more than just a business; it was a movement to make budget 1BHK and 2BHK homes  with optimum utilization of space a reality in Mumbai. In all, Ramakant R. Jadhav and Prakash V. Ajgaonkar did not just begin a movement towards making Smart housing a reality in Mumbai. Guided by the vision of “better homes for all”, they continue to inspire an approach that balances innovation, integrity and compliance within the city’s evolving urban landscape.</p>
                         {/* <a className={styles.commonBlueButton} href='#'>Learn more <ArrowRightAlt /></a> */}
 
                         <div className='row mt-5 pt-5'>
