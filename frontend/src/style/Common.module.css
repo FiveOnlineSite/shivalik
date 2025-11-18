@@ -72,6 +72,11 @@ vertical-align: middle;margin: 2.5rem 0;
   filter: brightness(0.6)
 }
 
+.projectPicture img{
+height: 390px;
+object-fit: contain
+}
+
 /* Dark gradient example */
 .darkGradient::before {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 40.77%, #333333 100%);
@@ -202,7 +207,11 @@ letter-spacing: -1.26px;
 
 /* client tie ups section start */
 /* client tie ups section close */
-
+@media only screen and (max-width: 1025px) and (min-width: 821px){
+  .projectPicture img{
+object-fit: cover
+}
+}
 
 @media only screen and (max-width: 767px) {
 
