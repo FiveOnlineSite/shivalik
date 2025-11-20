@@ -40,7 +40,7 @@ const ProjectsSection = () => {
         <div className='row row-reverse align-items-end mb-5 align-bottom-section'>
         <div className='col-lg-6 mb-3 h-100'>
                 <div className={homestyles.highlightProject}>
-                    <img src='/images/prabhat-darshan.jpg' width='100%' />
+                    <img src='/images/prabhat-darshan.png' width='100%' />
                 </div>
             </div>
             <div className='col-lg-6 mb-3 h-100 d-flex flex-column justify-content-end'>
