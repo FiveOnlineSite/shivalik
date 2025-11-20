@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDb = require("./config/db");
 const Route = require("./routes/index");
+const generateSitemap = require("./generateSitemap")
 
 const cors = require("cors");
 const app = express();
@@ -71,6 +72,8 @@ app.use("/api/project-enquiry", Route.projectEnquiryRoute);
 app.use("/api/csr-banner", Route.csrBannerRoute);
 
 connectDb();
+
+// generateSitemap();
 
 app.listen(PORT, "0.0.0.0", (error) => {
   if (error) {
