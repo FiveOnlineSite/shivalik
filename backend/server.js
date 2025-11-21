@@ -2,8 +2,6 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDb = require("./config/db");
 const Route = require("./routes/index");
-const generateSitemap = require("./generateSitemap")
-
 const cors = require("cors");
 const app = express();
 app.use(express.json());
@@ -34,6 +32,8 @@ app.use((req, res, next) => {
   res.setTimeout(10 * 60 * 1000); // 10 minutes
   next();
 });
+
+connectDb();
 
 app.get("/api", (req, res) => {
   res.send("This is backend");
@@ -71,7 +71,7 @@ app.use("/api/meta-data", Route.metaDataRoute);
 app.use("/api/project-enquiry", Route.projectEnquiryRoute);
 app.use("/api/csr-banner", Route.csrBannerRoute);
 
-connectDb();
+
 
 // generateSitemap();
 
