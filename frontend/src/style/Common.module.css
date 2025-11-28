@@ -74,7 +74,7 @@ vertical-align: middle;margin: 2.5rem 0;
 
 .projectPicture img{
 height: 390px;
-object-fit: contain
+object-fit: cover
 }
 
 /* Dark gradient example */

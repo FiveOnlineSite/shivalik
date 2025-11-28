@@ -85,6 +85,12 @@ const ProjectsTabSection = () => {
             <img src={shivalikHero.image[0].filepath} width='100%' alt={shivalikHero.alt} />
 
             )}
+            {shivalikHero.disclaimer && (
+<span className='overlayText'>
+           {shivalikHero.disclaimer}
+          </span>
+)}
+      
             {shivalikHero.banner_alt && (
                 <div className={styles.projectButton}>
                 <a className={styles.commonBlueButton} 
