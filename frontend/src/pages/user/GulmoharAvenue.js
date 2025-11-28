@@ -235,13 +235,13 @@ const {name} = useParams()
       <section className={styles.projectDetHeader}>
         <div className='row'>
           <div className='col-lg-12'>
-            <div className='d-lg-block desktop-banner'>
+            <div className='d-lg-block d-none desktop-banner'>
               {projectBanner.banner?.[0]?.filepath && (
                 <img src={projectBanner.banner?.[0]?.filepath} width='100%' alt={projectBanner.banner_alt} />
               )}
             </div>
 
-            <div className='d-md-none mobile-banner'>
+            <div className='d-lg-none d-block  mobile-banner'>
               {projectBanner.mobile_banner?.[0]?.filepath && (
                 <img src={projectBanner.mobile_banner?.[0]?.filepath} width='100%' alt={projectBanner.mobile_banner_alt} />
               )}
