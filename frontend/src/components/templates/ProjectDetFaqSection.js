@@ -11,7 +11,7 @@ const ProjectDetFaqSection = () => {
             <div className='row justify-content-left mb-3'>
                     <div className='col-lg-12'>
                         <GradientLine />
-                        <h3 className={`${styles.sectionTitle}`}>Loan FAQs & Registration</h3>
+                        <h2 className={`${styles.sectionTitle}`}>Loan FAQs & Registration</h2>
                     </div>
                 </div>
             <FaqProjectDetail />

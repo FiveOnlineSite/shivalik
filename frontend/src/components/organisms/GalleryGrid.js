@@ -52,7 +52,7 @@ const GalleryGrid = () => {
         <div className="container">
           <div className="row">
             <GradientLine />
-            <h3 className={styles.sectionTitle}>Project Gallery</h3>
+            <h2 className={styles.sectionTitle}>Project Gallery</h2>
 
             <div className="gallery-grid">
               {projectGallery.map((gallery, i) => (

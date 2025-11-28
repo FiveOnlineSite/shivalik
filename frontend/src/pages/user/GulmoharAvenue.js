@@ -318,7 +318,7 @@ const {name} = useParams()
       <div className='col-lg-6'>
         <div className={homestyles.aboutText}>
           <GradientLine />
-          <h3 className={styles.sectionTitle}>{about.project?.title}</h3>
+          <h1 className={styles.sectionTitle}>{about.project?.title}</h1>
           <div dangerouslySetInnerHTML={{ __html: about.description }}></div>
           {about.contact && (
             <a
@@ -358,7 +358,7 @@ const {name} = useParams()
             </div>
             <div className='col-lg-7 offset-lg-1 mt-lg-0 mt-3 mob-space'>
               <GradientLine />
-              <h3 className={styles.sectionTitle}>{content.title}</h3>
+              <h2 className={styles.sectionTitle}>{content.title}</h2>
               <div className='row g-0'>
       {projectFeatures && projectFeatures.map((feature) => (
 
@@ -393,7 +393,7 @@ const {name} = useParams()
     <div className='row'>
       <div className='col-lg-12'>
         <GradientLine />
-        <h3 className={styles.sectionTitle}>Highlights</h3>
+        <h2 className={styles.sectionTitle}>Highlights</h2>
       </div>
       {projectHighlight && projectHighlight.map((highlight) => (
 
@@ -418,7 +418,7 @@ const {name} = useParams()
           <div className='row '>
             <div className='col-lg-12'>
               <GradientLine />
-              <h3 className={styles.sectionTitle}>Amenities That Bring the Community Together</h3>
+              <h2 className={styles.sectionTitle}>Amenities That Bring the Community Together</h2>
             </div>
       {projectAmenities && projectAmenities.map((amenities) => (
 
@@ -449,7 +449,7 @@ const {name} = useParams()
           <div className='row'>
             <div className='col-lg-12'>
               <GradientLine />
-              <h3 className={styles.sectionTitle}>Site Plan</h3>
+              <h2 className={styles.sectionTitle}>Site Plan</h2>
             </div>
           </div>
           <div className='row'>
@@ -468,7 +468,7 @@ const {name} = useParams()
 
             <div className='col-lg-12'>
               <GradientLine />
-              <h3 className={styles.sectionTitle}>Well connected to all that is important</h3>
+              <h2 className={styles.sectionTitle}>Well connected to all that is important</h2>
             </div>
             {location.info && location.info.length > 0 ? (
               <div className='row align-items-center'>
@@ -543,7 +543,7 @@ const {name} = useParams()
           <div className='row'>
             <div className='col-lg-12'>
               <GradientLine />
-              <h3 className={styles.sectionTitle}>Current Status</h3>
+              <h2 className={styles.sectionTitle}>Current Status</h2>
             </div>
             <div className='col-lg-12'>
               <HorizontalTimeline />
@@ -558,7 +558,7 @@ const {name} = useParams()
           <div className='row'>
             <div className='col-lg-12'>
               <GradientLine />
-              <h3 className={styles.sectionTitle}>Bank Tie-Ups</h3>
+              <h2 className={styles.sectionTitle}>Bank Tie-Ups</h2>
             </div>
             <div className=''>
               <ClientTieUps />
