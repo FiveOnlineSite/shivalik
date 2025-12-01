@@ -302,7 +302,7 @@ const {name} = useParams()
 
       {/* ABOUT SECTION START */}
       {projectAbout && projectAbout.map((about, index) => (
-  <section key={index} className='pt-5 pb-5 before-bg-type1' id='about'>
+  <section key={index} className='mt-5 mb-5 before-bg-type1' id='about'>
     <div className='row align-items-center g-0'>
       <div className='col-lg-6'>
         <div className={`${homestyles.aboutImg} mb-3`}>
@@ -313,6 +313,9 @@ const {name} = useParams()
               alt={about.image?.[0]?.alt}
             />
           )}
+          <span className='overlayText'>
+           Artistic impression for representation purpose only
+          </span>
         </div>
       </div>
       <div className='col-lg-6'>
@@ -345,16 +348,19 @@ const {name} = useParams()
       {/* ABOUT SECTION CLOSE */}
 
       {/* Live the Fine Print at Gulmohar Avenue start */}
-      <section className='bg-grey pt-5 pb-5'>
+      <section className='bg-grey pt-5 pb-5 live-fine-section'>
         <div className=''>
       {projectContent && projectContent.map((content) => (
 
           <div className='row row-reverse g-0'>
 
-            <div className='col-lg-4'>
+            <div className='col-lg-4 position-relative'>
               {content.image?.[0]?.filepath && (
-              <img className={`${styles.borderRadius} border-radius-left`} src={content.image?.[0]?.filepath} width='100%' alt={content.alt} />
+              <img className={`${styles.borderRadius} border-radius-left position-relative`} src={content.image?.[0]?.filepath} width='100%' alt={content.alt} />
               )}
+              <span className='overlayText'>
+           Artistic impression for representation purpose only
+          </span>
             </div>
             <div className='col-lg-7 offset-lg-1 mt-lg-0 mt-3 mob-space'>
               <GradientLine />
@@ -368,6 +374,7 @@ const {name} = useParams()
                           {feature.image?.[0]?.filepath && (
                           <img src={feature.image?.[0]?.filepath} width="100%" alt={feature.alt} />
                           )} 
+                          
                         </div>
                         <div className='col-lg-10 col-10'>
                           <h4>{feature.title}</h4>
@@ -398,13 +405,24 @@ const {name} = useParams()
       {projectHighlight && projectHighlight.map((highlight) => (
 
       <div className='col' key={highlight._id}>
-        <div className={styles.highlightBox}>
-          {highlight.image?.[0]?.filepath && (
-          <img src={highlight.image?.[0]?.filepath} className="mb-1" width='100%' alt={highlight.alt}/>
-          )}
-          <h5>{highlight.title}</h5>
-        </div>
-      </div>
+  <div className={`${styles.highlightBox} position-relative`}>
+    {highlight.image?.[0]?.filepath && (
+      <img
+        src={highlight.image[0].filepath}
+        className="mb-1 position-relative"
+        width="100%"
+        alt={highlight.alt}
+      />
+    )}
+
+    <span className="overlayText">
+      Artistic impression for representation purpose only
+    </span>
+
+    <h5>{highlight.title}</h5>
+  </div>
+</div>
+
       ))}
     </div>
   </div>

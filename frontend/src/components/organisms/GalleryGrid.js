@@ -58,7 +58,7 @@ const GalleryGrid = () => {
               {projectGallery.map((gallery, i) => (
                 <div
                   key={gallery._id || i}
-                  className="gallery-box"
+                  className="gallery-box position-relative"
                   onClick={() => {
                     setIndex(i);
                     setOpen(true);
@@ -70,6 +70,9 @@ const GalleryGrid = () => {
                       alt={gallery.alt || ""}
                     />
                   )}
+                  <span className="overlayText">
+      Artistic impression for representation purpose only
+    </span>
                 </div>
               ))}
             </div>
