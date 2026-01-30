@@ -1,0 +1,246 @@
+
+.feIcon{text-decoration: none;background-color: #F58634;display: inline-block;padding: 0.6rem;border-radius: 2rem;}
+.bannerText{
+  position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 100%;
+  }
+.bannerText h2{font-weight: 500;font-size: 4.8rem;line-height: 100%;letter-spacing: -1.26px;color: #fff;}
+.bannerText p{color: #fff;font-weight: 400;font-size: 1.3rem;line-height: 38px;letter-spacing: -0.5px;text-align: center;}
+.bannerText{}
+
+/* common style for all start*/
+.gradientLine{background: linear-gradient(90deg, #F58634 0%, #000000 94.96%);width: 10rem;height: 0.3rem;border-radius: 1rem;display: inline-block;margin-bottom: 1.5rem;}
+.sectionTitle{font-weight: 500;font-size: 3rem;line-height: 100%;letter-spacing: -1.26px;color: #000;margin-bottom: 2rem;}
+.commonBlueButton{text-decoration: none;background-color: #191E3F;color: #fff;padding: 1rem 2rem;border-radius: 0 1.5rem 0 0;font-weight: 400;font-size: 16px;line-height: 100%;letter-spacing: -0.43px;display: inline-block;text-align: center;text-transform: capitalize;cursor: pointer;}
+.enquireNowBtn{padding: 0.7rem 1.5rem;}
+.enquireNowBtn2{display: inline-block;width: fit-content;}
+.commonBlueButton svg{color: #F58634;margin-left: 1rem;font-size: 2rem;}
+.commonOrangeButton{text-decoration: none;background-color: #F58634;color: #fff;padding: 1rem 1rem;
+  border-radius: 1.5rem 0 0 0;font-weight: 400;font-size: 16px;line-height: 100%;letter-spacing: -0.43px;display: inline-block;text-align: center;text-transform: capitalize;}
+
+.commonBlogButton{text-decoration: none;background-color: #191E3F;color: #fff;padding: 0.8rem 1.3rem;border-radius: 0rem 0rem 0rem 1.2rem;font-weight: 400;font-size: 16px;line-height: 100%;letter-spacing: -0.43px;display: inline-block;}
+.commonBlogButton svg{color: #F58634;margin-left: 1rem;font-size: 2rem;}
+/* common style for all close*/
+
+
+/* FOOTER SECTION START */
+.socialIcon ul{margin: 0;padding: 0;}
+.socialIcon ul li{margin: 0;padding: 0;list-style: none;margin-right: 1rem;}
+.footerLink ul{margin: 0;padding: 0;}
+.footerLink ul li{margin: 0;padding: 0;list-style: none;
+font-weight: 400;
+font-size: 1rem;
+line-height: 100%;
+vertical-align: middle;margin: 2.5rem 0;
+}
+.footerLink ul li a{text-decoration: none; color: #5d5d5d;}
+.footerCopyrights{border-top: 1px solid #DFDFDF}
+/* FOOTER SECTION CLOSE */
+
+/* TESTIMONIALS SECTION START */
+.testimonialSec::before{content:""; position: absolute;left: 50%;top: 50%;-webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);width: 30%;height: 100vh;background-color: #191E3F;z-index: -1;}
+.testiInfo{border-left: 2px solid #F58634;padding-left: 1.5rem;}
+.testiInfo svg{padding: 0 0.1rem;}
+.testiText {width: 95%;}
+.testiText{box-shadow: 0px 0px 20px 0px #0000001A;background-color: #fff;padding: 2rem;border-radius: 1rem;}
+.testiText ul{margin: 0;padding: 0;}
+.testiText ul li{list-style: none;margin-right: 1.5rem;font-weight: 700;font-size: 18px;line-height: 30px;letter-spacing: 0%;}
+.testiText ul li:first-child{background-color: #F58634;color: #fff;font-weight: 600;vertical-align: middle;padding: 0.7rem 0.7rem;border-radius: 4rem;line-height: 1.3rem;}
+.testiImg1{
+  box-shadow: 0px 62px 54px 0px #0000004D;
+}
+/* TESTIMONIALS SECTION close */
+
+/* inner page banner section start */
+.innerBannerSection:before{content:"";background: linear-gradient(180deg, rgba(255, 255, 255, 0) 40.77%, #FFFFFF 100%);width: 100%;display: block;height: 100%;left: 0;position: absolute;top: 0;width: 100%;}
+/* Default white gradient */
+.whiteGradient::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 40.77%, #FFFFFF 100%);
+}
+
+/* Grey gradient */
+.greyGradient::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 40.77%, #f5f5f5 100%);
+}
+
+.bannerImg{
+  filter: brightness(0.6)
+}
+
+.projectPicture img{
+height: 390px;
+object-fit: cover
+}
+
+/* Dark gradient example */
+.darkGradient::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 40.77%, #333333 100%);
+}
+
+.innerPageTitle{position: absolute;bottom: 3.5rem;left: 0;padding: 0;}
+.innerPageTitle h1{font-weight: 500;font-size: 4rem;line-height: 79px;letter-spacing: -1.26px;text-transform: uppercase;padding-left: 2rem;}
+
+/*  */
+.projectButton{position: absolute;bottom: 0;left: 0;}
+.projectTag{display: inline-block;background-color: #F58634;border-radius: 5rem;color: #fff;padding: 0.25rem 1rem;font-size: 0.8rem;}
+
+/* BLOG LISTING PAGE START */
+.blogInnerBanner{}
+.blogInnerTitle{background-color: #fff;box-shadow: 0px 0px 25px 0px #0000001A;}
+.blogInnerTitle{position: absolute;
+    left: 50%;
+    bottom: -110px;
+    width: 45%;
+    text-align: center;
+    transform: translate(-50%, -50%);}
+.blogInTitleBox {padding: 40px;}
+.blogInTitleBox h4{margin: 0;}
+.commonBlogSmBtn{text-decoration: none;
+    background-color: #191E3F;
+    color: #fff;
+    padding: 0.4rem 0.75rem;
+    border-radius: 0rem 0rem 0rem 1.2rem;
+    font-weight: 400;
+    font-size: 1.15rem;
+    line-height: 1.35rem;
+    letter-spacing: -0.43px;
+    display: inline-block;}
+.commonBlogSmBtn svg{font-size: 1.5rem;color: #F58634;}
+.blogsmPack h4{font-weight: 700;
+    font-size: 1.15rem;
+    line-height: 1.5rem;}
+.blogListTitLink{text-decoration: none;color: #212529; margin-top: 10px;}
+/* BLOG LISTING PAGE CLOSE */
+
+/* BLOG DETAIL PAGE START */
+.blogDetailContent p, .blogDetailContent ul li{
+font-weight: 400;color: #5d5d5d;
+font-size: 1rem;
+line-height: 2rem;
+}
+/* BLOG DETAIL PAGE close */
+
+/* ABOUT US PAGE START */
+.aboutText2{width: 90% !important;}
+.sectionSubtitle1{
+font-weight: 500;
+font-size: 32px;
+line-height: 100%;
+letter-spacing: -1.26px;
+}
+
+/* PROJECT DETAIL PAGE START */
+.projectDetHeader a{text-decoration: none;color: #5d5d5d;}
+.projectDetTitle{font-weight: 500;font-size: 84px;line-height: 80px;letter-spacing: -1.26px;color: #191E3F;}
+.projectDetTitle span{font-family: "Abhaya Libre", serif;font-weight: 500;font-size: 96px;line-height: 80px;letter-spacing: -1.26px;color: #F58634;}
+
+.projectDetNav{border-top: 1px solid #000;border-bottom: 1px solid #000;}
+.iconsProjectList p{font-size: 0.9rem;}
+.highlightBox {margin-bottom: 1.5rem;}
+.highlightBox h5{font-size: 1rem;}
+
+.placeDistance{box-shadow: 0px 0px 25px -5px #00000026;padding: 15px;}
+.reraSection p{font-size: 0.8rem;}
+
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modalBox {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.closeBtn {
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modalForm input {
+  width: 100%;
+  padding: 10px;
+  margin: 12px 0;border: 0;
+  border-bottom: 1px solid #ccc !important;
+  border-radius: 0px;
+}
+
+.submitBtn {
+  width: 100%;
+  background-color: #0056b3;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submitBtn:hover {
+  background-color: #004099;
+}
+
+
+
+/* client tie ups section start */
+/* client tie ups section close */
+@media only screen and (max-width: 1025px) and (min-width: 821px){
+  .projectPicture img{
+object-fit: cover
+}
+}
+
+@media only screen and (max-width: 767px) {
+
+  .projectDetTitle{font-size: 70px;}
+
+.projectDetTitle span{font-size: 70px;}
+
+.commonBlueButton{
+
+  padding: 1rem 1.5rem;}
+
+
+
+    .feIcon{padding: 0.4rem 0.6rem;}
+
+    .bannerText {width: 90%;}
+
+    .bannerText h2{font-size: 2.5rem;}
+
+    .bannerText p{font-size: 0.8rem;line-height: 1.2rem;}
+
+    .innerBannerSection img{height: 60vh;object-fit: cover;}
+
+    .testimonialSec::before{width: 100%;}
+
+    .footerLink{margin: 2rem 0;}
+
+    .blogInTitleBox {padding: 20px;}
+
+    .blogInnerTitle{position: static;transform: none;width: 100%;}
+
+}
