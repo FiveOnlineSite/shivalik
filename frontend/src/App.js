@@ -114,6 +114,7 @@ import AdminCSR from './pages/admin/CSR/CSR';
 import AddCSR from './pages/admin/CSR/AddCSR';
 import EditCSR from './pages/admin/CSR/EditCSR';
 import PrivacyPolicy from './pages/user/PrivacyPolicy';
+import TermsConditions from './pages/user/TermsConditions';
 
 const App = () => {
   return (
@@ -137,7 +138,7 @@ const App = () => {
          <Route path='/get-your-dream-home-mumbai-how-to-secure-the-right-home-loan' element={<BlogDetailFive />} />
          <Route path='/how-to-get-a-home-loan-to-buy-a-home-in-mumbai' element={<BlogDetailSix />} /> */}
 <Route path='/privacy-policy' element={<PrivacyPolicy />} />
-      
+      <Route path='/terms-and-conditions' element={<TermsConditions />} />
          <Route path='/blogs' element={<Blogs />} />
          <Route path='/contact-us' element={<ContactUs />} />
          <Route path='/csr' element={<CSR />} />

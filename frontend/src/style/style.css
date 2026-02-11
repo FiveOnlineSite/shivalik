@@ -12,6 +12,19 @@ h6{line-height: 1.5rem;}
 
 p, ul, li, span{font-family: Helvetica;}
 p{color: #5d5d5d;}
+.terms-title{
+      font-family: "Abhaya Libre", serif;
+      font-size: 20px;
+      margin: 20px 0 10px 0 ;
+}
+
+.privacy-list li{
+  color: #5d5d5d;
+}
+
+.privacy-mail{
+  color: #3f4fb3;
+}
 
 .border-radius-left{border-radius: 3.5rem 0 0 0;}
 
