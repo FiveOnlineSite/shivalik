@@ -29,19 +29,23 @@ const Footer = () => {
             <div className={styles.footerLink}>
               <ul>
                 {/* <li><a href='#'>Home</a></li> */}
-                <li><a href='about-us'>About</a></li>
-                <li><a href='projects'>Projects</a></li>
-                <li><a href='faqs'>FAQs</a></li>
+                <li><a href='/about-us'>About</a></li>
+                <li><a href='/projects'>Projects</a></li>
+                <li><a href='/faqs'>FAQs</a></li>
+                
+                <li><a href='/terms-and-conditions'>Terms & Conditions</a></li>
               </ul>
             </div>
           </div>
           <div className='col-lg-2'>
             <div className={styles.footerLink}>
               <ul>
-                <li><a href='csr'>CSR</a></li>
+                <li><a href='/csr'>CSR</a></li>
                 {/* <li><a href='#'>Resources</a></li> */}
-                <li><a href='blogs'>Blogs</a></li>
-                <li><a href='contact-us'>Contact Us</a></li>
+                <li><a href='/blogs'>Blogs</a></li>
+                <li><a href='/contact-us'>Contact Us</a></li>
+                <li><a href='/privacy-policy'>Privacy Policy</a></li>
+
               </ul>
             </div>
           </div>
