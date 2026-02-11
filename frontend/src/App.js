@@ -113,6 +113,7 @@ import EditCSRBanners from './pages/admin/CSRBanners/EditCSRBanners';
 import AdminCSR from './pages/admin/CSR/CSR';
 import AddCSR from './pages/admin/CSR/AddCSR';
 import EditCSR from './pages/admin/CSR/EditCSR';
+import PrivacyPolicy from './pages/user/PrivacyPolicy';
 
 const App = () => {
   return (
@@ -135,7 +136,8 @@ const App = () => {
          <Route path='/investing-in-Bandra-future-affordable-luxury-homes' element={<BlogDetailFour />} />
          <Route path='/get-your-dream-home-mumbai-how-to-secure-the-right-home-loan' element={<BlogDetailFive />} />
          <Route path='/how-to-get-a-home-loan-to-buy-a-home-in-mumbai' element={<BlogDetailSix />} /> */}
-
+<Route path='/privacy-policy' element={<PrivacyPolicy />} />
+      
          <Route path='/blogs' element={<Blogs />} />
          <Route path='/contact-us' element={<ContactUs />} />
          <Route path='/csr' element={<CSR />} />
