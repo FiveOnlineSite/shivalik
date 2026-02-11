@@ -164,6 +164,8 @@ const EditMetaData = () => {
                   <option value="/news">News</option>
                   <option value="/blogs">Blogs</option>
                   <option value="/contact-us">Contact Us</option>
+<option value="/privacy-policy">Privacy Policy</option>
+                  <option value="/terms-and-conditions">Terms & Conditions</option>
 
                   
                 </select>
