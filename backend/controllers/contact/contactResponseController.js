@@ -6,13 +6,11 @@ const createContact = async (req, res, skipResponse = false) => {
 
     const newContact = new ContactResponseModel({
       name,
-      email,
+      email,  
       phone,
       page,
       message,
     });
-
-    await newContact.save();
 
     if (!skipResponse) {
       return res.status(200).json({
@@ -20,16 +18,21 @@ const createContact = async (req, res, skipResponse = false) => {
         newContact,
       });
     }
+    
+    await newContact.save();
 
     return newContact; // return saved document if skipping response
-  } catch (error) {
-    if (!skipResponse) {
-      return res.status(500).json({
-        message: `Error in adding contact due to ${error.message}`,
-      });
-    }
-    throw error;
-  }
+
+
+  }catch (error) {
+  console.error("CREATE CONTACT ERROR:", error);
+
+  return res.status(500).json({
+    success: false,
+    message: "Failed to save contact",
+    error: error.message,
+  });
+}
 };
 
 

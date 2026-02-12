@@ -115,6 +115,7 @@ if (!isAgreed) {
     const validationErrors = validate();
     setErrors(validationErrors);
     
+    if (Object.keys(validationErrors).length > 0) return;
 
     if (!otpVerified) {
       toast.error('Please verify OTP before submitting');
